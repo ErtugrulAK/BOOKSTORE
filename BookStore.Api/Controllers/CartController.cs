@@ -192,7 +192,7 @@ namespace BookStore.Api.Controllers
                         return BadRequest($"'{book.Name}' stokta yeterli değil. Sadece {book.StockQuantity} adet var.");
 
                     book.StockQuantity -= item.Quantity;
-                    // book.MinStockLevel can be used here later to trigger low-stock alerts to admins
+                    if (book.StockQuantity <= 0) book.IsActive = false;
                 }
                 else
                 {

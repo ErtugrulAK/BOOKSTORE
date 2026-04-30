@@ -59,7 +59,7 @@ function Home({ searchTerm, minPrice, maxPrice, category, handleAddToCart }) {
         kategori: kitap.category || "Genel Kitap",
         fiyat: kitap.price,
         isFeatured: kitap.isFeatured,
-        gorsel: kitap.imageUrl
+        imageUrl: kitap.imageUrl
       }}
       onAddToCart={handleAddToCart}
     />

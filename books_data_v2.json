@@ -35,7 +35,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/çevre mühendisliğinde fiziksel - kimyasal temel süreçler.jpg"
   },
   {
     "Name": "Çevre Mühendisliğinde Biyoprosesler",
@@ -73,7 +74,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/atıksu arıtma sistemlerinin tasarım esasları C-II.jpg"
   },
   {
     "Name": "Atıksu Arıtma Sistemlerinin Tasarım Esasları C-II",
@@ -92,7 +94,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/atıksu arıtma sistemlerinin tasarım esasları C-II.jpg"
   },
   {
     "Name": "Arıtma Çamurlarının İşlenmesi",
@@ -111,7 +114,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/arıtma çamurlarının işlenmesi.jpg"
   },
   {
     "Name": "Katı Atık Toplama Taş. Bertaraf sis.",
@@ -168,7 +172,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/anaerobik arıtma.jpg"
   },
   {
     "Name": "Atmosfer Kimyası",
@@ -187,7 +192,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/atmosfer kimyası.jpg"
   },
   {
     "Name": "Çevre Mühendisliğinde Mikrobiyolojik Uygulamalar",
@@ -301,7 +307,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/elektrik makinalarının temel ilkeleri.jpg"
   },
   {
     "Name": "Üretim Fonksiyonları",
@@ -320,7 +327,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/üretim fonksiyonları.jpg"
   },
   {
     "Name": "İşletme Yöntemi ve Organizasyonu",
@@ -434,7 +442,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/yapı ve deprem mühendisliğinde matris yöntemler.jpg"
   },
   {
     "Name": "Malzeme Bilgisi (İnş.Müh.İçin.)",
@@ -757,7 +766,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/kömür.jpg"
   },
   {
     "Name": "Maden Jeolojisi Uygulama kılavuzu",
@@ -795,7 +805,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/volkaniklastik kayaçlar.jpg"
   },
   {
     "Name": "Kayaçların Radyometrik Yaş Tayininin Ana Yöntemleri",
@@ -814,7 +825,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/kayaçların radyometrik yaş tayininin ana yöntemleri.jpg"
   },
   {
     "Name": "Cevher Mikroskopisi ve Petrografisi",
@@ -852,7 +864,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/jeotermalde yerbilimsel uygulamalar.jpg"
   },
   {
     "Name": "Kil Mineralleri (Ders Notları)",
@@ -909,7 +922,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/kömür teknolojisi.jpg"
   },
   {
     "Name": "Tünel Ve Kuyu Açma",
@@ -928,7 +942,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/tünel ve kuyu açma.jpg"
   },
   {
     "Name": "Kaya Mekaniği",
@@ -947,7 +962,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/kaya mekaniği.jpg"
   },
   {
     "Name": "Maden işletme Ekonomisi",
@@ -966,7 +982,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/maden işletme ekonomisi.jpg"
   },
   {
     "Name": "Açık İşletme Tekniği",
@@ -985,7 +1002,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/açık işletme tekniği.jpg"
   },
   {
     "Name": "Madenlerde Su atımı ve Pompalar",
@@ -1023,7 +1041,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/madenlerde nakliyat.jpg"
   },
   {
     "Name": "Yer altı Maden Makinaları Ve Mekanizasyonu",
@@ -1061,7 +1080,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/maden mühendisleri için ölçme tekniği.jpg"
   },
   {
     "Name": "Madenciliğe Giriş",
@@ -1156,7 +1176,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/kaldırma makinaları.jpg"
   },
   {
     "Name": "Mukavemet I",
@@ -1194,7 +1215,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/sistem dinamiği ve otomatik kontrol.jpg"
   },
   {
     "Name": "Staj Defteri",
@@ -1213,7 +1235,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/staj defteri.jpg"
   },
   {
     "Name": "Örmecilik Esasları",
@@ -1232,7 +1255,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/örmecilik esasları.jpg"
   },
   {
     "Name": "Tekstil Mekaniğinin Temelleri",
@@ -1289,7 +1313,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/matematik I (lineer cebir).jpg"
   },
   {
     "Name": "Matematik-I (Lineer Cebir)",
@@ -1308,7 +1333,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/matematik I (lineer cebir).jpg"
   },
   {
     "Name": "Analitik Geometri",
@@ -1327,7 +1353,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/analitik geometri.jpg"
   },
   {
     "Name": "Sayısal Çözümleme",
@@ -1346,7 +1373,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/sayısal çözümleme ve örnekler.jpg"
   },
   {
     "Name": "Sayısal Çözümleme ve Örnekler",
@@ -1365,7 +1393,8 @@
     "IsFeatured": false,
     "MinStockLevel": 25,
     "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz.",
+    "ImageUrl": "/images/books/sayısal çözümleme ve örnekler.jpg"
   },
   {
     "Name": "Matematık ııı",

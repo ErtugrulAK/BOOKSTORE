@@ -69,7 +69,7 @@ function Admin({ token, user }) {
         publicationYear: '', pageCount: '', description: '',
         price: '', stockQuantity: '', minStockLevel: 25,
         category: '', isActive: true, isFeatured: false,
-        paymentInfo: '', storeInfo: '', edition: ''
+        edition: ''
     });
 
     // Site Ayarları
@@ -271,7 +271,7 @@ function Admin({ token, user }) {
                 publicationYear: '', pageCount: '', description: '',
                 price: '', stockQuantity: '', minStockLevel: 25,
                 category: '', isActive: true, isFeatured: false,
-                paymentInfo: '', storeInfo: '', edition: ''
+                edition: ''
             });
         }
         setActiveTab('book_form');

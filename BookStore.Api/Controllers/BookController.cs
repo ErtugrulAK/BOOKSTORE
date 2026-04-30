@@ -65,7 +65,7 @@ namespace BookStore.Api.Controllers
 
             if (isCritical == true)
             {
-                query = query.Where(b => b.StockQuantity <= b.MinStockLevel);
+                query = query.Where(b => b.StockQuantity > 0 && b.StockQuantity <= b.MinStockLevel);
             }
 
             var totalCount = await query.CountAsync();
@@ -95,8 +95,7 @@ namespace BookStore.Api.Controllers
             string Name, string? Author, string? Publisher, string? ISBN,
             string? Language, string? Edition, string? ImageUrl, int? PublicationYear, int? PageCount,
             string? Description, decimal Price, int StockQuantity,
-            int MinStockLevel, bool IsFeatured, bool IsActive, string? Category,
-            string? PaymentInfo, string? StoreInfo
+            int MinStockLevel, bool IsFeatured, bool IsActive, string? Category
         );
 
         [Authorize(Roles = "Admin")]
@@ -123,10 +122,13 @@ namespace BookStore.Api.Controllers
                 MinStockLevel = req.MinStockLevel,
                 IsFeatured = req.IsFeatured,
                 IsActive = req.IsActive,
-                Category = req.Category,
-                PaymentInfo = req.PaymentInfo,
-                StoreInfo = req.StoreInfo
+                Category = req.Category
             };
+
+            if (book.StockQuantity <= 0)
+            {
+                book.IsActive = false;
+            }
 
             _db.Books.Add(book);
             await _db.SaveChangesAsync();
@@ -159,8 +161,6 @@ namespace BookStore.Api.Controllers
             existing.MinStockLevel = req.MinStockLevel;
             existing.IsFeatured = req.IsFeatured;
             existing.Category = req.Category;
-            existing.PaymentInfo = req.PaymentInfo;
-            existing.StoreInfo = req.StoreInfo;
 
             // Otomatik aktif/pasif kontrolü
             if (existing.StockQuantity <= 0) 

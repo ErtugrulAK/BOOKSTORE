@@ -72,7 +72,19 @@ const BookDetail = ({ handleAddToCart }) => {
             <div className="book-detail-card">
                 <div className="book-detail-image-side">
                     <div className="main-image-wrapper">
-                        <span style={{ fontSize: '100px' }}>📘</span>
+                        {book.imageUrl ? (
+                            <img 
+                                src={book.imageUrl} 
+                                alt={book.name} 
+                                className="detail-main-image"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = "https://via.placeholder.com/400x600?text=Kitap+Resmi+Yok";
+                                }}
+                            />
+                        ) : (
+                            <span style={{ fontSize: '100px' }}>📘</span>
+                        )}
                     </div>
                 </div>
 
@@ -126,7 +138,7 @@ const BookDetail = ({ handleAddToCart }) => {
                         <div className="payment-info-icon">ℹ️</div>
                         <div className="payment-info-content">
                             <h4>Ödeme ve Teslimat Bilgisi</h4>
-                            <p>KDV dahildir. Kargo alıcı ödemelidir ve Dekanlıktan gelip alma seçeneği mevcuttur.</p>
+                            <p>Fiyatlara KDV dahildir. Kargo ücreti alıcıya aittir. Dilerseniz siparişinizi Dekanlık birimimizden şahsen teslim alabilirsiniz.</p>
                         </div>
                     </div>
 
@@ -173,6 +185,7 @@ const BookDetail = ({ handleAddToCart }) => {
                                     kategori: b.category,
                                     fiyat: b.price,
                                     isFeatured: b.isFeatured,
+                                    imageUrl: b.imageUrl,
                                 }}
                                 onAddToCart={handleAddToCart}
                             />

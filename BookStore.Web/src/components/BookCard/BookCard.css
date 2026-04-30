@@ -42,16 +42,31 @@
     100% { transform: scale(1); opacity: 1; }
 }
 
-.book-image-placeholder {
+.book-image-container {
     width: 100%;
     height: 200px;
-    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
     border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #5b708b;
-    font-weight: 600;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.book-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+}
+
+.book-card:hover .book-image {
+    transform: scale(1.1);
+}
+
+.book-image-placeholder {
+    font-size: 48px;
 }
 
 .book-category {

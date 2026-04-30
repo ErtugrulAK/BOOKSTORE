@@ -22,7 +22,7 @@ namespace BookStore.Api.Controllers
         public async Task<IActionResult> GetStats()
         {
             var now = DateTime.UtcNow;
-            var thisMonth = new DateTime(now.Year, now.Month, 1);
+            var thisMonth = new DateTime(now.Year, now.Month, 1, 0, 0, 0, DateTimeKind.Utc);
             var lastMonth = thisMonth.AddMonths(-1);
 
             var thisMonthUsers = await _db.Users.CountAsync(u => u.CreatedAt >= thisMonth);

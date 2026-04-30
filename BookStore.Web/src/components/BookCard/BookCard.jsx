@@ -9,6 +9,22 @@ function BookCard({ book, onAddToCart }) {
       
       <Link to={`/kitap/${book.id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column', gap: '16px', flex: 1 }}>
 
+        <div className="book-image-container">
+          {book.imageUrl ? (
+            <img 
+              src={book.imageUrl} 
+              alt={book.isim} 
+              className="book-image"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "https://via.placeholder.com/150?text=Kitap";
+              }}
+            />
+          ) : (
+            <div className="book-image-placeholder">📘</div>
+          )}
+        </div>
+
         {/* Kitap Bilgileri */}
         <div className="book-category">{book.kategori}</div>
         <h2 className="book-title">{book.isim}</h2>

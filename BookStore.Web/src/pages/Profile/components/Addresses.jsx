@@ -57,6 +57,21 @@ const Addresses = ({ token }) => {
         }
     };
 
+    const handleSetDefault = async (id) => {
+        try {
+            const config = { headers: { Authorization: `Bearer ${token}` } };
+            await axios.put(`http://localhost:5229/api/Addresses/${id}/default`, {}, config);
+            setAddresses(addresses.map(a => ({
+                ...a,
+                isDefault: a.id === id
+            })));
+            window.showToast("Varsayılan adres güncellendi.");
+        } catch (error) {
+            console.error("Varsayılan adres ayarlanamadı:", error);
+            window.showToast("Hata oluştu.", true);
+        }
+    };
+
     const handleSave = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -167,6 +182,16 @@ const Addresses = ({ token }) => {
                             <div style={{ fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px', color: '#2b3674', fontWeight: '600' }}>
                                 <i>📞</i> {addr.phoneNumber}
                             </div>
+                            
+                            {!addr.isDefault && (
+                                <button 
+                                    className="user-secondary-btn" 
+                                    style={{ width: '100%', marginTop: '16px', padding: '8px', fontSize: '12px', borderColor: '#4318ff', color: '#4318ff' }}
+                                    onClick={() => handleSetDefault(addr.id)}
+                                >
+                                    Varsayılan Yap
+                                </button>
+                            )}
                         </div>
                     </div>
                 ))}

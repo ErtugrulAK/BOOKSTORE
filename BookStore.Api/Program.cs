@@ -80,6 +80,7 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     DbSeeder.SeedAdmin(db);
+    DbSeeder.SyncStockStatus(db);
 }
 
 // Configure the HTTP request pipeline.

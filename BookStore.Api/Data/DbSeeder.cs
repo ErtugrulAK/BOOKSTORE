@@ -36,16 +36,16 @@ namespace BookStore.Api.Data
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword("1234"),
                     Role = "Admin"
                 });
-
+                context.SaveChanges();
             }
-            if (!context.Users.Any(u => u.Username == "user1"))
+        }
+
+        public static void SyncStockStatus(AppDbContext context)
+        {
+            var zeroStockBooks = context.Books.Where(b => b.StockQuantity <= 0 && b.IsActive).ToList();
+            foreach (var book in zeroStockBooks)
             {
-                context.Users.Add(new User
-                {
-                    Username = "user1",
-                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("1234"),
-                    Role = "User"
-                });
+                book.IsActive = false;
             }
             context.SaveChanges();
         }

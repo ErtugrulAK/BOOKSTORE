@@ -56,7 +56,7 @@
     border: 1px solid #f1f5f9;
 }
 
-.main-image-wrapper img {
+.main-image-wrapper img, .detail-main-image {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;

@@ -21,7 +21,6 @@ namespace BookStore.Api.Models
 
         public string? Category { get; set; }
 
-        public string? PaymentInfo { get; set; }
-        public string? StoreInfo { get; set; }
+
     }
 }
