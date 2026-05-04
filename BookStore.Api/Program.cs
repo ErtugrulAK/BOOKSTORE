@@ -82,7 +82,9 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate(); // Tabloları otomatik oluşturur/günceller
     DbSeeder.SeedAdmin(db);
+    DbSeeder.SeedBooksFromJson(db, "books_data_v2.json");
     DbSeeder.SyncStockStatus(db);
 }
 

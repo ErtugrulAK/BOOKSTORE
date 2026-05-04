@@ -8,20 +8,20 @@ namespace BookStore.Api.Data
     {
         public static void SeedBooksFromJson(AppDbContext context, string jsonPath)
         {
-            // 1. Clear existing books (and related data via cascade if possible, or manually)
-            // Using raw SQL for efficiency and to handle cascade if needed
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"OrderItems\" CASCADE;");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Books\" CASCADE;");
-
-            if (File.Exists(jsonPath))
+            // Only seed if there are no books in the database
+            if (!context.Books.Any())
             {
-                var json = File.ReadAllText(jsonPath);
-                var books = JsonSerializer.Deserialize<List<Book>>(json);
-
-                if (books != null)
+                if (File.Exists(jsonPath))
                 {
-                    context.Books.AddRange(books);
-                    context.SaveChanges();
+                    var json = File.ReadAllText(jsonPath);
+                    var books = JsonSerializer.Deserialize<List<Book>>(json);
+
+                    if (books != null)
+                    {
+                        context.Books.AddRange(books);
+                        context.SaveChanges();
+                        Console.WriteLine($"Seeded {books.Count} books from JSON.");
+                    }
                 }
             }
         }
@@ -34,7 +34,10 @@ namespace BookStore.Api.Data
                 {
                     Username = "admin",
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword("1234"),
-                    Role = "Admin"
+                    Role = "Admin",
+                    FirstName = "Sistem",
+                    LastName = "Yöneticisi",
+                    Email = "admin@bookstore.com"
                 });
                 context.SaveChanges();
             }

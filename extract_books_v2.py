@@ -27,7 +27,7 @@ def to_int(v):
     except:
         return 0
 
-df = pd.read_excel('../Kitap Bilgileri.xlsx')
+df = pd.read_excel('Kitap Bilgileri.xlsx')
 df.columns = [c.strip() for c in df.columns]
 
 books = []
@@ -49,9 +49,7 @@ for _, row in df.iterrows():
         "Description": clean_value(row.get('Açıklama\n(Maks. 50 Kelime)')),
         "IsActive": True,
         "IsFeatured": False,
-        "MinStockLevel": 25,
-        "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-        "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+        "MinStockLevel": 25
     }
     books.append(book)
 

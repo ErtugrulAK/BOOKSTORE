@@ -14,9 +14,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Çevre Mühendisliğinde Fiziksel- Kimyasal Temel Süreçler",
@@ -33,9 +31,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Çevre Mühendisliğinde Biyoprosesler",
@@ -52,9 +48,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Atıksu Arıtma Sistemlerinin Tasarım Esasları C-I ",
@@ -71,9 +65,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Atıksu Arıtma Sistemlerinin Tasarım Esasları C-II",
@@ -90,9 +82,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Arıtma Çamurlarının İşlenmesi",
@@ -109,9 +99,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Katı Atık Toplama Taş. Bertaraf sis.",
@@ -128,9 +116,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Atıksu Stabili Havuz ve Mekanik Havuz Lagün Taşıma-İnş -İşlt Esas",
@@ -147,9 +133,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Anaerobik Arıtma",
@@ -166,9 +150,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Atmosfer Kimyası",
@@ -185,9 +167,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Çevre Mühendisliğinde Mikrobiyolojik Uygulamalar",
@@ -204,9 +184,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Aktif Çamur Sürecinin Tasarım Uygulamaları Cilt I",
@@ -223,9 +201,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Aktif Çamur Sürecinin Tasarım Uygulamaları Cilt II",
@@ -242,9 +218,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Teknik İngilizce ",
@@ -261,9 +235,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Endüstriyel atık suların yönetilmesi",
@@ -280,9 +252,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Elektrik  Makinalarının Temel İlkeleri",
@@ -299,9 +269,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Üretim Fonksiyonları",
@@ -318,9 +286,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "İşletme Yöntemi ve Organizasyonu",
@@ -337,9 +303,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Tesis Planlama",
@@ -356,9 +320,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Üretim Planlama",
@@ -375,9 +337,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Sukuvveti tes.Sayısal Örnekle",
@@ -394,9 +354,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Su Getirme ve Kanalizasyon Tes.Sayısal Örnekler",
@@ -413,9 +371,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Yapı ve Deprem Mühendisliğinde Matris Yöntemler",
@@ -432,9 +388,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Malzeme Bilgisi (İnş.Müh.İçin.)",
@@ -451,9 +405,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Kıyı Mühendisliğinde  Sayısal Uygulamalar",
@@ -470,9 +422,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Su Kaynaklarını Geliştirilmesi",
@@ -489,9 +439,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Su Kuvveti Su yapıları Cilt IX",
@@ -508,9 +456,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Fiziksel Modeller",
@@ -527,9 +473,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Fıransızca",
@@ -546,9 +490,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Beton",
@@ -565,9 +507,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Sayısal uygulamalı Akışkanlar Mekaniği",
@@ -584,9 +524,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Diferansiyel denklemler",
@@ -603,9 +541,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Mühendis ve Mimar Sinan",
@@ -622,9 +558,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Geçmişten Günümüze Dünya Su Yapıları",
@@ -641,9 +575,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Taşıyıcı Sistemlerin Dinamik Analizi",
@@ -660,9 +592,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Bilisayar Programlama (matlab Uygulamalı)",
@@ -679,9 +609,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Jeofizik Sinyal Analizi",
@@ -698,9 +626,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Potansiyel Teori Jeofizik Uygulamaları",
@@ -717,9 +643,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Mineroloji-Genel Mineroloji (Cilt I )",
@@ -736,9 +660,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Kömür",
@@ -755,9 +677,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Maden Jeolojisi Uygulama kılavuzu",
@@ -774,9 +694,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Volkanik lastik Kayaclar",
@@ -793,9 +711,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Kayaçların Radyometrik Yaş Tayininin Ana Yöntemleri",
@@ -812,9 +728,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Cevher Mikroskopisi ve Petrografisi",
@@ -831,9 +745,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Jeotermalde Yerbilimsel  Uygulamalar",
@@ -850,9 +762,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Kil Mineralleri (Ders Notları)",
@@ -869,9 +779,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Mühendislik Jeolojisi",
@@ -888,9 +796,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Kömür Teknolojisi",
@@ -907,9 +813,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Tünel Ve Kuyu Açma",
@@ -926,9 +830,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Kaya Mekaniği",
@@ -945,9 +847,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Maden işletme Ekonomisi",
@@ -964,9 +864,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Açık İşletme Tekniği",
@@ -983,9 +881,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Madenlerde Su atımı ve Pompalar",
@@ -1002,9 +898,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Madenlerde Nakliyat",
@@ -1021,9 +915,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Yer altı Maden Makinaları Ve Mekanizasyonu",
@@ -1040,9 +932,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Maden Mühendisleri için Ölçme Tekniği",
@@ -1059,9 +949,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Madenciliğe Giriş",
@@ -1078,9 +966,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Yer altı havalandırması",
@@ -1097,9 +983,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Yer altı madencilik Yöntemleri",
@@ -1116,9 +1000,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Teknik Resim  I",
@@ -1135,9 +1017,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Kaldırma Makinaları",
@@ -1154,9 +1034,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Mukavemet I",
@@ -1173,9 +1051,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Sistem Dinamiği ve Otomatik Kontrol",
@@ -1192,9 +1068,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Staj Defteri",
@@ -1211,9 +1085,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Örmecilik Esasları",
@@ -1230,9 +1102,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Tekstil Mekaniğinin Temelleri",
@@ -1249,9 +1119,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Giysi Kalıpçılığı-1",
@@ -1268,9 +1136,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Matematik I",
@@ -1287,9 +1153,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Matematik-I (Lineer Cebir)",
@@ -1306,9 +1170,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Analitik Geometri",
@@ -1325,9 +1187,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Sayısal Çözümleme",
@@ -1344,9 +1204,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Sayısal Çözümleme ve Örnekler",
@@ -1363,9 +1221,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Matematık ııı",
@@ -1382,9 +1238,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "İş ve zaman etüdü  ",
@@ -1401,9 +1255,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Atatürk ve Aydınlanma",
@@ -1420,9 +1272,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Üçünçü  Kılıç",
@@ -1439,9 +1289,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Türk Devrim Tarihi",
@@ -1458,9 +1306,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Genel kimya için Lab.Deneyleri",
@@ -1477,9 +1323,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Fizik Lab II",
@@ -1496,9 +1340,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Fizik lab.I",
@@ -1515,9 +1357,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   },
   {
     "Name": "Tekstil Kimya ",
@@ -1534,8 +1374,6 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25,
-    "PaymentInfo": "KDV dahildir. Güvenli ödeme altyapısı ile sipariş verebilirsiniz.",
-    "StoreInfo": "Mağazalarımızdan hemen teslim alabilirsiniz."
+    "MinStockLevel": 25
   }
 ]
