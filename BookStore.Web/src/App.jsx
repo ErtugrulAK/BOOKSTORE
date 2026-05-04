@@ -11,6 +11,7 @@ import Register from './pages/Register/Register'; // Kayıt sayfası
 import Admin from './pages/Admin/Admin'; // Admin Paneli sayfası
 import Profile from './pages/Profile/Profile'; // Profil sayfası
 import BookDetail from './pages/BookDetail/BookDetail'; // Kitap detay sayfası
+import Contact from './pages/Contact/Contact'; // İletişim sayfası
 
 // Vitrin (Ana Sayfa) bileşenimiz dışarıdan paramtere olarak aramayı, fiyatları ve KATEGORİYİ alıyor
 function Home({ searchTerm, minPrice, maxPrice, category, handleAddToCart }) {
@@ -413,9 +414,10 @@ function App() {
 
               <Route path="/sepet" element={<Cart localCart={localCart} setLocalCart={setLocalCart} token={token} setApiCartCount={setApiCartCount} />} />
               
-              <Route path="/login" element={<Login setToken={setToken} setUser={setUser} localCart={localCart} />} />
+              <Route path="/login" element={<Login setToken={setToken} setUser={setUser} localCart={localCart} setLocalCart={setLocalCart} />} />
               <Route path="/register" element={<Register />} />
               <Route path="/kitap/:id" element={<BookDetail handleAddToCart={handleAddToCart} />} />
+              <Route path="/iletisim" element={<Contact />} />
             </Routes>
         </div>
       </div>

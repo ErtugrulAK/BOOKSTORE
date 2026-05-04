@@ -7,10 +7,12 @@ namespace BookStore.Api.Services
     public class OrderService : IOrderService
     {
         private readonly AppDbContext _context;
+        private readonly IEmailService _emailService;
 
-        public OrderService(AppDbContext context)
+        public OrderService(AppDbContext context, IEmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         // ✅ NEW: BookId ile sipariş oluşturma (fiyat DB’den)
@@ -88,6 +90,7 @@ namespace BookStore.Api.Services
         {
             var order = await _context.Orders
                 .Include(o => o.OrderItems)
+                .Include(o => o.User)
                 .FirstOrDefaultAsync(o => o.Id == orderId);
             if (order == null) throw new KeyNotFoundException("Order not found");
 
@@ -122,6 +125,13 @@ namespace BookStore.Api.Services
             }
 
             await _context.SaveChangesAsync();
+
+            // Eğer kargoya verildiyse kullanıcıya mail at
+            if (newStatus == OrderStatus.Shipped && oldStatus != OrderStatus.Shipped && order.User != null)
+            {
+                await _emailService.SendOrderShippedEmailAsync(order.User.Email, order.OrderNumber);
+            }
+
             return order;
         }
 

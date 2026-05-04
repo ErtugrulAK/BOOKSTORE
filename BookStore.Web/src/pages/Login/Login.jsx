@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css';
 
-function Login({ setToken, setUser, localCart }) {
+function Login({ setToken, setUser, localCart, setLocalCart }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -31,6 +31,7 @@ function Login({ setToken, setUser, localCart }) {
                     }
                 }
                 localStorage.removeItem('guest_cart'); // Aktarıldığı için yerel sepeti temizle
+                setLocalCart([]); // Hafızadan (state) de temizle ki çıkış yapınca tekrar yazılmasın
             }
 
             localStorage.setItem('token', token);

@@ -53,6 +53,7 @@ function Admin({ token, user }) {
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [tempOrderStatus, setTempOrderStatus] = useState(null);
     const [dashboardStats, setDashboardStats] = useState(null);
+    const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
 
     // Modal Durumu
     const [modal, setModal] = useState({ isOpen: false, title: '', message: '', onConfirm: null, type: 'confirm' });
@@ -126,6 +127,10 @@ function Admin({ token, user }) {
             // Dashboard Stats
             const statsRes = await axios.get(`http://localhost:5229/api/Dashboard/stats`, config).catch(() => null);
             if (statsRes) setDashboardStats(statsRes.data);
+
+            // Unread Messages Count
+            const unreadRes = await axios.get(`http://localhost:5229/api/Contact?pageSize=1&isRead=false`, config).catch(() => ({ data: { totalCount: 0 } }));
+            setUnreadMessagesCount(unreadRes.data.totalCount || 0);
 
         } catch (error) {
             console.error("Admin veri hatası:", error);
@@ -293,7 +298,10 @@ function Admin({ token, user }) {
                     <button className={`admin-menu-item ${activeTab === 'books' || activeTab === 'book_form' ? 'active' : ''}`} onClick={() => { setActiveTab('books'); setBooksPage(1); setSelectedUser(null); setSelectedOrder(null); }}><i>📚</i> Kitaplar</button>
                     <button className={`admin-menu-item ${activeTab === 'orders' ? 'active' : ''}`} onClick={() => { setActiveTab('orders'); setOrdersPage(1); setSelectedOrder(null); setSelectedUser(null); }}><i>🛒</i> Siparişler</button>
                     <button className={`admin-menu-item ${activeTab === 'users' ? 'active' : ''}`} onClick={() => { setActiveTab('users'); setUsersPage(1); setSelectedUser(null); setSelectedOrder(null); }}><i>👥</i> Kullanıcılar</button>
-                    <button className={`admin-menu-item ${activeTab === 'contacts' ? 'active' : ''}`} onClick={() => { setActiveTab('contacts'); setMessagesPage(1); setSelectedUser(null); setSelectedOrder(null); }}><i>✉️</i> İletişim Mesajları</button>
+                    <button className={`admin-menu-item ${activeTab === 'contacts' ? 'active' : ''}`} onClick={() => { setActiveTab('contacts'); setMessagesPage(1); setSelectedUser(null); setSelectedOrder(null); }}>
+                        <i>✉️</i> İletişim Mesajları
+                        {unreadMessagesCount > 0 && <span className="admin-menu-badge danger" style={{ marginLeft: 'auto', background: '#ef4444', color: 'white', fontSize: '10px', padding: '2px 6px', borderRadius: '10px', fontWeight: '700' }}>{unreadMessagesCount}</span>}
+                    </button>
                     <button className={`admin-menu-item ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => { setActiveTab('settings'); setSelectedUser(null); setSelectedOrder(null); }}><i>⚙️</i> Ayarlar</button>
                 </div>
                 <div className="admin-sidebar-footer">

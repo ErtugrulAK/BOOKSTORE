@@ -61,7 +61,10 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+builder.Services.Configure<BookStore.Api.Models.EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddMemoryCache();
 
 builder.Services.AddCors(options =>
 {

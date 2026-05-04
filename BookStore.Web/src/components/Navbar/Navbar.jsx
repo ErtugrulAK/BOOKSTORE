@@ -33,6 +33,7 @@ function Navbar({ searchTerm, setSearchTerm, user, handleLogout, cartCount }) {
       {/* Sağ Kısım: Menü Linkleri */}
       <div className="navbar-links">
         <Link to="/" className="nav-link">Ana Sayfa</Link>
+        <Link to="/iletisim" className="nav-link">İletişim</Link>
         
         {user ? (
             <>

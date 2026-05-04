@@ -9,7 +9,7 @@ namespace BookStore.Api.Models
         public string Email { get; set; } = string.Empty;
         public string Subject { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public bool IsRead { get; set; } = false;
         public string? Reply { get; set; }
         public DateTime? RepliedAt { get; set; }

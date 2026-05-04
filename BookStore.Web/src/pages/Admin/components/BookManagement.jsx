@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import Pagination from './Pagination';
 
 const BookManagement = ({ 
@@ -29,6 +29,39 @@ const BookManagement = ({
 }) => {
     const fileInputRef = useRef(null);
     
+    const [searchQuery, setSearchQuery] = useState('');
+    const [sortConfig, setSortConfig] = useState({ key: null, direction: 'desc' });
+
+    const handleSort = (key) => {
+        setSortConfig(prev => ({
+            key,
+            direction: prev.key === key && prev.direction === 'desc' ? 'asc' : 'desc'
+        }));
+    };
+
+    const sortedAndFilteredBooks = useMemo(() => {
+        let filtered = books.filter(b =>
+            b.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        if (sortConfig.key) {
+            filtered = [...filtered].sort((a, b) => {
+                let aVal = a[sortConfig.key];
+                let bVal = b[sortConfig.key];
+                if (typeof aVal === 'string') aVal = aVal.toLowerCase();
+                if (typeof bVal === 'string') bVal = bVal.toLowerCase();
+                if (aVal < bVal) return sortConfig.direction === 'asc' ? -1 : 1;
+                if (aVal > bVal) return sortConfig.direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+        }
+        return filtered;
+    }, [books, searchQuery, sortConfig]);
+
+    const SortIcon = ({ col }) => {
+        if (sortConfig.key !== col) return <span style={{ opacity: 0.3, marginLeft: 4 }}>↕</span>;
+        return <span style={{ marginLeft: 4, color: '#4318ff' }}>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>;
+    };
+
     const renderBookList = () => (
         <>
             <div className="admin-page-header" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '20px' }}>
@@ -101,7 +134,19 @@ const BookManagement = ({
                         </button>
                     </div>
 
-                    <div style={{ flex: 1 }}></div>
+                    <div style={{ width: '260px', flexShrink: 0, display: 'flex', alignItems: 'center', background: '#fff', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '0 12px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                        <span style={{ color: '#a3aed1', marginRight: '8px', fontSize: '16px' }}>🔍</span>
+                        <input
+                            type="text"
+                            placeholder="Kitap ismi ara..."
+                            value={searchQuery}
+                            onChange={e => setSearchQuery(e.target.value)}
+                            style={{ border: 'none', outline: 'none', fontSize: '14px', width: '100%', padding: '10px 0', background: 'transparent', color: '#2b3674' }}
+                        />
+                        {searchQuery && (
+                            <span onClick={() => setSearchQuery('')} style={{ cursor: 'pointer', color: '#a3aed1', fontSize: '18px', lineHeight: 1 }}>×</span>
+                        )}
+                    </div>
 
                     <button className="admin-primary-btn" onClick={() => openBookForm()}>+ Yeni Kitap Ekle</button>
                 </div>
@@ -113,15 +158,26 @@ const BookManagement = ({
                         <thead>
                             <tr>
                                 <th style={{ width: '35%' }}>Kitaplar</th>
-                                <th style={{ width: '20%' }}>Kategori</th>
-                                <th style={{ width: '10%' }}>Stok</th>
-                                <th style={{ width: '15%' }}>Fiyat</th>
-                                <th style={{ width: '10%' }}>Durum</th>
+                                <th style={{ width: '20%', cursor: 'pointer', userSelect: 'none' }} onClick={() => handleSort('category')}>
+                                    Kategori<SortIcon col="category" />
+                                </th>
+                                <th style={{ width: '10%', cursor: 'pointer', userSelect: 'none' }} onClick={() => handleSort('stockQuantity')}>
+                                    Stok<SortIcon col="stockQuantity" />
+                                </th>
+                                <th style={{ width: '15%', cursor: 'pointer', userSelect: 'none' }} onClick={() => handleSort('price')}>
+                                    Fiyat<SortIcon col="price" />
+                                </th>
+                                <th style={{ width: '10%', cursor: 'pointer', userSelect: 'none' }} onClick={() => handleSort('isActive')}>
+                                    Durum<SortIcon col="isActive" />
+                                </th>
                                 <th style={{ width: '10%', textAlign: 'right' }}>İşlemler</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {books.map(b => (
+                            {sortedAndFilteredBooks.length === 0 && (
+                                <tr><td colSpan="6" style={{ textAlign: 'center', padding: '40px', color: '#a3aed1' }}>🔍 "{searchQuery}" için sonuç bulunamadı.</td></tr>
+                            )}
+                            {sortedAndFilteredBooks.map(b => (
                                 <tr key={b.id}>
                                     <td>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
