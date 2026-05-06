@@ -162,7 +162,7 @@ const BookDetail = ({ handleAddToCart }) => {
                         </div>
                         <div className="spec-item">
                             <span className="spec-label">SAYFA SAYISI</span>
-                            <span className="spec-value">{book.pageCount || "0"} Sayfa</span>
+                            <span className="spec-value">{book.pageCount || "0"}</span>
                         </div>
                         <div className="spec-item">
                             <span className="spec-label">DİL</span>
