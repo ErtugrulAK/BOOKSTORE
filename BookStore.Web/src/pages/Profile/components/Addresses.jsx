@@ -12,7 +12,7 @@ const Addresses = ({ token }) => {
     const fetchAddresses = async () => {
         try {
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.get('http://localhost:5229/api/Addresses', config);
+            const response = await axios.get('/api/Addresses', config);
             setAddresses(response.data || []);
             setLoading(false);
         } catch (error) {
@@ -47,7 +47,7 @@ const Addresses = ({ token }) => {
         if(window.confirm("Bu adresi silmek istediğinize emin misiniz?")) {
             try {
                 const config = { headers: { Authorization: `Bearer ${token}` } };
-                await axios.delete(`http://localhost:5229/api/Addresses/${id}`, config);
+                await axios.delete(`/api/Addresses/${id}`, config);
                 setAddresses(addresses.filter(a => a.id !== id));
                 window.showToast("Adres silindi.");
             } catch (error) {
@@ -60,7 +60,7 @@ const Addresses = ({ token }) => {
     const handleSetDefault = async (id) => {
         try {
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            await axios.put(`http://localhost:5229/api/Addresses/${id}/default`, {}, config);
+            await axios.put(`/api/Addresses/${id}/default`, {}, config);
             setAddresses(addresses.map(a => ({
                 ...a,
                 isDefault: a.id === id
@@ -86,10 +86,10 @@ const Addresses = ({ token }) => {
         try {
             const config = { headers: { Authorization: `Bearer ${token}` } };
             if (currentAddress) {
-                const response = await axios.put(`http://localhost:5229/api/Addresses/${currentAddress.id}`, addrData, config);
+                const response = await axios.put(`/api/Addresses/${currentAddress.id}`, addrData, config);
                 setAddresses(addresses.map(a => a.id === currentAddress.id ? response.data : a));
             } else {
-                const response = await axios.post('http://localhost:5229/api/Addresses', addrData, config);
+                const response = await axios.post('/api/Addresses', addrData, config);
                 setAddresses([...addresses, response.data]);
             }
             setIsEditing(false);

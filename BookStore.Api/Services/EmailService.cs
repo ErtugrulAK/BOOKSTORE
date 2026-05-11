@@ -69,5 +69,21 @@ namespace BookStore.Api.Services
 
             await SendCustomEmailAsync(toEmail, subject, body);
         }
+
+        public async Task SendOrderCreatedEmailAsync(string toEmail, string orderNumber)
+        {
+            string subject = $"Siparişiniz Alınmıştır! ({orderNumber})";
+            string body = $@"
+                <div style='font-family: Arial, sans-serif; padding: 20px;'>
+                    <h2 style='color: #16a34a;'>Siparişiniz Alındı!</h2>
+                    <p>Merhaba,</p>
+                    <p><strong>{orderNumber}</strong> numaralı siparişiniz başarıyla oluşturulmuştur.</p>
+                    <p>Siparişiniz en kısa sürede hazırlanıp kargoya verilecektir. Bizi tercih ettiğiniz için teşekkür ederiz.</p>
+                    <hr style='border: 1px solid #eee; margin: 20px 0;'/>
+                    <p style='font-size: 12px; color: #888;'>DEÜ Kitap Satış Platformu</p>
+                </div>";
+
+            await SendCustomEmailAsync(toEmail, subject, body);
+        }
     }
 }

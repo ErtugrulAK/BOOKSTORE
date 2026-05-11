@@ -7,6 +7,36 @@ const ContactMessages = ({ messages = [], messagesTotal, messagesPage, setMessag
     const [replyText, setReplyText] = useState('');
     const [isSending, setIsSending] = useState(false);
 
+    // Arama ve Sıralama State'leri
+    const [searchTerm, setSearchTerm] = useState('');
+    const [sortOrder, setSortOrder] = useState('newest'); // newest, oldest, unread_first
+
+    // Filtreleme ve Sıralama İşlemi
+    let filteredMessages = [...messages];
+
+    if (searchTerm) {
+        const lower = searchTerm.toLowerCase();
+        filteredMessages = filteredMessages.filter(m => 
+            m.senderName?.toLowerCase().includes(lower) || 
+            m.email?.toLowerCase().includes(lower) || 
+            m.subject?.toLowerCase().includes(lower) ||
+            m.content?.toLowerCase().includes(lower)
+        );
+    }
+
+    if (sortOrder === 'newest') {
+        filteredMessages.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+    } else if (sortOrder === 'oldest') {
+        filteredMessages.sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
+    } else if (sortOrder === 'unread_first') {
+        filteredMessages.sort((a, b) => {
+            if (a.isRead === b.isRead) {
+                return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+            }
+            return a.isRead ? 1 : -1;
+        });
+    }
+
     const handleViewMessage = async (msg) => {
         setSelectedMsg(msg);
         setReplyText(msg.reply || '');
@@ -14,7 +44,7 @@ const ContactMessages = ({ messages = [], messagesTotal, messagesPage, setMessag
         // Mark as read in API if it's not read yet
         if (!msg.isRead) {
             try {
-                await axios.put(`http://localhost:5229/api/Contact/read/${msg.id}`, {}, {
+                await axios.put(`/api/Contact/read/${msg.id}`, {}, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 fetchData(); // Refresh messages list
@@ -29,7 +59,7 @@ const ContactMessages = ({ messages = [], messagesTotal, messagesPage, setMessag
         setIsSending(true);
         
         try {
-            await axios.put(`http://localhost:5229/api/Contact/reply/${selectedMsg.id}`, 
+            await axios.put(`/api/Contact/reply/${selectedMsg.id}`, 
                 `"${replyText}"`, // Backend expects [FromBody] string (JSON string)
                 {
                     headers: { 
@@ -55,6 +85,27 @@ const ContactMessages = ({ messages = [], messagesTotal, messagesPage, setMessag
                     <h2 className="admin-page-title">İletişim Mesajları</h2>
                     <p className="admin-page-subtitle">Kullanıcılardan gelen destek talepleri ve mesajları yönetin.</p>
                 </div>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <div className="search-box" style={{ background: 'white', padding: '8px 16px', borderRadius: '12px', display: 'flex', alignItems: 'center', border: '1px solid #e2e8f0', width: '250px' }}>
+                        <span style={{ marginRight: '8px', opacity: '0.5' }}>🔍</span>
+                        <input 
+                            type="text" 
+                            placeholder="İsim, e-posta veya konu ara..." 
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            style={{ border: 'none', outline: 'none', width: '100%', fontSize: '14px' }}
+                        />
+                    </div>
+                    <select 
+                        value={sortOrder} 
+                        onChange={(e) => setSortOrder(e.target.value)}
+                        style={{ padding: '10px 16px', borderRadius: '12px', border: '1px solid #e2e8f0', outline: 'none', background: 'white', color: '#475569', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                        <option value="newest">En Yeniler</option>
+                        <option value="oldest">En Eskiler</option>
+                        <option value="unread_first">Önce Okunmayanlar</option>
+                    </select>
+                </div>
             </div>
 
             <div className="admin-card">
@@ -71,7 +122,7 @@ const ContactMessages = ({ messages = [], messagesTotal, messagesPage, setMessag
                             </tr>
                         </thead>
                         <tbody>
-                            {messages.map(m => (
+                            {filteredMessages.map(m => (
                                 <tr 
                                     key={m.id} 
                                     style={{ 
@@ -130,7 +181,7 @@ const ContactMessages = ({ messages = [], messagesTotal, messagesPage, setMessag
                                     </td>
                                 </tr>
                             ))}
-                            {messages.length === 0 && <tr><td colSpan="6" style={{ textAlign: 'center', padding: '40px', color: '#a3aed1' }}>Henüz mesaj bulunmuyor.</td></tr>}
+                            {filteredMessages.length === 0 && <tr><td colSpan="6" style={{ textAlign: 'center', padding: '40px', color: '#a3aed1' }}>Kriterlere uygun mesaj bulunamadı.</td></tr>}
                         </tbody>
                     </table>
                 </div>

@@ -17,7 +17,7 @@ function Register() {
         setIsLoading(true);
         setError('');
         try {
-            const res = await axios.post('http://localhost:5229/api/auth/register', formData);
+            const res = await axios.post('/api/auth/register', formData);
             if (res.data.requireVerification) {
                 window.showToast("Doğrulama kodu gönderildi!");
                 setStep(2);
@@ -36,7 +36,7 @@ function Register() {
         e.preventDefault();
         setError('');
         try {
-            await axios.post('http://localhost:5229/api/auth/verify-email', {
+            await axios.post('/api/auth/verify-email', {
                 email: formData.email,
                 code: verificationCode
             });

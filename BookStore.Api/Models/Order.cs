@@ -7,7 +7,8 @@ namespace BookStore.Api.Models
         Processing = 2,   // Hazırlanıyor
         Shipped = 3,      // Kargolandı
         Delivered = 4,    // Teslim Edildi
-        Cancelled = 5     // İptal Edildi
+        Cancelled = 5,    // İptal Edildi
+        HandDelivered = 6 // Elden Teslim Edildi
     }
 
     public class Order

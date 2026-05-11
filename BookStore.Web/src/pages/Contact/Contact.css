@@ -132,17 +132,20 @@
 
 /* Gönder Butonu */
 .contact-submit-btn {
-    padding: 13px 28px;
+    padding: 12px 28px;
     background: #2563eb;
     color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 15px;
+    border: 2px solid #2563eb;
+    border-radius: 12px;
+    font-size: 14px;
     font-weight: 700;
     font-family: inherit;
     cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
-    align-self: flex-start;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 
 .contact-submit-btn:hover {
@@ -193,17 +196,20 @@
 }
 
 .contact-btn-outline {
-    margin-top: 8px;
-    padding: 10px 22px;
+    padding: 12px 28px;
     border: 2px solid #2563eb;
     color: #2563eb;
     background: white;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     font-family: inherit;
     cursor: pointer;
     transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 
 .contact-btn-outline:hover {
@@ -340,8 +346,44 @@
     justify-content: center;
     flex-wrap: wrap;
 }
+
+
+
+.form-login-overlay {
+    position: absolute;
+    top: 110px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.contact-form-card {
+    position: relative;
+}
+
+.overlay-content {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid #f1f5f9;
+}
+
+.overlay-content p {
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
 }

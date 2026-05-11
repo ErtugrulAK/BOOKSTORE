@@ -12,7 +12,7 @@ function Login({ setToken, setUser, localCart, setLocalCart }) {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5229/api/auth/login', {
+            const res = await axios.post('/api/auth/login', {
                 Username: email,
                 Password: password
             });
@@ -22,7 +22,7 @@ function Login({ setToken, setUser, localCart, setLocalCart }) {
             if (localCart && localCart.length > 0) {
                 for (let item of localCart) {
                     try {
-                        await axios.post('http://localhost:5229/api/Cart/items', 
+                        await axios.post('/api/Cart/items', 
                             { BookId: item.book.id, Quantity: item.quantity },
                             { headers: { Authorization: `Bearer ${token}` } }
                         );

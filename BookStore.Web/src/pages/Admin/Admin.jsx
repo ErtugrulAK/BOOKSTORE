@@ -91,9 +91,9 @@ function Admin({ token, user }) {
     const fetchData = async () => {
         try {
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            
+
             // Books
-            let booksUrl = `http://localhost:5229/api/Books?includeInactive=true&page=${booksPage}&pageSize=10`;
+            let booksUrl = `/api/Books?includeInactive=true&page=${booksPage}&pageSize=10`;
             if (showOnlyInactiveBooks) booksUrl += '&isActive=false';
             if (showOnlyCriticalBooks) booksUrl += '&isCritical=true';
 
@@ -102,34 +102,34 @@ function Admin({ token, user }) {
             setBooksTotal(booksRes.data.totalCount);
 
             // Critical Stock Count (for badge)
-            const critRes = await axios.get(`http://localhost:5229/api/Books?isCritical=true&pageSize=1`);
+            const critRes = await axios.get(`/api/Books?isCritical=true&pageSize=1`);
             setCriticalStockCount(critRes.data.totalCount);
 
             // Inactive Books Count (for badge)
-            const inactiveRes = await axios.get(`http://localhost:5229/api/Books?isActive=false&includeInactive=true&pageSize=1`);
+            const inactiveRes = await axios.get(`/api/Books?isActive=false&includeInactive=true&pageSize=1`);
             setInactiveBooksCount(inactiveRes.data.totalCount);
 
             // Orders
-            const ordersRes = await axios.get(`http://localhost:5229/api/Orders/all?page=${ordersPage}&pageSize=10`, config).catch(() => ({ data: { items: [], totalCount: 0 } }));
+            const ordersRes = await axios.get(`/api/Orders/all?page=${ordersPage}&pageSize=10`, config).catch(() => ({ data: { items: [], totalCount: 0 } }));
             setOrders(ordersRes.data.items || []);
             setOrdersTotal(ordersRes.data.totalCount || 0);
 
             // Users
-            const usersRes = await axios.get(`http://localhost:5229/api/Users?page=${usersPage}&pageSize=10`, config).catch(() => ({ data: { items: [], totalCount: 0 } }));
+            const usersRes = await axios.get(`/api/Users?page=${usersPage}&pageSize=10`, config).catch(() => ({ data: { items: [], totalCount: 0 } }));
             setUsers(usersRes.data.items || []);
             setUsersTotal(usersRes.data.totalCount || 0);
 
             // Messages
-            const messagesRes = await axios.get(`http://localhost:5229/api/Contact?page=${messagesPage}&pageSize=10`, config).catch(() => ({ data: { items: [], totalCount: 0 } }));
+            const messagesRes = await axios.get(`/api/Contact?page=${messagesPage}&pageSize=10`, config).catch(() => ({ data: { items: [], totalCount: 0 } }));
             setMessages(messagesRes.data.items || []);
             setMessagesTotal(messagesRes.data.totalCount || 0);
 
             // Dashboard Stats
-            const statsRes = await axios.get(`http://localhost:5229/api/Dashboard/stats`, config).catch(() => null);
+            const statsRes = await axios.get(`/api/Dashboard/stats`, config).catch(() => null);
             if (statsRes) setDashboardStats(statsRes.data);
 
             // Unread Messages Count
-            const unreadRes = await axios.get(`http://localhost:5229/api/Contact?pageSize=1&isRead=false`, config).catch(() => ({ data: { totalCount: 0 } }));
+            const unreadRes = await axios.get(`/api/Contact?pageSize=1&isRead=false`, config).catch(() => ({ data: { totalCount: 0 } }));
             setUnreadMessagesCount(unreadRes.data.totalCount || 0);
 
         } catch (error) {
@@ -146,7 +146,7 @@ function Admin({ token, user }) {
     const handleViewUser = async (id) => {
         try {
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const res = await axios.get(`http://localhost:5229/api/Users/${id}`, config);
+            const res = await axios.get(`/api/Users/${id}`, config);
             setSelectedUser(res.data);
         } catch (err) {
             console.error(err);
@@ -162,7 +162,7 @@ function Admin({ token, user }) {
             onConfirm: async () => {
                 try {
                     const config = { headers: { Authorization: `Bearer ${token}` } };
-                    await axios.delete(`http://localhost:5229/api/Users/${id}`, config);
+                    await axios.delete(`/api/Users/${id}`, config);
                     window.showToast('Kullanıcı başarıyla silindi.');
                     fetchData();
                     closeModal();
@@ -177,13 +177,14 @@ function Admin({ token, user }) {
     };
 
     const formatDate = (dateString) => new Date(dateString).toLocaleDateString('tr-TR');
-    
+
     const getStatusText = (status) => {
         switch (status) {
             case 2: return "Hazırlanıyor";
-            case 3: 
+            case 3:
             case 4: return "Kargoya Verildi";
             case 5: return "İptal / İade";
+            case 6: return "Elden Teslim Edildi";
             default: return "Hazırlanıyor";
         }
     };
@@ -211,9 +212,9 @@ function Admin({ token, user }) {
                 minStockLevel: parseInt(bookForm.minStockLevel)
             };
             if (bookForm.id) {
-                await axios.put(`http://localhost:5229/api/Books/${bookForm.id}`, payload, config);
+                await axios.put(`/api/Books/${bookForm.id}`, payload, config);
             } else {
-                await axios.post('http://localhost:5229/api/Books', payload, config);
+                await axios.post('/api/Books', payload, config);
             }
             window.showToast("Kitap kaydedildi!");
             setActiveTab('books');
@@ -224,7 +225,7 @@ function Admin({ token, user }) {
     const handleDeleteBook = (id) => {
         showModal("Kitabı Sil/Pasifleştir", "Bu kitabı pasifleştirmek istediğinize emin misiniz?", async () => {
             try {
-                await axios.delete(`http://localhost:5229/api/Books/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+                await axios.delete(`/api/Books/${id}`, { headers: { Authorization: `Bearer ${token}` } });
                 window.showToast("Kitap durumu güncellendi.");
                 fetchData();
             } catch (err) { window.showToast("Silinirken hata oluştu.", true); }
@@ -255,11 +256,11 @@ function Admin({ token, user }) {
                 const config = { headers: { Authorization: `Bearer ${token}` } };
                 if (action === 'price_increase') {
                     const amount = parseFloat(val);
-                    await axios.post(`http://localhost:5229/api/Books/bulk-price?percentage=${amount}`, {}, config);
+                    await axios.post(`/api/Books/bulk-price?percentage=${amount}`, {}, config);
                     setBulkPriceIncrease('');
                 } else {
                     const targetState = action === 'open_all';
-                    await axios.post(`http://localhost:5229/api/Books/bulk-status?active=${targetState}`, {}, config);
+                    await axios.post(`/api/Books/bulk-status?active=${targetState}`, {}, config);
                 }
                 window.showToast("İşlem başarıyla tamamlandı!");
                 fetchData();
@@ -287,7 +288,7 @@ function Admin({ token, user }) {
     return (
         <div className="admin-layout">
             <CustomModal {...modal} onCancel={closeModal} />
-            
+
             <aside className="admin-sidebar">
                 <div className="admin-sidebar-header" onClick={() => navigate('/')}>
                     <span style={{ fontSize: '24px', color: '#3b82f6', marginRight: '6px' }}>📚</span>

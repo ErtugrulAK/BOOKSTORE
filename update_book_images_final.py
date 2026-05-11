@@ -15,7 +15,7 @@ def normalize(text):
 
 def update_images():
     conn_str = "host=localhost port=5432 dbname=kitapsatisdb user=postgres password=1234"
-    img_dir = r"c:\Users\senmu\Masaüstü\PROJE\BOOKSTORE\BookStore.Web\public\images\books"
+    img_dir = r"c:\Users\Mert\BOOKSTORE\BookStore.Web\public\images\books"
     
     manual_matches = {
         "bilgisayarprogramlama": "bilisayarprogramlamamatlabuygulamali",

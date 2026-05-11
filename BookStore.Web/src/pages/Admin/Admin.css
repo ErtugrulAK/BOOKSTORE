@@ -923,3 +923,18 @@ input:checked + .slider:before { transform: translateX(20px); }
     cursor: not-allowed;
     background: #f8fafc;
 }
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 1024px) {
+    .admin-layout { flex-direction: column; height: auto; overflow: visible; position: relative; }
+    .admin-sidebar { display: none; }
+    .admin-topbar { padding: 0 15px; justify-content: center; height: auto; padding: 15px; }
+    .admin-topbar-search { display: none; }
+    .admin-content-scroll { padding: 15px; overflow: visible; }
+    .admin-page-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+    .stat-cards { grid-template-columns: 1fr; }
+    .dashboard-grid, .admin-form-grid, .detailed-report-grid { grid-template-columns: 1fr; }
+    .admin-card { padding: 15px; }
+    .admin-modern-table { display: block; overflow-x: auto; }
+    .admin-page-title { font-size: 24px; }
+}

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using BookStore.Api.Services;
 
 namespace BookStore.Api.Controllers
 {
@@ -13,10 +14,12 @@ namespace BookStore.Api.Controllers
     public class CartController : ControllerBase
     {
         private readonly AppDbContext _db;
+        private readonly IEmailService _emailService;
 
-        public CartController(AppDbContext db)
+        public CartController(AppDbContext db, IEmailService emailService)
         {
             _db = db;
+            _emailService = emailService;
         }
 
         private int CurrentUserId() => int.Parse(User.FindFirstValue("uid")!);
@@ -201,6 +204,15 @@ namespace BookStore.Api.Controllers
             }
 
             await _db.SaveChangesAsync();
+
+            // Kulanıcıyı bulup "Siparişiniz Alınmıştır" maili gönder
+            var userId = CurrentUserId();
+            var user = await _db.Users.FindAsync(userId);
+            if (user != null && !string.IsNullOrEmpty(user.Email))
+            {
+                await _emailService.SendOrderCreatedEmailAsync(user.Email, cart.OrderNumber);
+            }
+
             return Ok(cart);
         }
 

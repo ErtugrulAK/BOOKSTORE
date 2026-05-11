@@ -16,12 +16,12 @@ const BookDetail = ({ handleAddToCart }) => {
     useEffect(() => {
         const fetchBook = async () => {
             try {
-                const response = await axios.get(`http://localhost:5229/api/Books/${id}`);
+                const response = await axios.get(`/api/Books/${id}`);
                 setBook(response.data);
                 
                 // Fetch similar books
                 if (response.data.category) {
-                    const similarRes = await axios.get(`http://localhost:5229/api/Books?category=${response.data.category}&pageSize=999`);
+                    const similarRes = await axios.get(`/api/Books?category=${response.data.category}&pageSize=999`);
                     const booksList = similarRes.data.items || [];
                     const filtered = booksList.filter(b => b.id !== response.data.id).slice(0, 5);
                     setSimilarBooks(filtered);

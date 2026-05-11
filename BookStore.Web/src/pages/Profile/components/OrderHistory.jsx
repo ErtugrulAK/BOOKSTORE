@@ -9,7 +9,7 @@ const OrderHistory = ({ orders = [], token, onRefresh }) => {
 
         try {
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            await axios.post(`http://localhost:5229/api/Orders/${orderId}/cancel`, {}, config);
+            await axios.post(`/api/Orders/${orderId}/cancel`, {}, config);
             window.showToast("Sipariş iptal/iade talebi başarıyla alındı.");
             
             if (onRefresh) await onRefresh();
@@ -46,21 +46,22 @@ const OrderHistory = ({ orders = [], token, onRefresh }) => {
                                  selectedOrder.status === 'Processing' || selectedOrder.status === 2 ? 'Hazırlanıyor' :
                                  selectedOrder.status === 'Shipped' || selectedOrder.status === 3 ? 'Kargoya Verildi' :
                                  selectedOrder.status === 'Delivered' || selectedOrder.status === 4 ? 'Teslim Edildi' :
+                                 selectedOrder.status === 6 ? 'Elden Teslim Edildi' :
                                  selectedOrder.status === 'Cancelled' || selectedOrder.status === 5 ? 'İptal Edildi' : selectedOrder.status}
                             </span>
                         </div>
                     </div>
 
                     <div className="order-timeline" style={{ background: '#f8fafc', padding: '30px', borderRadius: '24px', marginBottom: '40px' }}>
-                        <div className={`timeline-step ${(selectedOrder.status === 'Processing' || selectedOrder.status === 2 || selectedOrder.status === 'Shipped' || selectedOrder.status === 3 || selectedOrder.status === 'Delivered' || selectedOrder.status === 4) ? 'completed' : 'active'}`}>
+                        <div className={`timeline-step ${(selectedOrder.status === 'Processing' || selectedOrder.status === 2 || selectedOrder.status === 'Shipped' || selectedOrder.status === 3 || selectedOrder.status === 'Delivered' || selectedOrder.status === 4 || selectedOrder.status === 6) ? 'completed' : 'active'}`}>
                             <div className="step-icon">📦</div>
                             <div className="step-label">Hazırlanıyor</div>
                             <div className="step-time" style={{ fontWeight: '700' }}>{(selectedOrder.status === 'Processing' || selectedOrder.status === 2) ? 'İşleniyor' : 'Tamamlandı'}</div>
                         </div>
-                        <div className={`timeline-step ${(selectedOrder.status === 'Shipped' || selectedOrder.status === 3) ? 'active' : (selectedOrder.status === 'Delivered' || selectedOrder.status === 4) ? 'completed' : ''}`}>
+                        <div className={`timeline-step ${(selectedOrder.status === 'Shipped' || selectedOrder.status === 3) ? 'active' : (selectedOrder.status === 'Delivered' || selectedOrder.status === 4 || selectedOrder.status === 6) ? 'completed' : ''}`}>
                             <div className="step-icon">🚚</div>
                             <div className="step-label">Kargoya Verildi</div>
-                            <div className="step-time" style={{ fontWeight: '700' }}>{(selectedOrder.status === 'Shipped' || selectedOrder.status === 3) ? 'Yolda' : (selectedOrder.status === 'Delivered' || selectedOrder.status === 4) ? 'Teslim Edildi' : 'Bekleniyor'}</div>
+                            <div className="step-time" style={{ fontWeight: '700' }}>{(selectedOrder.status === 'Shipped' || selectedOrder.status === 3) ? 'Yolda' : (selectedOrder.status === 'Delivered' || selectedOrder.status === 4) ? 'Teslim Edildi' : selectedOrder.status === 6 ? 'Elden Teslim Edildi' : 'Bekleniyor'}</div>
                         </div>
                     </div>
 
@@ -209,8 +210,8 @@ const OrderHistory = ({ orders = [], token, onRefresh }) => {
                                     <td style={{ fontWeight: '800', color: '#2b3674' }}>₺{order.totalPrice?.toFixed(2)}</td>
                                     <td>
                                         <span className={`status-pill ${(order.status === 'Processing' || order.status === 2 || order.status === 'Pending' || order.status === 0 || order.status === 'Paid' || order.status === 1) ? 'warning' : (order.status === 'Cancelled' || order.status === 5) ? 'danger' : 'success'}`}>
-                                            {order.status === 'Pending' || order.status === 0 || order.status === 'Paid' || order.status === 1 || order.status === 'Processing' || order.status === 2 ? 'Hazırlanıyor' : 
-                                             order.status === 'Cancelled' || order.status === 5 ? 'İptal Edildi' : 'Kargoya Verildi'}
+                                             {order.status === 'Pending' || order.status === 0 || order.status === 'Paid' || order.status === 1 || order.status === 'Processing' || order.status === 2 ? 'Hazırlanıyor' : 
+                                             order.status === 'Cancelled' || order.status === 5 ? 'İptal Edildi' : order.status === 6 ? 'Elden Teslim Edildi' : 'Kargoya Verildi'}
                                         </span>
                                     </td>
                                      <td style={{ textAlign: 'right' }}>

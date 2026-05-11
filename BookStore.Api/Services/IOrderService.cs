@@ -15,5 +15,6 @@ namespace BookStore.Api.Services
         Task<Order> CancelAsync(int orderId, int userId, bool isAdmin);
         Task<Order> UpdateStatusAsync(int orderId, OrderStatus newStatus);
         Task<bool> VerifyPickupCodeAsync(int orderId, string code);
+        Task<Order?> GetByPickupCodeAsync(string code);
     }
 }

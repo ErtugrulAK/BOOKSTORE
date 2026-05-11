@@ -42,7 +42,7 @@ function Contact() {
         setError('');
         try {
             const token = localStorage.getItem('token');
-            await axios.post('http://localhost:5229/api/contact', formData, {
+            await axios.post('/api/contact', formData, {
                 headers: token ? { Authorization: `Bearer ${token}` } : {}
             });
             setSuccess(true);
@@ -54,33 +54,7 @@ function Contact() {
         }
     };
 
-    // Giriş yapılmamışsa uyarı ekranı
-    if (!user) {
-        return (
-            <div className="contact-page">
-                <div className="contact-header">
-                    <h1>İletişim</h1>
-                    <p>Sorularınız, görüşleriniz veya önerileriniz için bizimle iletişime geçebilirsiniz.</p>
-                </div>
-                <div className="contact-login-required">
-                    <div className="login-required-icon">🔒</div>
-                    <h2>Giriş Yapmanız Gerekiyor</h2>
-                    <p>
-                        İletişim formunu kullanabilmek için hesabınızla giriş yapmanız gerekmektedir.
-                        Bu sayede mesajlarınıza daha hızlı ve doğru yanıt verebiliriz.
-                    </p>
-                    <div className="login-required-btns">
-                        <Link to="/login" className="contact-submit-btn" style={{ textDecoration: 'none', display: 'inline-block' }}>
-                            Giriş Yap
-                        </Link>
-                        <Link to="/register" className="contact-btn-outline" style={{ textDecoration: 'none', display: 'inline-block' }}>
-                            Kayıt Ol
-                        </Link>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+
 
     return (
         <div className="contact-page">
@@ -95,6 +69,20 @@ function Contact() {
                     <h2 className="contact-section-title">
                         <span>✉️</span> İletişim Formu
                     </h2>
+
+                    {/* Giriş Yapılmamışsa Overlay */}
+                    {!user && (
+                        <div className="form-login-overlay">
+                            <div className="overlay-content">
+                                <div style={{fontSize: '40px', marginBottom: '10px'}}>🔒</div>
+                                <p>Mesaj göndermek için giriş yapmalısınız</p>
+                                <div style={{display: 'flex', gap: '10px', marginTop: '15px'}}>
+                                    <Link to="/login" className="contact-submit-btn">Giriş Yap</Link>
+                                    <Link to="/register" className="contact-btn-outline">Kayıt Ol</Link>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     {success ? (
                         <div className="contact-success">
@@ -212,18 +200,12 @@ function Contact() {
                         </ul>
                     </div>
 
-                    <div className="contact-faq-card">
-                        <div className="faq-icon">💡</div>
-                        <div>
-                            <h3>Aklınızda soru mu var?</h3>
-                            <p>Sipariş süreci ve iadeler hakkında hızlı yanıtlar için sıkça sorulan sorulara bakabilirsiniz.</p>
-                        </div>
-                    </div>
+
 
                     <div className="contact-map-card">
                         <iframe
                             title="DEÜ Mühendislik Fakültesi Harita"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3127.684120986503!2d27.20577731519784!3d38.37976697965383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b961a1532f83d9%3A0xc312450892019777!2sDokuz%20Eyl%C3%BCl%20University%2C%20Faculty%20of%20Engineering!5e0!3m2!1sen!2str!4v1620000000000!5m2!1sen!2str"
+                            src="https://maps.google.com/maps?q=Dokuz%20Eyl%C3%BCl%20%C3%9Cniversitesi%20M%C3%BChendislik%20Fak%C3%BCltesi%20Dekanl%C4%B1%C4%9F%C4%B1&t=&z=15&ie=UTF8&iwloc=&output=embed"
                             width="100%"
                             height="220"
                             style={{ border: 0, borderRadius: '10px', display: 'block' }}

@@ -53,7 +53,7 @@ const PersonalInfo = ({ user, token, setUser }) => {
                 phoneNumber: formData.phone
             };
             
-            const response = await axios.put('http://localhost:5229/api/Users/profile', updateData, config);
+            const response = await axios.put('/api/Users/profile', updateData, config);
             
             // Update local state and storage
             const updatedUser = response.data;

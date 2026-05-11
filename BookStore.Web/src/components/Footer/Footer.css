@@ -1,0 +1,141 @@
+.footer-container {
+    background-color: #1e293b;
+    color: #f8fafc;
+    padding: 60px 20px 20px 20px;
+    margin-top: auto;
+    font-family: 'Inter', sans-serif;
+    border-top: 4px solid #3b82f6;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-brand h2 {
+    font-size: 24px;
+    margin: 0 0 16px 0;
+    color: #ffffff;
+    font-weight: 800;
+}
+
+.footer-brand p {
+    color: #cbd5e1;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.footer-links-group h3,
+.footer-contact h3 {
+    font-size: 18px;
+    margin: 0 0 20px 0;
+    color: #ffffff;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-links-group h3::after,
+.footer-contact h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 3px;
+    background-color: #3b82f6;
+    border-radius: 2px;
+}
+
+.footer-links-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links-group li {
+    margin-bottom: 12px;
+}
+
+.footer-links-group a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+.footer-links-group a:hover {
+    color: #60a5fa;
+    transform: translateX(5px);
+}
+
+.footer-contact .contact-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
+}
+
+.footer-contact .icon {
+    font-size: 18px;
+    margin-top: 2px;
+}
+
+.footer-contact p {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 24px;
+    border-top: 1px solid #334155;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.social-links {
+    display: flex;
+    gap: 16px;
+}
+
+.social-links a {
+    text-decoration: none;
+    font-size: 20px;
+    transition: transform 0.2s ease;
+    opacity: 0.8;
+}
+
+.social-links a:hover {
+    transform: scale(1.2);
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+    }
+}

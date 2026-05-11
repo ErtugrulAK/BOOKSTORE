@@ -86,4 +86,13 @@ public class OrdersController : ControllerBase
         if (success) return Ok(new { message = "Kod doğrulandı, sipariş teslim edildi." });
         return BadRequest("Hatalı teslimat kodu!");
     }
+
+    [Authorize(Roles = "Admin")]
+    [HttpGet("by-code/{code}")]
+    public async Task<IActionResult> GetByPickupCode(string code)
+    {
+        var order = await _orderService.GetByPickupCodeAsync(code);
+        if (order == null) return NotFound("Bu koda ait sipariş bulunamadı.");
+        return Ok(order);
+    }
 }

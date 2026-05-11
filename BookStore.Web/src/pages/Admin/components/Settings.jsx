@@ -82,7 +82,7 @@ const Settings = ({
                         window.showToast("Şifre güncelleniyor...", false);
                         try {
                             const config = { headers: { Authorization: `Bearer ${token}` } };
-                            await axios.put('http://localhost:5229/api/Users/profile/password', {
+                            await axios.put('/api/Users/profile/password', {
                                 CurrentPassword: passwordForm.currentPassword,
                                 NewPassword: passwordForm.newPassword
                             }, config);

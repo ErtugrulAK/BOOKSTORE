@@ -195,10 +195,11 @@ namespace BookStore.Api.Controllers
             var books = await _db.Books.ToListAsync();
             foreach (var book in books)
             {
-                book.IsActive = active;
+                // Stokta olmayan kitaplar zorla aktif edilemez
+                book.IsActive = active && book.StockQuantity > 0;
             }
             await _db.SaveChangesAsync();
-            return Ok(new { message = $"Tüm kitaplar {(active ? "yayına alındı" : "yayından kaldırıldı")}." });
+            return Ok(new { message = $"Tüm kitaplar {(active ? "yayına alındı" : "yayından kaldırıldı")}. (Stoksuz kitaplar yayına alınmadı)" });
         }
 
         [Authorize(Roles = "Admin")]

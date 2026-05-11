@@ -25,7 +25,7 @@ function Profile({ user, setUser, token }) {
     const fetchUserOrders = async () => {
         try {
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.get('http://localhost:5229/api/Orders/mine', config);
+            const response = await axios.get('/api/Orders/mine', config);
             setOrders(response.data || []);
         } catch (error) {
             console.error("Siparişler getirilemedi:", error);

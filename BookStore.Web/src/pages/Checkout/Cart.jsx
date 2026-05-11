@@ -30,7 +30,7 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
     useEffect(() => {
         if (token) {
             // Sepeti çek
-            axios.get('http://localhost:5229/api/Cart', { headers: { Authorization: `Bearer ${token}` } })
+            axios.get('/api/Cart', { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 setApiCart(res.data.orderItems || []);
                 setLoading(false);
@@ -41,7 +41,7 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
             });
 
             // Adresleri çek
-            axios.get('http://localhost:5229/api/Addresses', { headers: { Authorization: `Bearer ${token}` } })
+            axios.get('/api/Addresses', { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 setUserAddresses(res.data || []);
                 const defaultAddr = res.data.find(a => a.isDefault);
@@ -79,7 +79,7 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
 
     const handleRemoveFromApi = async (bookId) => {
         try {
-            await axios.delete(`http://localhost:5229/api/Cart/items/${bookId}`, { headers: { Authorization: `Bearer ${token}` } });
+            await axios.delete(`/api/Cart/items/${bookId}`, { headers: { Authorization: `Bearer ${token}` } });
             const newItems = apiCart.filter(item => item.bookId !== bookId);
             setApiCart(newItems);
             if (setApiCartCount) setApiCartCount(newItems.reduce((sum, item) => sum + item.quantity, 0));
@@ -103,7 +103,7 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
         if (result.isConfirmed) {
             if (token) {
                 try {
-                    await axios.delete('http://localhost:5229/api/Cart', { headers: { Authorization: `Bearer ${token}` } });
+                    await axios.delete('/api/Cart', { headers: { Authorization: `Bearer ${token}` } });
                     setApiCart([]);
                     if (setApiCartCount) setApiCartCount(0);
                     window.showToast("Sepetiniz boşaltıldı.");
@@ -143,7 +143,7 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
             ));
         } else {
             try {
-                await axios.put(`http://localhost:5229/api/Cart/items/${bookId}`, newQty, { 
+                await axios.put(`/api/Cart/items/${bookId}`, newQty, { 
                     headers: { 
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json'
@@ -156,7 +156,7 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
                 console.error("Güncelleme hatası", err);
             } finally {
                 // Her durumda global sayacı yenile ki senkron kalsın
-                axios.get('http://localhost:5229/api/Cart', { headers: { Authorization: `Bearer ${token}` } })
+                axios.get('/api/Cart', { headers: { Authorization: `Bearer ${token}` } })
                 .then(res => {
                     const count = res.data.orderItems?.reduce((sum, i) => sum + i.quantity, 0) || 0;
                     if (setApiCartCount) setApiCartCount(count);
@@ -183,7 +183,7 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
         }
 
         try {
-            const response = await axios.post('http://localhost:5229/api/Cart/checkout', 
+            const response = await axios.post('/api/Cart/checkout', 
                 { DeliveryAddress: addressString }, 
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -325,7 +325,7 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
                             navigate('/login');
                         } else {
                             try {
-                                const res = await axios.get('http://localhost:5229/api/Cart/validate', { 
+                                const res = await axios.get('/api/Cart/validate', { 
                                     headers: { Authorization: `Bearer ${token}` } 
                                 });
                                 if (!res.data.isValid) {

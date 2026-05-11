@@ -4,6 +4,32 @@ import Pagination from './Pagination';
 const UserManagement = ({ users, usersTotal, usersPage, setUsersPage, formatDate, handleViewUser, handleDeleteUser, selectedUser, setSelectedUser }) => {
     const [ordersPage, setOrdersPage] = useState(1);
     const ordersPerPage = 5;
+    
+    // Arama ve Sıralama State'leri
+    const [searchTerm, setSearchTerm] = useState('');
+    const [sortOrder, setSortOrder] = useState('newest'); // newest, oldest, name_asc, name_desc
+
+    // Filtreleme ve Sıralama İşlemi
+    let filteredUsers = [...users];
+
+    if (searchTerm) {
+        const lower = searchTerm.toLowerCase();
+        filteredUsers = filteredUsers.filter(u => 
+            u.firstName?.toLowerCase().includes(lower) || 
+            u.lastName?.toLowerCase().includes(lower) || 
+            u.email?.toLowerCase().includes(lower)
+        );
+    }
+
+    if (sortOrder === 'newest') {
+        filteredUsers.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+    } else if (sortOrder === 'oldest') {
+        filteredUsers.sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
+    } else if (sortOrder === 'name_asc') {
+        filteredUsers.sort((a, b) => (a.firstName || '').localeCompare(b.firstName || ''));
+    } else if (sortOrder === 'name_desc') {
+        filteredUsers.sort((a, b) => (b.firstName || '').localeCompare(a.firstName || ''));
+    }
 
     if (selectedUser) {
         const indexOfLastOrder = ordersPage * ordersPerPage;
@@ -91,11 +117,11 @@ const UserManagement = ({ users, usersTotal, usersPage, setUsersPage, formatDate
                             </table>
                         </div>
                         {selectedUser.orders.length > ordersPerPage && (
-                            <Pagination 
-                                currentPage={ordersPage} 
-                                totalCount={selectedUser.orders.length} 
-                                pageSize={ordersPerPage} 
-                                onPageChange={setOrdersPage} 
+                            <Pagination
+                                currentPage={ordersPage}
+                                totalCount={selectedUser.orders.length}
+                                pageSize={ordersPerPage}
+                                onPageChange={setOrdersPage}
                             />
                         )}
                     </div>
@@ -111,6 +137,28 @@ const UserManagement = ({ users, usersTotal, usersPage, setUsersPage, formatDate
                     <h2 className="admin-page-title">Kullanıcı Listesi</h2>
                     <p className="admin-page-subtitle">Sisteme kayıtlı kullanıcıları ve yetkilerini görüntüleyin.</p>
                 </div>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <div className="search-box" style={{ background: 'white', padding: '8px 16px', borderRadius: '12px', display: 'flex', alignItems: 'center', border: '1px solid #e2e8f0', width: '250px' }}>
+                        <span style={{ marginRight: '8px', opacity: '0.5' }}>🔍</span>
+                        <input 
+                            type="text" 
+                            placeholder="Kullanıcı veya E-posta ara..." 
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            style={{ border: 'none', outline: 'none', width: '100%', fontSize: '14px' }}
+                        />
+                    </div>
+                    <select 
+                        value={sortOrder} 
+                        onChange={(e) => setSortOrder(e.target.value)}
+                        style={{ padding: '10px 16px', borderRadius: '12px', border: '1px solid #e2e8f0', outline: 'none', background: 'white', color: '#475569', fontSize: '14px', cursor: 'pointer' }}
+                    >
+                        <option value="newest">En Yeniler</option>
+                        <option value="oldest">En Eskiler</option>
+                        <option value="name_asc">İsim (A-Z)</option>
+                        <option value="name_desc">İsim (Z-A)</option>
+                    </select>
+                </div>
             </div>
 
             <div className="admin-card">
@@ -125,7 +173,7 @@ const UserManagement = ({ users, usersTotal, usersPage, setUsersPage, formatDate
                             </tr>
                         </thead>
                         <tbody>
-                            {users.map(u => (
+                            {filteredUsers.map(u => (
                                 <tr key={u.id}>
                                     <td>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -167,11 +215,11 @@ const UserManagement = ({ users, usersTotal, usersPage, setUsersPage, formatDate
                     </table>
                 </div>
 
-                <Pagination 
-                    currentPage={usersPage} 
-                    totalCount={usersTotal} 
-                    pageSize={10} 
-                    onPageChange={setUsersPage} 
+                <Pagination
+                    currentPage={usersPage}
+                    totalCount={usersTotal}
+                    pageSize={10}
+                    onPageChange={setUsersPage}
                 />
             </div>
         </>

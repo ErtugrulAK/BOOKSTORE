@@ -54,6 +54,14 @@ namespace BookStore.Api.Services
 
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
+
+            // Kulanıcıyı bulup "Siparişiniz Alınmıştır" maili gönder
+            var user = await _context.Users.FindAsync(userId);
+            if (user != null && !string.IsNullOrEmpty(user.Email))
+            {
+                await _emailService.SendOrderCreatedEmailAsync(user.Email, order.OrderNumber);
+            }
+
             return order;
         }
 
@@ -127,7 +135,7 @@ namespace BookStore.Api.Services
             await _context.SaveChangesAsync();
 
             // Eğer kargoya verildiyse kullanıcıya mail at
-            if (newStatus == OrderStatus.Shipped && oldStatus != OrderStatus.Shipped && order.User != null)
+            if (newStatus == OrderStatus.Shipped && oldStatus != OrderStatus.Shipped && order.User != null && !string.IsNullOrEmpty(order.User.Email))
             {
                 await _emailService.SendOrderShippedEmailAsync(order.User.Email, order.OrderNumber);
             }
@@ -193,6 +201,16 @@ namespace BookStore.Api.Services
                 return true;
             }
             return false;
+        }
+
+        public async Task<Order?> GetByPickupCodeAsync(string code)
+        {
+            var order = await _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.OrderItems).ThenInclude(oi => oi.Book)
+                .FirstOrDefaultAsync(o => o.PickupCode != null && o.PickupCode.ToLower() == code.ToLower());
+                
+            return order;
         }
     }
 }
