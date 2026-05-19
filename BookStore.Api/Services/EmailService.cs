@@ -85,5 +85,56 @@ namespace BookStore.Api.Services
 
             await SendCustomEmailAsync(toEmail, subject, body);
         }
+
+        public async Task SendOrderStatusChangedEmailAsync(string toEmail, string orderNumber, OrderStatus oldStatus, OrderStatus newStatus)
+        {
+            string newStatusText = newStatus switch
+            {
+                OrderStatus.Pending => "Beklemede",
+                OrderStatus.Paid => "Ödendi",
+                OrderStatus.Processing => "Hazırlanıyor",
+                OrderStatus.Shipped => "Kargoya Verildi",
+                OrderStatus.Delivered => "Teslim Edildi",
+                OrderStatus.Cancelled => "İptal Edildi",
+                OrderStatus.HandDelivered => "Elden Teslim Edildi",
+                OrderStatus.Returned => "İade Edildi",
+                _ => "Bilinmiyor"
+            };
+
+            string title = newStatus switch
+            {
+                OrderStatus.Processing => "Siparişiniz Hazırlanıyor!",
+                OrderStatus.Shipped => "Siparişiniz Kargoya Verildi!",
+                OrderStatus.Cancelled => "Siparişiniz İptal Edildi",
+                OrderStatus.HandDelivered => "Siparişiniz Elden Teslim Edildi!",
+                OrderStatus.Paid => "Ödemeniz Onaylandı!",
+                OrderStatus.Returned => "Siparişiniz İade Edildi",
+                _ => "Siparişinizin Durumu Güncellendi!"
+            };
+
+            string color = newStatus switch
+            {
+                OrderStatus.Processing => "#3b82f6", // Blue
+                OrderStatus.Shipped => "#2563eb", // Darker Blue
+                OrderStatus.Cancelled => "#dc2626", // Red
+                OrderStatus.HandDelivered => "#16a34a", // Green
+                OrderStatus.Paid => "#16a34a", // Green
+                OrderStatus.Returned => "#ef4444", // Red/Orange for Return
+                _ => "#4b5563" // Gray
+            };
+
+            string subject = $"Siparişinizin Durumu Güncellendi: {newStatusText} ({orderNumber})";
+            string body = $@"
+                <div style='font-family: Arial, sans-serif; padding: 20px;'>
+                    <h2 style='color: {color};'>{title}</h2>
+                    <p>Merhaba,</p>
+                    <p><strong>{orderNumber}</strong> numaralı siparişinizin durumu <strong>{newStatusText}</strong> olarak güncellenmiştir.</p>
+                    <p>Siparişinizin detaylarını web sitemiz üzerinden her zaman kontrol edebilirsiniz.</p>
+                    <hr style='border: 1px solid #eee; margin: 20px 0;'/>
+                    <p style='font-size: 12px; color: #888;'>DEÜ Kitap Satış Platformu</p>
+                </div>";
+
+            await SendCustomEmailAsync(toEmail, subject, body);
+        }
     }
 }

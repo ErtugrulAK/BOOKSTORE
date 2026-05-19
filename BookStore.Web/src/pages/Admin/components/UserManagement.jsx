@@ -10,11 +10,14 @@ const UserManagement = ({ users, usersTotal, usersPage, setUsersPage, formatDate
     const [sortOrder, setSortOrder] = useState('newest'); // newest, oldest, name_asc, name_desc
 
     // Filtreleme ve Sıralama İşlemi
-    let filteredUsers = [...users];
+    const admins = users.filter(u => u.role === 'Admin' || u.id === 1);
+    const others = users.filter(u => u.role !== 'Admin' && u.id !== 1);
+
+    let filteredOthers = [...others];
 
     if (searchTerm) {
         const lower = searchTerm.toLowerCase();
-        filteredUsers = filteredUsers.filter(u => 
+        filteredOthers = filteredOthers.filter(u => 
             u.firstName?.toLowerCase().includes(lower) || 
             u.lastName?.toLowerCase().includes(lower) || 
             u.email?.toLowerCase().includes(lower)
@@ -22,14 +25,16 @@ const UserManagement = ({ users, usersTotal, usersPage, setUsersPage, formatDate
     }
 
     if (sortOrder === 'newest') {
-        filteredUsers.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+        filteredOthers.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
     } else if (sortOrder === 'oldest') {
-        filteredUsers.sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
+        filteredOthers.sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
     } else if (sortOrder === 'name_asc') {
-        filteredUsers.sort((a, b) => (a.firstName || '').localeCompare(b.firstName || ''));
+        filteredOthers.sort((a, b) => (a.firstName || '').localeCompare(b.firstName || ''));
     } else if (sortOrder === 'name_desc') {
-        filteredUsers.sort((a, b) => (b.firstName || '').localeCompare(a.firstName || ''));
+        filteredOthers.sort((a, b) => (b.firstName || '').localeCompare(a.firstName || ''));
     }
+
+    const filteredUsers = [...admins, ...filteredOthers];
 
     if (selectedUser) {
         const indexOfLastOrder = ordersPage * ordersPerPage;
@@ -106,8 +111,8 @@ const UserManagement = ({ users, usersTotal, usersPage, setUsersPage, formatDate
                                             <td>{formatDate(o.createdAtUtc)}</td>
                                             <td style={{ fontWeight: '800', color: '#2b3674' }}>₺{o.totalPrice.toFixed(2)}</td>
                                             <td>
-                                                <span className={`status-pill ${o.status === 5 ? 'danger' : o.status === 3 || o.status === 4 ? 'success' : 'warning'}`}>
-                                                    {o.status === 1 ? 'Beklemede' : o.status === 2 ? 'Hazırlanıyor' : o.status === 3 ? 'Kargolandı' : o.status === 4 ? 'Teslim Edildi' : 'İptal'}
+                                                <span className={`status-pill ${(o.status === 5 || o.status === 7) ? 'danger' : (o.status === 3 || o.status === 4 || o.status === 6) ? 'success' : 'warning'}`}>
+                                                    {o.status === 1 ? 'Beklemede' : o.status === 2 ? 'Hazırlanıyor' : o.status === 3 ? 'Kargolandı' : o.status === 6 ? 'Elden Teslim Edildi' : o.status === 7 ? 'İade Edildi' : o.status === 5 ? 'İptal Edildi' : 'Hazırlanıyor'}
                                                 </span>
                                             </td>
                                         </tr>
@@ -181,7 +186,9 @@ const UserManagement = ({ users, usersTotal, usersPage, setUsersPage, formatDate
                                                 {u.firstName?.charAt(0) || 'U'}{u.lastName?.charAt(0) || ''}
                                             </div>
                                             <div>
-                                                <div style={{ fontWeight: '700', color: '#2b3674' }}>{u.firstName} {u.lastName}</div>
+                                                <div style={{ fontWeight: '700', color: '#2b3674' }}>
+                                                    {u.firstName} {u.lastName} {u.username && u.username !== u.email && `(${u.username})`}
+                                                </div>
                                                 <div style={{ fontSize: '12px', color: '#a3aed1' }}>ID: #{u.id}</div>
                                             </div>
                                         </div>

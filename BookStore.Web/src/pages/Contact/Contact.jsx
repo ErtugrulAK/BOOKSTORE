@@ -63,8 +63,8 @@ function Contact() {
                 <p>Sorularınız, görüşleriniz veya önerileriniz için bizimle iletişime geçebilirsiniz.</p>
             </div>
 
-            <div className="contact-grid">
-                {/* Sol: Form */}
+            <div className="contact-container-centered">
+                {/* Form */}
                 <div className="contact-form-card">
                     <h2 className="contact-section-title">
                         <span>✉️</span> İletişim Formu
@@ -162,58 +162,6 @@ function Contact() {
                             </button>
                         </form>
                     )}
-                </div>
-
-                {/* Sağ: Bilgi + Harita */}
-                <div className="contact-info-column">
-                    <div className="contact-info-card">
-                        <h3 className="contact-section-title">İletişim Bilgileri</h3>
-                        <ul className="contact-info-list">
-                            <li>
-                                <div className="contact-info-icon">📍</div>
-                                <div>
-                                    <strong>Adres</strong>
-                                    <p>Dokuz Eylül Üniversitesi<br />Mühendislik Fakültesi<br />Tınaztepe Yerleşkesi<br />35160 Buca / İzmir</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="contact-info-icon">📞</div>
-                                <div>
-                                    <strong>Telefon</strong>
-                                    <a href="tel:+902321234567">+90 (232) 123 45 67</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="contact-info-icon">📧</div>
-                                <div>
-                                    <strong>E-posta</strong>
-                                    <a href="mailto:kitapsatis@deu.edu.tr">kitapsatis@deu.edu.tr</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="contact-info-icon">🕐</div>
-                                <div>
-                                    <strong>Çalışma Saatleri</strong>
-                                    <p>Pazartesi – Cuma: 09:00 – 17:00</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-
-
-                    <div className="contact-map-card">
-                        <iframe
-                            title="DEÜ Mühendislik Fakültesi Harita"
-                            src="https://maps.google.com/maps?q=Dokuz%20Eyl%C3%BCl%20%C3%9Cniversitesi%20M%C3%BChendislik%20Fak%C3%BCltesi%20Dekanl%C4%B1%C4%9F%C4%B1&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                            width="100%"
-                            height="220"
-                            style={{ border: 0, borderRadius: '10px', display: 'block' }}
-                            allowFullScreen=""
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                        />
-                    </div>
                 </div>
             </div>
         </div>

@@ -16,17 +16,11 @@ const PersonalInfo = ({ user, token, setUser }) => {
         setFormData({ ...formData, [field]: onlyLetters });
     };
 
-    // Phone: Auto format with better backspace handling
+    // Phone: Auto format
     const handlePhoneChange = (e) => {
         let value = e.target.value;
-        
-        // If it's a delete operation and the last char was a space, remove one more char
-        const isDelete = e.nativeEvent.inputType === 'deleteContentBackward';
-        
-        // Get raw digits
         let digits = value.replace(/[^\d]/g, '');
         
-        // Format logic
         let formatted = '';
         if (digits.length > 0) {
             formatted = digits.slice(0, 4);
@@ -55,7 +49,6 @@ const PersonalInfo = ({ user, token, setUser }) => {
             
             const response = await axios.put('/api/Users/profile', updateData, config);
             
-            // Update local state and storage
             const updatedUser = response.data;
             setUser(updatedUser);
             localStorage.setItem('user', JSON.stringify(updatedUser));
@@ -71,7 +64,7 @@ const PersonalInfo = ({ user, token, setUser }) => {
         <div className="animate-slide-up">
             <div className="user-page-header">
                 <h2 className="user-panel-title">Profil Ayarları</h2>
-                <p className="user-panel-subtitle">Kişisel bilgilerinizi buradan görüntüleyebilir ve güncelleyebilirsiniz.</p>
+                <p className="user-panel-subtitle">Kişisel bilgilerinizi buradan güncelleyebilirsiniz.</p>
             </div>
 
             <div className="user-panel-card">

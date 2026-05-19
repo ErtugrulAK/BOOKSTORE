@@ -272,6 +272,14 @@ const BookManagement = ({
                                 <p style={{ color: '#1e40af', margin: 0, fontSize: '13px', fontWeight: '500' }}>Fiyatlara KDV dahildir. Kargo ücreti alıcıya aittir. Dilerseniz siparişinizi Dekanlık birimimizden şahsen teslim alabilirsiniz.</p>
                             </div>
                         </div>
+
+                        <div style={{ marginTop: '12px', backgroundColor: '#fef2f2', padding: '16px', borderRadius: '8px', border: '1px solid #fecaca', display: 'flex', gap: '12px' }}>
+                            <div style={{ width: '24px', height: '24px', backgroundColor: '#dc2626', color: 'white', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '14px', flexShrink: 0 }}>!</div>
+                            <div>
+                                <h4 style={{ color: '#991b1b', margin: '0 0 4px 0', fontSize: '14px' }}>İptal ve İade Bilgisi</h4>
+                                <p style={{ color: '#b91c1c', margin: 0, fontSize: '13px', fontWeight: '500' }}>Siparişinizi oluşturduktan sonraki 10 dakika içinde iptal edebilirsiniz. Teslimat sonrası iade hakkı 14 gündür. İade durumunda kargo ücreti alıcıya aittir.</p>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="form-section">

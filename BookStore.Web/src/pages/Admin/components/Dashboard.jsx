@@ -8,13 +8,14 @@ const Dashboard = ({ orders, books, users, CATEGORIES, setActiveTab, formatDate,
     const lastMonth = thisMonth === 0 ? 11 : thisMonth - 1;
     const lastMonthYear = thisMonth === 0 ? thisYear - 1 : thisYear;
 
-    // Gelir ve Kitap Satışı için: Sadece kargolanan veya teslim edilenler
-    const salesOrders = orders.filter(o => o.status === 3 || o.status === 4);
+    // Gelir ve Kitap Satışı için: Kargolanan, teslim edilen veya elden teslim edilenler
+    const salesOrders = orders.filter(o => o.status === 3 || o.status === 4 || o.status === 6);
     
     // Toplam Sipariş için: Hepsi
     const allOrdersCount = orders.length;
     const cancelledOrdersCount = orders.filter(o => o.status === 5).length;
-    const activeOrders = orders.filter(o => o.status !== 5);
+    const returnedOrdersCount = orders.filter(o => o.status === 7).length;
+    const activeOrders = orders.filter(o => o.status !== 5 && o.status !== 7);
 
     const totalRevenue = salesOrders.reduce((sum, o) => sum + o.totalPrice, 0);
     const totalSoldBooks = salesOrders.reduce((sum, o) => {
@@ -30,7 +31,7 @@ const Dashboard = ({ orders, books, users, CATEGORIES, setActiveTab, formatDate,
     const totalBooks = books.length;
 
     const monthlyData = {};
-    activeOrders.forEach(o => {
+    salesOrders.forEach(o => {
         const date = new Date(o.createdAtUtc);
         const monthLabel = date.toLocaleString('tr-TR', { month: 'short', year: 'numeric' });
         if (!monthlyData[monthLabel]) monthlyData[monthLabel] = 0;
@@ -151,13 +152,20 @@ const Dashboard = ({ orders, books, users, CATEGORIES, setActiveTab, formatDate,
                     </div>
                     <div className="stat-info">
                         <span className="stat-label">Toplam Sipariş</span>
-                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', flexWrap: 'wrap' }}>
                             <span className="stat-value">{stats?.totalOrders || allOrdersCount}</span>
-                            {(stats?.cancelledOrdersCount > 0 || cancelledOrdersCount > 0) && (
-                                <span style={{ fontSize: '12px', color: '#ee5d50', fontWeight: '500' }}>
-                                    ({stats?.cancelledOrdersCount || cancelledOrdersCount} İptal)
-                                </span>
-                            )}
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                                {((stats?.cancelledOrdersCount || cancelledOrdersCount) > 0) && (
+                                    <span style={{ fontSize: '11px', color: '#ee5d50', fontWeight: '600' }}>
+                                        ({stats?.cancelledOrdersCount || cancelledOrdersCount} İptal)
+                                    </span>
+                                )}
+                                {((stats?.returnedOrdersCount || returnedOrdersCount) > 0) && (
+                                    <span style={{ fontSize: '11px', color: '#ef4444', fontWeight: '600' }}>
+                                        ({stats?.returnedOrdersCount || returnedOrdersCount} İade)
+                                    </span>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -30,15 +30,31 @@ const Footer = () => {
                     <h3>İletişim</h3>
                     <div className="contact-item">
                         <span className="icon">📍</span>
-                        <p>Örnek Mah. Kitap Sok. No: 123 Kadıköy / İstanbul</p>
+                        <p>Dokuz Eylül Üniversitesi Mühendislik Fakültesi Tınaztepe Yerleşkesi 35160 Buca / İzmir</p>
                     </div>
                     <div className="contact-item">
                         <span className="icon">📞</span>
-                        <p>+90 (212) 123 45 67</p>
+                        <p><a href="tel:+902321234567">+90 (232) 123 45 67</a></p>
                     </div>
                     <div className="contact-item">
                         <span className="icon">✉️</span>
-                        <p>destek@bookstore.com</p>
+                        <p><a href="mailto:kitapsatis@deu.edu.tr">kitapsatis@deu.edu.tr</a></p>
+                    </div>
+                    <div className="contact-item">
+                        <span className="icon">🕐</span>
+                        <p>Pazartesi – Cuma: 09:00 – 17:00</p>
+                    </div>
+                    <div className="footer-map" style={{ marginTop: '15px' }}>
+                        <iframe
+                            title="DEÜ Mühendislik Fakültesi Harita"
+                            src="https://maps.google.com/maps?q=Dokuz%20Eyl%C3%BCl%20%C3%9Cniversitesi%20M%C3%BChendislik%20Fak%C3%BCltesi%20Dekanl%C4%B1%C4%9F%C4%B1&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                            width="100%"
+                            height="130"
+                            style={{ border: 0, borderRadius: '8px', display: 'block' }}
+                            allowFullScreen=""
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                        />
                     </div>
                 </div>
             </div>

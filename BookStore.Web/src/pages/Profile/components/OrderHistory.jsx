@@ -1,22 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const OrderHistory = ({ orders = [], token, onRefresh }) => {
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [timeLeft, setTimeLeft] = useState(null);
+
+    useEffect(() => {
+        if (!selectedOrder) {
+            setTimeLeft(null);
+            return;
+        }
+
+        const checkTime = () => {
+            const createdAt = new Date(selectedOrder.createdAtUtc);
+            const now = new Date();
+            const diffMs = now.getTime() - createdAt.getTime();
+            const totalCancelMs = 10 * 60 * 1000;
+            const remainingMs = totalCancelMs - diffMs;
+
+            if (remainingMs > 0) {
+                const mins = Math.floor(remainingMs / 1000 / 60);
+                const secs = Math.floor((remainingMs / 1000) % 60);
+                setTimeLeft(`${mins}:${secs < 10 ? '0' : ''}${secs}`);
+            } else {
+                setTimeLeft(null);
+            }
+        };
+
+        checkTime();
+        const interval = setInterval(checkTime, 1000);
+        return () => clearInterval(interval);
+    }, [selectedOrder]);
 
     const handleCancelOrder = async (orderId) => {
-        if (!window.confirm("Bu siparişi iptal etmek/iade etmek istediğinize emin misiniz?")) return;
+        const result = await Swal.fire({
+            title: 'Siparişi İptal Et?',
+            text: 'Bu siparişi iptal etmek istediğinize emin misiniz?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, İptal Et',
+            cancelButtonText: 'Vazgeç',
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#707eae',
+            background: '#ffffff'
+        });
+
+        if (!result.isConfirmed) return;
 
         try {
             const config = { headers: { Authorization: `Bearer ${token}` } };
             await axios.post(`/api/Orders/${orderId}/cancel`, {}, config);
-            window.showToast("Sipariş iptal/iade talebi başarıyla alındı.");
+            window.showToast("Sipariş başarıyla iptal edildi.");
             
             if (onRefresh) await onRefresh();
             
             // Update local selected order status
             if (selectedOrder && selectedOrder.id === orderId) {
-                setSelectedOrder({ ...selectedOrder, status: 'Cancelled' });
+                setSelectedOrder({ ...selectedOrder, status: 5 });
             }
         } catch (error) {
             console.error("Sipariş iptal edilemedi:", error);
@@ -24,7 +65,54 @@ const OrderHistory = ({ orders = [], token, onRefresh }) => {
         }
     };
 
+    const handleReturnOrder = async (orderId) => {
+        const result = await Swal.fire({
+            title: 'Siparişi İade Et?',
+            text: 'Bu siparişi iade etmek istediğinize emin misiniz? İade durumunda kargo ücreti alıcıya aittir.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, İade Et',
+            cancelButtonText: 'Vazgeç',
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#707eae',
+            background: '#ffffff'
+        });
+
+        if (!result.isConfirmed) return;
+
+        try {
+            const config = { headers: { Authorization: `Bearer ${token}` } };
+            await axios.post(`/api/Orders/${orderId}/return`, {}, config);
+            window.showToast("Sipariş iade talebi başarıyla alındı.");
+            
+            if (onRefresh) await onRefresh();
+            
+            // Update local selected order status
+            if (selectedOrder && selectedOrder.id === orderId) {
+                setSelectedOrder({ ...selectedOrder, status: 7 });
+            }
+        } catch (error) {
+            console.error("Sipariş iade edilemedi:", error);
+            window.showToast(error.response?.data || "İşlem sırasında bir hata oluştu.", true);
+        }
+    };
+
     if (selectedOrder) {
+        const createdAt = new Date(selectedOrder.createdAtUtc);
+        const now = new Date();
+        const diffMs = now.getTime() - createdAt.getTime();
+        const diffMins = diffMs / 1000 / 60;
+        const diffDays = diffMs / 1000 / 60 / 60 / 24;
+
+        const canCancel = (selectedOrder.status === 0 || selectedOrder.status === 1 || selectedOrder.status === 2 || selectedOrder.status === 'Pending' || selectedOrder.status === 'Paid' || selectedOrder.status === 'Processing') && timeLeft !== null;
+        const canReturn = (selectedOrder.status === 3 || selectedOrder.status === 6 || selectedOrder.status === 'Shipped' || selectedOrder.status === 'HandDelivered') && diffDays <= 14;
+
+        const getReturnDeadlineText = () => {
+            const date = new Date(selectedOrder.createdAtUtc);
+            const deadline = new Date(date.getTime() + 14 * 24 * 60 * 60 * 1000);
+            return deadline.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+        };
+
         return (
             <div className="animate-slide-up">
                 <button className="user-secondary-btn" style={{ marginBottom: '30px', padding: '10px 20px', fontSize: '14px' }} onClick={() => setSelectedOrder(null)}>
@@ -41,16 +129,100 @@ const OrderHistory = ({ orders = [], token, onRefresh }) => {
                             </p>
                         </div>
                         <div style={{ textAlign: 'right' }}>
-                            <span className={`status-pill ${(selectedOrder.status === 'Processing' || selectedOrder.status === 2 || selectedOrder.status === 'Pending' || selectedOrder.status === 0) ? 'warning' : (selectedOrder.status === 'Cancelled' || selectedOrder.status === 5) ? 'danger' : 'success'}`} style={{ padding: '12px 24px', fontSize: '14px', borderRadius: '12px' }}>
+                            <span className={`status-pill ${(selectedOrder.status === 'Processing' || selectedOrder.status === 2 || selectedOrder.status === 'Pending' || selectedOrder.status === 0) ? 'warning' : (selectedOrder.status === 'Cancelled' || selectedOrder.status === 5 || selectedOrder.status === 7) ? 'danger' : 'success'}`} style={{ padding: '12px 24px', fontSize: '14px', borderRadius: '12px' }}>
                                 {selectedOrder.status === 'Pending' || selectedOrder.status === 0 ? 'Hazırlanıyor' : 
                                  selectedOrder.status === 'Processing' || selectedOrder.status === 2 ? 'Hazırlanıyor' :
                                  selectedOrder.status === 'Shipped' || selectedOrder.status === 3 ? 'Kargoya Verildi' :
                                  selectedOrder.status === 'Delivered' || selectedOrder.status === 4 ? 'Teslim Edildi' :
                                  selectedOrder.status === 6 ? 'Elden Teslim Edildi' :
-                                 selectedOrder.status === 'Cancelled' || selectedOrder.status === 5 ? 'İptal Edildi' : selectedOrder.status}
+                                 selectedOrder.status === 'Cancelled' || selectedOrder.status === 5 ? 'İptal Edildi' :
+                                 selectedOrder.status === 7 ? 'İade Edildi' : selectedOrder.status}
                             </span>
                         </div>
                     </div>
+
+                    {/* İptal / İade Bilgi & Sayaç Alanı */}
+                    {(canCancel || canReturn) && (
+                        <div style={{
+                            background: '#fff8f6',
+                            border: '1.5px solid #ffebe5',
+                            padding: '20px 25px',
+                            borderRadius: '20px',
+                            marginBottom: '30px',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            gap: '20px',
+                            flexWrap: 'wrap',
+                            boxShadow: '0 4px 15px rgba(239, 68, 68, 0.03)'
+                        }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: '250px' }}>
+                                <span style={{ fontSize: '24px' }}>⏰</span>
+                                <div>
+                                    {canCancel && (
+                                        <>
+                                            <h4 style={{ margin: 0, color: '#b91c1c', fontSize: '15px', fontWeight: '800' }}>Kolay İptal Süresi</h4>
+                                            <p style={{ margin: '4px 0 0 0', color: '#ef4444', fontSize: '13px', fontWeight: '500' }}>
+                                                Siparişinizi ilk 10 dakika içinde hiçbir ücret ödemeden tek tıkla iptal edebilirsiniz.
+                                            </p>
+                                        </>
+                                    )}
+                                    {canReturn && (
+                                        <>
+                                            <h4 style={{ margin: 0, color: '#1e293b', fontSize: '15px', fontWeight: '800' }}>Kolay İade Hakkı</h4>
+                                            <p style={{ margin: '4px 0 0 0', color: '#475569', fontSize: '13px', fontWeight: '500' }}>
+                                                Bu siparişi <strong>{getReturnDeadlineText()}</strong> tarihine kadar iade etme hakkınız bulunmaktadır. (İade kargo ücreti alıcıya aittir.)
+                                            </p>
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+                            {canCancel && timeLeft && (
+                                <button 
+                                    className="user-primary-btn" 
+                                    style={{ 
+                                        background: '#fff5f5', 
+                                        color: '#ef4444',
+                                        borderColor: '#fee2e2',
+                                        padding: '12px 24px',
+                                        borderRadius: '14px',
+                                        fontWeight: '700',
+                                        fontSize: '14px',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s ease',
+                                        boxShadow: '0 4px 12px rgba(239, 68, 68, 0.05)'
+                                    }}
+                                    onClick={() => handleCancelOrder(selectedOrder.id)}
+                                    onMouseEnter={(e) => { e.currentTarget.style.background = '#ef4444'; e.currentTarget.style.color = 'white'; }}
+                                    onMouseLeave={(e) => { e.currentTarget.style.background = '#fff5f5'; e.currentTarget.style.color = '#ef4444'; }}
+                                >
+                                    ⚠️ Siparişi İptal Et ({timeLeft})
+                                </button>
+                            )}
+                            {canReturn && (
+                                <button 
+                                    className="user-primary-btn" 
+                                    style={{ 
+                                        background: '#fff5f5', 
+                                        color: '#ef4444',
+                                        borderColor: '#fee2e2',
+                                        padding: '12px 24px',
+                                        borderRadius: '14px',
+                                        fontWeight: '700',
+                                        fontSize: '14px',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s ease',
+                                        boxShadow: '0 4px 12px rgba(239, 68, 68, 0.05)'
+                                    }}
+                                    onClick={() => handleReturnOrder(selectedOrder.id)}
+                                    onMouseEnter={(e) => { e.currentTarget.style.background = '#ef4444'; e.currentTarget.style.color = 'white'; }}
+                                    onMouseLeave={(e) => { e.currentTarget.style.background = '#fff5f5'; e.currentTarget.style.color = '#ef4444'; }}
+                                >
+                                    🔄 Siparişi İade Et
+                                </button>
+                            )}
+                        </div>
+                    )}
 
                     <div className="order-timeline" style={{ background: '#f8fafc', padding: '30px', borderRadius: '24px', marginBottom: '40px' }}>
                         <div className={`timeline-step ${(selectedOrder.status === 'Processing' || selectedOrder.status === 2 || selectedOrder.status === 'Shipped' || selectedOrder.status === 3 || selectedOrder.status === 'Delivered' || selectedOrder.status === 4 || selectedOrder.status === 6) ? 'completed' : 'active'}`}>
@@ -58,11 +230,19 @@ const OrderHistory = ({ orders = [], token, onRefresh }) => {
                             <div className="step-label">Hazırlanıyor</div>
                             <div className="step-time" style={{ fontWeight: '700' }}>{(selectedOrder.status === 'Processing' || selectedOrder.status === 2) ? 'İşleniyor' : 'Tamamlandı'}</div>
                         </div>
-                        <div className={`timeline-step ${(selectedOrder.status === 'Shipped' || selectedOrder.status === 3) ? 'active' : (selectedOrder.status === 'Delivered' || selectedOrder.status === 4 || selectedOrder.status === 6) ? 'completed' : ''}`}>
-                            <div className="step-icon">🚚</div>
-                            <div className="step-label">Kargoya Verildi</div>
-                            <div className="step-time" style={{ fontWeight: '700' }}>{(selectedOrder.status === 'Shipped' || selectedOrder.status === 3) ? 'Yolda' : (selectedOrder.status === 'Delivered' || selectedOrder.status === 4) ? 'Teslim Edildi' : selectedOrder.status === 6 ? 'Elden Teslim Edildi' : 'Bekleniyor'}</div>
-                        </div>
+                        {selectedOrder.pickupCode ? (
+                            <div className={`timeline-step ${(selectedOrder.status === 'Delivered' || selectedOrder.status === 4 || selectedOrder.status === 6) ? 'completed' : ''}`}>
+                                <div className="step-icon">🤝</div>
+                                <div className="step-label">Elden Teslim Edildi</div>
+                                <div className="step-time" style={{ fontWeight: '700' }}>{(selectedOrder.status === 'Delivered' || selectedOrder.status === 4 || selectedOrder.status === 6) ? 'Teslim Edildi' : 'Bekleniyor'}</div>
+                            </div>
+                        ) : (
+                            <div className={`timeline-step ${(selectedOrder.status === 'Shipped' || selectedOrder.status === 3) ? 'active' : (selectedOrder.status === 'Delivered' || selectedOrder.status === 4 || selectedOrder.status === 6) ? 'completed' : ''}`}>
+                                <div className="step-icon">🚚</div>
+                                <div className="step-label">Kargoya Verildi</div>
+                                <div className="step-time" style={{ fontWeight: '700' }}>{(selectedOrder.status === 'Shipped' || selectedOrder.status === 3) ? 'Yolda' : (selectedOrder.status === 'Delivered' || selectedOrder.status === 4) ? 'Teslim Edildi' : selectedOrder.status === 6 ? 'Elden Teslim Edildi' : 'Bekleniyor'}</div>
+                            </div>
+                        )}
                     </div>
 
                     {selectedOrder.pickupCode && (
@@ -152,27 +332,7 @@ const OrderHistory = ({ orders = [], token, onRefresh }) => {
                         </div>
                     </div>
 
-                    {(selectedOrder.status !== 'Cancelled' && selectedOrder.status !== 5) && (
-                        <div style={{ marginTop: '40px', display: 'flex', justifyContent: 'flex-end' }}>
-                            <button 
-                                className="user-primary-btn" 
-                                style={{ 
-                                    background: '#fff5f5', 
-                                    color: '#ef4444',
-                                    borderColor: '#fee2e2',
-                                    padding: '15px 30px',
-                                    borderRadius: '16px',
-                                    fontWeight: '700',
-                                    fontSize: '14px'
-                                }}
-                                onClick={() => handleCancelOrder(selectedOrder.id)}
-                                onMouseEnter={(e) => { e.currentTarget.style.background = '#ef4444'; e.currentTarget.style.color = 'white'; }}
-                                onMouseLeave={(e) => { e.currentTarget.style.background = '#fff5f5'; e.currentTarget.style.color = '#ef4444'; }}
-                            >
-                                ⚠️ Siparişi İptal Et / İade Talebi Oluştur
-                            </button>
-                        </div>
-                    )}
+
                 </div>
             </div>
         );
@@ -209,9 +369,12 @@ const OrderHistory = ({ orders = [], token, onRefresh }) => {
                                     </td>
                                     <td style={{ fontWeight: '800', color: '#2b3674' }}>₺{order.totalPrice?.toFixed(2)}</td>
                                     <td>
-                                        <span className={`status-pill ${(order.status === 'Processing' || order.status === 2 || order.status === 'Pending' || order.status === 0 || order.status === 'Paid' || order.status === 1) ? 'warning' : (order.status === 'Cancelled' || order.status === 5) ? 'danger' : 'success'}`}>
+                                        <span className={`status-pill ${(order.status === 'Processing' || order.status === 2 || order.status === 'Pending' || order.status === 0 || order.status === 'Paid' || order.status === 1) ? 'warning' : (order.status === 'Cancelled' || order.status === 5 || order.status === 7) ? 'danger' : 'success'}`}>
                                              {order.status === 'Pending' || order.status === 0 || order.status === 'Paid' || order.status === 1 || order.status === 'Processing' || order.status === 2 ? 'Hazırlanıyor' : 
-                                             order.status === 'Cancelled' || order.status === 5 ? 'İptal Edildi' : order.status === 6 ? 'Elden Teslim Edildi' : 'Kargoya Verildi'}
+                                             order.status === 'Cancelled' || order.status === 5 ? 'İptal Edildi' : 
+                                             order.status === 7 ? 'İade Edildi' : 
+                                             order.status === 6 ? 'Elden Teslim Edildi' : 
+                                             order.status === 'Delivered' || order.status === 4 ? 'Teslim Edildi' : 'Kargoya Verildi'}
                                         </span>
                                     </td>
                                      <td style={{ textAlign: 'right' }}>

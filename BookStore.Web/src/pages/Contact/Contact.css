@@ -25,18 +25,10 @@
     font-size: 15px;
 }
 
-/* İki Kolon Grid */
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 420px;
-    gap: 28px;
-    align-items: start;
-}
-
-@media (max-width: 900px) {
-    .contact-grid {
-        grid-template-columns: 1fr;
-    }
+/* Centered Form Container */
+.contact-container-centered {
+    max-width: 650px;
+    margin: 0 auto;
 }
 
 /* Form Kartı */

@@ -135,10 +135,18 @@ const BookDetail = ({ handleAddToCart }) => {
                     </div>
 
                     <div className="payment-info-banner">
-                        <div className="payment-info-icon">ℹ️</div>
+                        <div className="payment-info-icon">i</div>
                         <div className="payment-info-content">
                             <h4>Ödeme ve Teslimat Bilgisi</h4>
                             <p>Fiyatlara KDV dahildir. Kargo ücreti alıcıya aittir. Dilerseniz siparişinizi Dekanlık birimimizden şahsen teslim alabilirsiniz.</p>
+                        </div>
+                    </div>
+
+                    <div className="cancel-info-banner">
+                        <div className="cancel-info-icon">!</div>
+                        <div className="cancel-info-content">
+                            <h4>İptal ve İade Bilgisi</h4>
+                            <p>Siparişinizi oluşturduktan sonraki 10 dakika içinde iptal edebilirsiniz. Teslimat sonrası iade hakkı 14 gündür. İade durumunda kargo ücreti alıcıya aittir.</p>
                         </div>
                     </div>
 

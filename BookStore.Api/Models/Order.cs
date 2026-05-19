@@ -8,7 +8,8 @@ namespace BookStore.Api.Models
         Shipped = 3,      // Kargolandı
         Delivered = 4,    // Teslim Edildi
         Cancelled = 5,    // İptal Edildi
-        HandDelivered = 6 // Elden Teslim Edildi
+        HandDelivered = 6, // Elden Teslim Edildi
+        Returned = 7      // İade Edildi
     }
 
     public class Order

@@ -15,12 +15,12 @@ def normalize(text):
 
 def update_images():
     conn_str = "host=localhost port=5432 dbname=kitapsatisdb user=postgres password=1234"
-    img_dir = r"c:\Users\Mert\BOOKSTORE\BookStore.Web\public\images\books"
+    img_dir = r"c:\Users\senmu\Masaüstü\PROJE\BOOKSTORE\BookStore.Web\public\images\books"
     
     manual_matches = {
         "bilgisayarprogramlama": "bilisayarprogramlamamatlabuygulamali",
         "endustriyelatiksularinyonetimi": "endustriyelatiksularinyonetilmesi",
-        "frenchforengineers": "firansizca",
+        "frenchforengineers": "fransizca",
         "fiziklaboratuvariiideneykitapcigi": "fiziklabii",
         "giysikalipciligii": "giysikalipci1",
         "insaatmuhendisleriicinmalzemebilgisi": "malzemebilgisiinsmuhicin",
@@ -35,15 +35,17 @@ def update_images():
         "potansiyelteorivejeofizikuygulamalari": "potansiyelteorijeofizikuygulamalari",
         "sukaynaklarininkiyilestirilmesi": "sukaynaklarinigelistirilmesi",
         "sukuvvetisuyapilari": "sukuvvetisuyapilariciltix",
-        "sukuvvetitesislerindesayisalornekler": "sukuvvetitesisayisalornekle",
+        "sukuvvetitesislerindesayisalornekler": "sukuvvetitessayisalornekle",
         "turkdevrimtarihii": "turkdevrimtarihi",
         "uretimplanama": "uretimplanlama",
-        "giysikalipciligii": "giysikalipci1",
-        "mineraloji": "minerolojigenelminerolojikilti",
+        "mineraloji": "minerolojigenelminerolojicilti",
         "yeraltimadenmakineleriivemekanizasyonu": "yeraltimadenmakinalarivemekanizasyonu",
         "cevremuhendiligindemikrobiyolojikuygulamalar": "cevremuhendisligindemikrobiyolojikuygulamalar",
         "cevreuhendisligindebiyoprosesler": "cevremuhendisligindebiyoprosesler",
-        "izmirinkurtulusuveyuzbasiserafettin": "insakilik", # Still unsure but let's try
+        "izmirinkurtulusuveyuzbasiserafettin": "insakilik",
+        "aktifcamursurecinintasarimuygulamalaricilti": "atiksuaritmasistemlerinintasarimesaslarici",
+        "aktifcamursurecinintasarimuygulamalariciltii": "atiksuaritmasistemlerinintasarimesaslaricii",
+        "madenjeolojisiuygulamaklavuzu": "madenjeolojisiuygulamakilavuzu",
     }
 
     try:

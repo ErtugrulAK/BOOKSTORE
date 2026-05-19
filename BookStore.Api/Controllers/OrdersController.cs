@@ -68,6 +68,29 @@ public class OrdersController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "User,Admin")]
+    [HttpPost("{id}/return")]
+    public async Task<IActionResult> Return(int id)
+    {
+        try
+        {
+            var returned = await _orderService.ReturnAsync(id, CurrentUserId(), IsAdmin());
+            return Ok(returned);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Forbid();
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     public record UpdateStatusRequest(OrderStatus Status);
 
     [Authorize(Roles = "Admin")]

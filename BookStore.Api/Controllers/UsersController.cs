@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Microsoft.Extensions.Caching.Memory;
+using BookStore.Api.Services;
 
 namespace BookStore.Api.Controllers
 {
@@ -13,10 +15,14 @@ namespace BookStore.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly AppDbContext _db;
+        private readonly IMemoryCache _cache;
+        private readonly IEmailService _emailService;
 
-        public UsersController(AppDbContext db)
+        public UsersController(AppDbContext db, IMemoryCache cache, IEmailService emailService)
         {
             _db = db;
+            _cache = cache;
+            _emailService = emailService;
         }
 
         // Admin: Get All Users
@@ -124,7 +130,38 @@ namespace BookStore.Api.Controllers
             return Ok(user);
         }
 
-        public record ChangePasswordRequest(string CurrentPassword, string NewPassword);
+        [HttpPost("profile/password/send-code")]
+        public async Task<IActionResult> SendPasswordChangeCode()
+        {
+            var userId = int.Parse(User.FindFirstValue("uid")!);
+            var user = await _db.Users.FindAsync(userId);
+            if (user == null) return NotFound();
+
+            // Generate 6-digit code
+            var random = new Random();
+            string code = random.Next(100000, 999999).ToString();
+
+            // Cache code for 10 minutes
+            var cacheOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
+            _cache.Set($"PasswordChange_{userId}", code, cacheOptions);
+
+            // Send email
+            string subject = "DEÜ Kitap Satış - Şifre Değişikliği Doğrulama Kodu";
+            string body = $@"
+                <div style='font-family: Arial, sans-serif; padding: 20px; text-align: center;'>
+                    <h2 style='color: #dc2626;'>Şifre Değişikliği Doğrulama</h2>
+                    <p>Merhaba {user.FirstName},</p>
+                    <p>Şifrenizi değiştirmek için aşağıdaki 6 haneli doğrulama kodunu kullanın:</p>
+                    <h1 style='letter-spacing: 5px; color: #b91c1c; background: #fff5f5; padding: 10px; border-radius: 8px; display: inline-block; border: 1px solid #fecaca;'>{code}</h1>
+                    <p style='color: #ef4444; font-size: 12px;'>Bu kod 10 dakika içinde geçerliliğini yitirecektir.</p>
+                </div>";
+
+            await _emailService.SendCustomEmailAsync(user.Email!, subject, body);
+
+            return Ok(new { message = "Doğrulama kodu e-posta adresinize gönderildi." });
+        }
+
+        public record ChangePasswordRequest(string CurrentPassword, string NewPassword, string? Code);
 
         [HttpPut("profile/password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest req)
@@ -132,6 +169,18 @@ namespace BookStore.Api.Controllers
             var userId = int.Parse(User.FindFirstValue("uid")!);
             var user = await _db.Users.FindAsync(userId);
             if (user == null) return NotFound();
+
+            if (string.IsNullOrEmpty(req.Code))
+            {
+                return BadRequest("Doğrulama kodu gereklidir.");
+            }
+
+            if (!_cache.TryGetValue($"PasswordChange_{userId}", out string? cachedCode) || cachedCode != req.Code)
+            {
+                return BadRequest("Hatalı veya süresi geçmiş doğrulama kodu.");
+            }
+
+            _cache.Remove($"PasswordChange_{userId}");
 
             if (!BCrypt.Net.BCrypt.Verify(req.CurrentPassword, user.PasswordHash))
                 return BadRequest("Mevcut şifre hatalı.");

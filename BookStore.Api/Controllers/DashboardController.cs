@@ -31,23 +31,24 @@ namespace BookStore.Api.Controllers
             var totalBooks = await _db.Books.CountAsync();
             var totalOrders = await _db.Orders.CountAsync();
             var cancelledOrders = await _db.Orders.CountAsync(o => o.Status == OrderStatus.Cancelled);
+            var returnedOrders = await _db.Orders.CountAsync(o => o.Status == OrderStatus.Returned);
             
             var totalSoldBooks = await _db.OrderItems
-                .Where(oi => oi.Order!.Status == OrderStatus.Shipped || oi.Order!.Status == OrderStatus.Delivered)
+                .Where(oi => oi.Order!.Status == OrderStatus.Shipped || oi.Order!.Status == OrderStatus.HandDelivered)
                 .SumAsync(oi => (int?)oi.Quantity) ?? 0;
 
             var totalRevenue = await _db.Orders
-                .Where(o => o.Status == OrderStatus.Shipped || o.Status == OrderStatus.Delivered)
+                .Where(o => o.Status == OrderStatus.Shipped || o.Status == OrderStatus.HandDelivered)
                 .SumAsync(o => (decimal?)o.TotalPrice) ?? 0;
             
             // This month revenue
             var thisMonthRevenue = await _db.Orders
-                .Where(o => (o.Status == OrderStatus.Shipped || o.Status == OrderStatus.Delivered) && o.CreatedAtUtc >= thisMonth)
+                .Where(o => (o.Status == OrderStatus.Shipped || o.Status == OrderStatus.HandDelivered) && o.CreatedAtUtc >= thisMonth)
                 .SumAsync(o => (decimal?)o.TotalPrice) ?? 0;
             
             // Last month revenue
             var lastMonthRevenue = await _db.Orders
-                .Where(o => (o.Status == OrderStatus.Shipped || o.Status == OrderStatus.Delivered) && o.CreatedAtUtc >= lastMonth && o.CreatedAtUtc < thisMonth)
+                .Where(o => (o.Status == OrderStatus.Shipped || o.Status == OrderStatus.HandDelivered) && o.CreatedAtUtc >= lastMonth && o.CreatedAtUtc < thisMonth)
                 .SumAsync(o => (decimal?)o.TotalPrice) ?? 0;
 
             // This month orders
@@ -56,10 +57,10 @@ namespace BookStore.Api.Controllers
 
             // This month sold books
             var thisMonthSoldBooks = await _db.OrderItems
-                .Where(oi => (oi.Order!.Status == OrderStatus.Shipped || oi.Order!.Status == OrderStatus.Delivered) && oi.Order!.CreatedAtUtc >= thisMonth)
+                .Where(oi => (oi.Order!.Status == OrderStatus.Shipped || oi.Order!.Status == OrderStatus.HandDelivered) && oi.Order!.CreatedAtUtc >= thisMonth)
                 .SumAsync(oi => (int?)oi.Quantity) ?? 0;
             var lastMonthSoldBooks = await _db.OrderItems
-                .Where(oi => (oi.Order!.Status == OrderStatus.Shipped || oi.Order!.Status == OrderStatus.Delivered) && oi.Order!.CreatedAtUtc >= lastMonth && oi.Order!.CreatedAtUtc < thisMonth)
+                .Where(oi => (oi.Order!.Status == OrderStatus.Shipped || oi.Order!.Status == OrderStatus.HandDelivered) && oi.Order!.CreatedAtUtc >= lastMonth && oi.Order!.CreatedAtUtc < thisMonth)
                 .SumAsync(oi => (int?)oi.Quantity) ?? 0;
 
             return Ok(new
@@ -69,6 +70,7 @@ namespace BookStore.Api.Controllers
                 TotalBooks = totalBooks,
                 TotalOrders = totalOrders,
                 CancelledOrdersCount = cancelledOrders,
+                ReturnedOrdersCount = returnedOrders,
                 TotalRevenue = totalRevenue,
                 TotalSoldBooks = totalSoldBooks,
                 

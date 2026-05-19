@@ -105,8 +105,11 @@ namespace BookStore.Api.Services
             var oldStatus = order.Status;
             order.Status = newStatus;
 
-            // Eğer iptal edildiyse stokları geri yükle (Eskiden iptal değilse)
-            if (newStatus == OrderStatus.Cancelled && oldStatus != OrderStatus.Cancelled)
+            // Eğer iptal veya iade edildiyse stokları geri yükle (Eskiden iptal veya iade değilse)
+            var isTerminalRefund = newStatus == OrderStatus.Cancelled || newStatus == OrderStatus.Returned;
+            var wasTerminalRefund = oldStatus == OrderStatus.Cancelled || oldStatus == OrderStatus.Returned;
+
+            if (isTerminalRefund && !wasTerminalRefund)
             {
                 foreach (var item in order.OrderItems)
                 {
@@ -118,8 +121,8 @@ namespace BookStore.Api.Services
                     }
                 }
             }
-            // Eğer iptalden geri alındıysa stokları tekrar düş
-            else if (oldStatus == OrderStatus.Cancelled && newStatus != OrderStatus.Cancelled)
+            // Eğer iptalden/iadeden geri alındıysa stokları tekrar düş
+            else if (wasTerminalRefund && !isTerminalRefund)
             {
                 foreach (var item in order.OrderItems)
                 {
@@ -134,10 +137,10 @@ namespace BookStore.Api.Services
 
             await _context.SaveChangesAsync();
 
-            // Eğer kargoya verildiyse kullanıcıya mail at
-            if (newStatus == OrderStatus.Shipped && oldStatus != OrderStatus.Shipped && order.User != null && !string.IsNullOrEmpty(order.User.Email))
+            // Sipariş durumu değiştiğinde kullanıcıya mail at
+            if (newStatus != oldStatus && order.User != null && !string.IsNullOrEmpty(order.User.Email))
             {
-                await _emailService.SendOrderShippedEmailAsync(order.User.Email, order.OrderNumber);
+                await _emailService.SendOrderStatusChangedEmailAsync(order.User.Email, order.OrderNumber, oldStatus, newStatus);
             }
 
             return order;
@@ -146,14 +149,23 @@ namespace BookStore.Api.Services
         // ✅ Admin ödenmiş yapar
         public async Task<Order> MarkPaidAsync(int orderId)
         {
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
+            var order = await _context.Orders
+                .Include(o => o.User)
+                .FirstOrDefaultAsync(o => o.Id == orderId);
             if (order == null) throw new KeyNotFoundException("Order not found");
 
             if (order.Status == OrderStatus.Cancelled)
                 throw new InvalidOperationException("Cancelled order cannot be paid");
 
+            var oldStatus = order.Status;
             order.Status = OrderStatus.Paid;
             await _context.SaveChangesAsync();
+
+            if (oldStatus != OrderStatus.Paid && order.User != null && !string.IsNullOrEmpty(order.User.Email))
+            {
+                await _emailService.SendOrderStatusChangedEmailAsync(order.User.Email, order.OrderNumber, oldStatus, OrderStatus.Paid);
+            }
+
             return order;
         }
 
@@ -162,6 +174,7 @@ namespace BookStore.Api.Services
         {
             var order = await _context.Orders
                 .Include(o => o.OrderItems)
+                .Include(o => o.User)
                 .FirstOrDefaultAsync(o => o.Id == orderId);
             if (order == null) throw new KeyNotFoundException("Order not found");
 
@@ -171,6 +184,7 @@ namespace BookStore.Api.Services
             if (order.Status == OrderStatus.Paid && !isAdmin)
                 throw new InvalidOperationException("Paid order cannot be cancelled");
 
+            var oldStatus = order.Status;
             if (order.Status != OrderStatus.Cancelled)
             {
                 order.Status = OrderStatus.Cancelled;
@@ -187,6 +201,52 @@ namespace BookStore.Api.Services
             }
 
             await _context.SaveChangesAsync();
+
+            if (oldStatus != OrderStatus.Cancelled && order.User != null && !string.IsNullOrEmpty(order.User.Email))
+            {
+                await _emailService.SendOrderStatusChangedEmailAsync(order.User.Email, order.OrderNumber, oldStatus, OrderStatus.Cancelled);
+            }
+
+            return order;
+        }
+
+        public async Task<Order> ReturnAsync(int orderId, int userId, bool isAdmin)
+        {
+            var order = await _context.Orders
+                .Include(o => o.OrderItems)
+                .Include(o => o.User)
+                .FirstOrDefaultAsync(o => o.Id == orderId);
+            if (order == null) throw new KeyNotFoundException("Order not found");
+
+            if (!isAdmin && order.UserId != userId)
+                throw new UnauthorizedAccessException("You can return only your own order");
+
+            if (order.Status != OrderStatus.Shipped && order.Status != OrderStatus.HandDelivered && !isAdmin)
+                throw new InvalidOperationException("Sadece kargoya verilmiş veya elden teslim edilmiş siparişler iade edilebilir.");
+
+            var oldStatus = order.Status;
+            if (order.Status != OrderStatus.Returned)
+            {
+                order.Status = OrderStatus.Returned;
+                // Stok iadesi
+                foreach (var item in order.OrderItems)
+                {
+                    var book = await _context.Books.FindAsync(item.BookId);
+                    if (book != null) 
+                    {
+                        book.StockQuantity += item.Quantity;
+                        if (book.StockQuantity > 0) book.IsActive = true;
+                    }
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            if (oldStatus != OrderStatus.Returned && order.User != null && !string.IsNullOrEmpty(order.User.Email))
+            {
+                await _emailService.SendOrderStatusChangedEmailAsync(order.User.Email, order.OrderNumber, oldStatus, OrderStatus.Returned);
+            }
+
             return order;
         }
 

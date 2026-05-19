@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import './Cart.css';
+import SearchableSelect from '../../components/SearchableSelect';
+import { turkeyCities } from '../../data/turkeyCities';
 
 function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
     const navigate = useNavigate();
@@ -26,6 +28,8 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
     });
 
     const [orderResult, setOrderResult] = useState(null);
+    const [selectedCity, setSelectedCity] = useState('');
+    const [selectedDistrict, setSelectedDistrict] = useState('');
 
     useEffect(() => {
         if (token) {
@@ -179,7 +183,7 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
             const addr = userAddresses.find(a => a.id === selectedAddressId);
             addressString = `${addr.title}: ${addr.addressDetails} - Alıcı: ${addr.receiverName} (${addr.phoneNumber})`;
         } else {
-            addressString = `${formData.adres} - Alıcı: ${formData.ad} ${formData.soyad} (${formData.telefon})`;
+            addressString = `${selectedCity} / ${selectedDistrict} - ${formData.adres} - Alıcı: ${formData.ad} ${formData.soyad} (${formData.telefon})`;
         }
 
         try {
@@ -251,7 +255,7 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
                 <span>{totalAmount.toFixed(2)} ₺</span>
             </div>
             <button className="btn-primary-lg" onClick={onNext}>
-                {buttonText} {step < 3 && '→'}
+                {buttonText} {step < 3 && deliveryMethod === 'kargo' && '→'}
             </button>
             <div style={{marginTop: '20px', fontSize: '12px', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '8px'}}>
                 {/* SSL text removed as per user request */}
@@ -413,13 +417,35 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
                                                 <label>Alıcı Soyadı</label>
                                                 <input name="soyad" value={formData.soyad} onChange={handleInputChange} placeholder="Soyad" />
                                             </div>
+                                            <div className="form-group">
+                                                <label>İl *</label>
+                                                <SearchableSelect 
+                                                    options={Object.keys(turkeyCities)}
+                                                    value={selectedCity}
+                                                    onChange={(city) => {
+                                                        setSelectedCity(city);
+                                                        setSelectedDistrict('');
+                                                    }}
+                                                    placeholder="İl Seçiniz"
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>İlçe *</label>
+                                                <SearchableSelect 
+                                                    options={selectedCity ? turkeyCities[selectedCity] : []}
+                                                    value={selectedDistrict}
+                                                    onChange={(district) => setSelectedDistrict(district)}
+                                                    placeholder={selectedCity ? "İlçe Seçiniz" : "Önce İl Seçiniz"}
+                                                    disabled={!selectedCity}
+                                                />
+                                            </div>
+                                            <div className="form-group full">
+                                                <label>Açık Adres (Mahalle, Cadde, Sokak, No, Daire vs.) *</label>
+                                                <textarea name="adres" value={formData.adres} onChange={handleInputChange} rows="3" placeholder="Mahalle, cadde, sokak, apartman, daire vb. detayları yazın."></textarea>
+                                            </div>
                                             <div className="form-group full">
                                                 <label>Telefon Numarası</label>
                                                 <input name="telefon" value={formData.telefon} onChange={handleInputChange} placeholder="05XX XXX XX XX" maxLength="14" />
-                                            </div>
-                                            <div className="form-group full">
-                                                <label>Açık Adres</label>
-                                                <textarea name="adres" value={formData.adres} onChange={handleInputChange} rows="3" placeholder="Mahalle, Sokak, No, Daire..."></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -437,15 +463,23 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
                             </div>
                         )}
                     </div>
-                    {renderSummary('Ödeme Adımına Geç', () => {
-                        if (deliveryMethod === 'kargo') {
-                            if (!selectedAddressId && (!formData.ad || !formData.adres || !formData.telefon)) {
-                                window.showToast('Lütfen tüm alanları doldurun.', true);
-                                return;
+                    {deliveryMethod === 'dekanlik' ? (
+                        renderSummary('Siparişi Onayla', handleFinalCheckout)
+                    ) : (
+                        renderSummary('Ödeme Adımına Geç', () => {
+                            if (!selectedAddressId) {
+                                if (!formData.ad || !formData.soyad || !formData.adres || !formData.telefon) {
+                                    window.showToast('Lütfen tüm alanları doldurun.', true);
+                                    return;
+                                }
+                                if (!selectedCity || !selectedDistrict) {
+                                    window.showToast('Lütfen il ve ilçe seçiniz.', true);
+                                    return;
+                                }
                             }
-                        }
-                        setStep(3);
-                    })}
+                            setStep(3);
+                        })
+                    )}
                 </div>
             )}
 
@@ -453,18 +487,8 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
                 <div className="checkout-layout animate-fade-in">
                     <div className="checkout-main">
                         <button className="btn-back" onClick={() => setStep(2)}>← Bilgilere Dön</button>
-                        <h1 style={{marginBottom: '25px', color: '#1e293b'}}>Ödeme Yöntemi</h1>
+                        <h1 style={{marginBottom: '25px', color: '#1e293b'}}>Ödeme Yöntemi (Kredi / Banka Kartı)</h1>
                         <div className="form-section">
-                            <div className="payment-methods">
-                                <div className="pay-method active">
-                                    <i>💳</i>
-                                    <span>Kredi / Banka Kartı</span>
-                                </div>
-                                <div className="pay-method" onClick={() => window.showToast('Bu yöntem şu an aktif değil.', true)}>
-                                    <i>🏦</i>
-                                    <span>Havale / EFT</span>
-                                </div>
-                            </div>
                             <div className="form-grid">
                                 <div className="form-group full">
                                     <label>Kart Üzerindeki İsim</label>

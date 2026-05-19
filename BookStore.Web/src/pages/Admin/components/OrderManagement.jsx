@@ -30,7 +30,7 @@ const OrderManagement = ({
             handleViewOrder({ ...foundOrder, isVerified: true });
             setSearchCode('');
         } catch (err) {
-            window.showToast(err.response?.data || "Sipariş bulunamadı veya kod geçersiz.", true);
+            window.showToast("Kod bulunamadı.", true);
         }
     };
 
@@ -60,8 +60,8 @@ const OrderManagement = ({
                         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                             <h2 className="admin-page-title">Sipariş {selectedOrder.orderNumber}</h2>
                             <span className="status-pill" style={{
-                                background: selectedOrder.status === 5 ? '#fee2e2' : selectedOrder.status === 3 || selectedOrder.status === 4 || selectedOrder.status === 6 ? '#dcfce7' : '#fef3c7',
-                                color: selectedOrder.status === 5 ? '#dc2626' : selectedOrder.status === 3 || selectedOrder.status === 4 || selectedOrder.status === 6 ? '#16a34a' : '#d97706',
+                                background: (selectedOrder.status === 5 || selectedOrder.status === 7) ? '#fee2e2' : selectedOrder.status === 3 || selectedOrder.status === 4 || selectedOrder.status === 6 ? '#dcfce7' : '#fef3c7',
+                                color: (selectedOrder.status === 5 || selectedOrder.status === 7) ? '#dc2626' : selectedOrder.status === 3 || selectedOrder.status === 4 || selectedOrder.status === 6 ? '#16a34a' : '#d97706',
                                 fontSize: '14px', marginTop: '6px'
                             }}>
                                 {getStatusText(selectedOrder.status)}
@@ -81,8 +81,17 @@ const OrderManagement = ({
                                 <h3 className="admin-card-title">Müşteri & Teslimat Bilgileri</h3>
                                 {selectedOrder.isVerified && (
                                     <span style={{ 
-                                        padding: '6px 12px', background: '#dcfce7', color: '#16a34a', 
-                                        borderRadius: '8px', fontSize: '12px', fontWeight: '800' 
+                                        padding: '8px 16px', 
+                                        background: '#dcfce7', 
+                                        color: '#15803d', 
+                                        border: '1.5px solid #86efac',
+                                        borderRadius: '8px', 
+                                        fontSize: '15px', 
+                                        fontWeight: '900',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '6px',
+                                        boxShadow: '0 2px 8px rgba(22, 163, 74, 0.1)'
                                     }}>✅ KOD DOĞRULANDI</span>
                                 )}
                             </div>
@@ -105,17 +114,31 @@ const OrderManagement = ({
                         <div className="admin-card">
                             <h3 className="admin-card-title">Sipariş Durumu Güncelle</h3>
                             <div style={{ display: 'flex', gap: '16px', marginTop: '16px', alignItems: 'center' }}>
-                                <select
-                                    className="admin-select"
-                                    style={{ width: '200px' }}
-                                    value={tempOrderStatus !== null ? tempOrderStatus : selectedOrder.status}
-                                    onChange={(e) => setTempOrderStatus(parseInt(e.target.value))}
-                                >
-                                    <option value="2">Hazırlanıyor</option>
-                                    <option value="3">Kargoya Verildi</option>
-                                    <option value="6">Elden Teslim Edildi</option>
-                                    <option value="5">İptal / İade</option>
-                                </select>
+                                {selectedOrder.pickupCode ? (
+                                    <select
+                                        className="admin-select"
+                                        style={{ width: '200px' }}
+                                        value={tempOrderStatus !== null ? tempOrderStatus : selectedOrder.status}
+                                        onChange={(e) => setTempOrderStatus(parseInt(e.target.value))}
+                                    >
+                                        <option value="2">Hazırlanıyor</option>
+                                        <option value="6">Elden Teslim Edildi</option>
+                                        <option value="5">İptal Edildi</option>
+                                        <option value="7">İade Edildi</option>
+                                    </select>
+                                ) : (
+                                    <select
+                                        className="admin-select"
+                                        style={{ width: '200px' }}
+                                        value={tempOrderStatus !== null ? tempOrderStatus : selectedOrder.status}
+                                        onChange={(e) => setTempOrderStatus(parseInt(e.target.value))}
+                                    >
+                                        <option value="2">Hazırlanıyor</option>
+                                        <option value="3">Kargoya Verildi</option>
+                                        <option value="5">İptal Edildi</option>
+                                        <option value="7">İade Edildi</option>
+                                    </select>
+                                )}
 
                                 {tempOrderStatus !== null && tempOrderStatus !== selectedOrder.status && (
                                     <div style={{ display: 'flex', gap: '8px' }}>

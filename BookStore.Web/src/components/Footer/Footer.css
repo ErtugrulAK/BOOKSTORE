@@ -92,6 +92,16 @@
     line-height: 1.5;
 }
 
+.footer-contact a {
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-contact a:hover {
+    color: #3b82f6;
+}
+
 .footer-bottom {
     max-width: 1200px;
     margin: 0 auto;

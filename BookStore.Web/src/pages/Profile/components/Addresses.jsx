@@ -1,13 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import SearchableSelect from '../../../components/SearchableSelect';
+import { turkeyCities } from '../../../data/turkeyCities';
 
 const Addresses = ({ token }) => {
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isEditing, setIsEditing] = useState(false);
+    const [currentAddress, setCurrentAddress] = useState(null);
+    const [tempPhone, setTempPhone] = useState('');
+
+    const [selectedCity, setSelectedCity] = useState('');
+    const [selectedDistrict, setSelectedDistrict] = useState('');
+    const [addressDetails, setAddressDetails] = useState('');
+
+    const parseAddressDetails = (detailsStr) => {
+        if (!detailsStr) return { city: '', district: '', details: '' };
+        const match = detailsStr.match(/^([^\/]+)\s*\/\s*([^-]+)\s*-\s*(.*)$/);
+        if (match) {
+            const city = match[1].trim();
+            const district = match[2].trim();
+            const details = match[3].trim();
+            if (turkeyCities[city]) {
+                return { city, district, details };
+            }
+        }
+        return { city: '', district: '', details: detailsStr };
+    };
 
     useEffect(() => {
         fetchAddresses();
     }, []);
+
+    useEffect(() => {
+        if (currentAddress) {
+            const parsed = parseAddressDetails(currentAddress.addressDetails);
+            setSelectedCity(parsed.city);
+            setSelectedDistrict(parsed.district);
+            setAddressDetails(parsed.details);
+        } else {
+            setSelectedCity('');
+            setSelectedDistrict('');
+            setAddressDetails('');
+        }
+    }, [currentAddress]);
 
     const fetchAddresses = async () => {
         try {
@@ -20,10 +56,6 @@ const Addresses = ({ token }) => {
             setLoading(false);
         }
     };
-
-    const [isEditing, setIsEditing] = useState(false);
-    const [currentAddress, setCurrentAddress] = useState(null);
-    const [tempPhone, setTempPhone] = useState('');
 
     const formatPhone = (value) => {
         let digits = value.replace(/[^\d]/g, '');
@@ -74,11 +106,18 @@ const Addresses = ({ token }) => {
 
     const handleSave = async (e) => {
         e.preventDefault();
+
+        if (!selectedCity || !selectedDistrict) {
+            window.showToast("Lütfen il ve ilçe seçiniz.", true);
+            return;
+        }
+
         const formData = new FormData(e.target);
+        const fullAddress = `${selectedCity} / ${selectedDistrict} - ${addressDetails}`;
         const addrData = {
             title: formData.get('label'),
             receiverName: formData.get('name'),
-            addressDetails: formData.get('details'),
+            addressDetails: fullAddress,
             phoneNumber: tempPhone,
             isDefault: currentAddress?.isDefault || false
         };
@@ -126,9 +165,48 @@ const Addresses = ({ token }) => {
                                     }}
                                 />
                             </div>
+                            <div className="user-input-group">
+                                <label>İl *</label>
+                                <SearchableSelect 
+                                    options={Object.keys(turkeyCities)}
+                                    value={selectedCity}
+                                    onChange={(city) => {
+                                        setSelectedCity(city);
+                                        setSelectedDistrict('');
+                                    }}
+                                    placeholder="İl Seçiniz"
+                                />
+                            </div>
+                            <div className="user-input-group">
+                                <label>İlçe *</label>
+                                <SearchableSelect 
+                                    options={selectedCity ? turkeyCities[selectedCity] : []}
+                                    value={selectedDistrict}
+                                    onChange={(district) => setSelectedDistrict(district)}
+                                    placeholder={selectedCity ? "İlçe Seçiniz" : "Önce İl Seçiniz"}
+                                    disabled={!selectedCity}
+                                />
+                            </div>
                             <div className="user-input-group" style={{ gridColumn: 'span 2' }}>
-                                <label>Açık Adres</label>
-                                <input name="details" defaultValue={currentAddress?.addressDetails} required />
+                                <label>Açık Adres (Mahalle, Cadde, Sokak, No, Daire vs.) *</label>
+                                <textarea 
+                                    value={addressDetails}
+                                    onChange={(e) => setAddressDetails(e.target.value)}
+                                    placeholder="Mahalle, cadde, sokak, apartman, daire vb. detayları yazın."
+                                    required 
+                                    rows="3"
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px 16px',
+                                        border: '1.5px solid #e2e8f0',
+                                        borderRadius: '12px',
+                                        fontFamily: 'inherit',
+                                        fontSize: '14px',
+                                        outline: 'none',
+                                        transition: 'border-color 0.2s ease',
+                                        boxSizing: 'border-box'
+                                    }}
+                                />
                             </div>
                             <div className="user-input-group">
                                 <label>Telefon Numarası</label>

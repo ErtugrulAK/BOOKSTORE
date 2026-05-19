@@ -110,26 +110,41 @@ function Admin({ token, user }) {
             setInactiveBooksCount(inactiveRes.data.totalCount);
 
             // Orders
-            const ordersRes = await axios.get(`/api/Orders/all?page=${ordersPage}&pageSize=10`, config).catch(() => ({ data: { items: [], totalCount: 0 } }));
+            const ordersRes = await axios.get(`/api/Orders/all?page=${ordersPage}&pageSize=10`, config).catch((err) => {
+                console.error("Siparişler yüklenemedi:", err);
+                return { data: { items: [], totalCount: 0 } };
+            });
             setOrders(ordersRes.data.items || []);
             setOrdersTotal(ordersRes.data.totalCount || 0);
 
             // Users
-            const usersRes = await axios.get(`/api/Users?page=${usersPage}&pageSize=10`, config).catch(() => ({ data: { items: [], totalCount: 0 } }));
+            const usersRes = await axios.get(`/api/Users?page=${usersPage}&pageSize=10`, config).catch((err) => {
+                console.error("Kullanıcılar yüklenemedi:", err);
+                return { data: { items: [], totalCount: 0 } };
+            });
             setUsers(usersRes.data.items || []);
             setUsersTotal(usersRes.data.totalCount || 0);
 
             // Messages
-            const messagesRes = await axios.get(`/api/Contact?page=${messagesPage}&pageSize=10`, config).catch(() => ({ data: { items: [], totalCount: 0 } }));
+            const messagesRes = await axios.get(`/api/Contact?page=${messagesPage}&pageSize=10`, config).catch((err) => {
+                console.error("Mesajlar yüklenemedi:", err);
+                return { data: { items: [], totalCount: 0 } };
+            });
             setMessages(messagesRes.data.items || []);
             setMessagesTotal(messagesRes.data.totalCount || 0);
 
             // Dashboard Stats
-            const statsRes = await axios.get(`/api/Dashboard/stats`, config).catch(() => null);
+            const statsRes = await axios.get(`/api/Dashboard/stats`, config).catch((err) => {
+                console.error("İstatistikler yüklenemedi:", err);
+                return null;
+            });
             if (statsRes) setDashboardStats(statsRes.data);
 
             // Unread Messages Count
-            const unreadRes = await axios.get(`/api/Contact?pageSize=1&isRead=false`, config).catch(() => ({ data: { totalCount: 0 } }));
+            const unreadRes = await axios.get(`/api/Contact?pageSize=1&isRead=false`, config).catch((err) => {
+                console.error("Okunmamış mesaj sayısı alınamadı:", err);
+                return { data: { totalCount: 0 } };
+            });
             setUnreadMessagesCount(unreadRes.data.totalCount || 0);
 
         } catch (error) {
@@ -181,10 +196,10 @@ function Admin({ token, user }) {
     const getStatusText = (status) => {
         switch (status) {
             case 2: return "Hazırlanıyor";
-            case 3:
-            case 4: return "Kargoya Verildi";
-            case 5: return "İptal / İade";
+            case 3: return "Kargoya Verildi";
+            case 5: return "İptal Edildi";
             case 6: return "Elden Teslim Edildi";
+            case 7: return "İade Edildi";
             default: return "Hazırlanıyor";
         }
     };
@@ -303,13 +318,12 @@ function Admin({ token, user }) {
                         <i>✉️</i> İletişim Mesajları
                         {unreadMessagesCount > 0 && <span className="admin-menu-badge danger" style={{ marginLeft: 'auto', background: '#ef4444', color: 'white', fontSize: '10px', padding: '2px 6px', borderRadius: '10px', fontWeight: '700' }}>{unreadMessagesCount}</span>}
                     </button>
-                    <button className={`admin-menu-item ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => { setActiveTab('settings'); setSelectedUser(null); setSelectedOrder(null); }}><i>⚙️</i> Ayarlar</button>
+                    <button className={`admin-menu-item ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => { setActiveTab('settings'); setSelectedUser(null); setSelectedOrder(null); }}><i>🔑</i> Şifre Değiştir</button>
                 </div>
                 <div className="admin-sidebar-footer">
-                    <button className="admin-menu-item logout" onClick={() => navigate('/')}>Siteye Dön</button>
                 </div>
             </aside>
-
+ 
             <main className="admin-main">
                 <header className="admin-topbar">
                     <div className="admin-topbar-right">
@@ -322,14 +336,14 @@ function Admin({ token, user }) {
                         </div>
                     </div>
                 </header>
-
+ 
                 <div className="admin-content-scroll">
                     {activeTab === 'dashboard' && <Dashboard orders={orders} books={books} users={users} CATEGORIES={CATEGORIES} setActiveTab={setActiveTab} formatDate={formatDate} stats={dashboardStats} />}
                     {(activeTab === 'books' || activeTab === 'book_form') && <BookManagement activeTab={activeTab} books={books} booksTotal={booksTotal} booksPage={booksPage} setBooksPage={setBooksPage} bookForm={bookForm} setBookForm={setBookForm} handleSaveBook={handleSaveBook} handleDeleteBook={handleDeleteBook} handleBulkAction={handleBulkAction} setActiveTab={setActiveTab} CATEGORIES={CATEGORIES} token={token} fetchData={fetchData} showOnlyInactiveBooks={showOnlyInactiveBooks} setShowOnlyInactiveBooks={setShowOnlyInactiveBooks} showOnlyCriticalBooks={showOnlyCriticalBooks} setShowOnlyCriticalBooks={setShowOnlyCriticalBooks} criticalStockCount={criticalStockCount} inactiveBooksCount={inactiveBooksCount} bulkPriceIncrease={bulkPriceIncrease} setBulkPriceIncrease={setBulkPriceIncrease} openBookForm={openBookForm} formatISBN={formatISBN} />}
                     {activeTab === 'orders' && <OrderManagement selectedOrder={selectedOrder} setSelectedOrder={setSelectedOrder} orders={orders} ordersTotal={ordersTotal} ordersPage={ordersPage} setOrdersPage={setOrdersPage} formatDate={formatDate} getStatusText={getStatusText} tempOrderStatus={tempOrderStatus} setTempOrderStatus={setTempOrderStatus} token={token} fetchData={fetchData} handleViewOrder={(o) => { setSelectedOrder(o); setTempOrderStatus(o.status); }} />}
                     {activeTab === 'users' && <UserManagement users={users} usersTotal={usersTotal} usersPage={usersPage} setUsersPage={setUsersPage} formatDate={formatDate} handleViewUser={handleViewUser} handleDeleteUser={handleDeleteUser} selectedUser={selectedUser} setSelectedUser={setSelectedUser} />}
                     {activeTab === 'contacts' && <ContactMessages messages={messages} messagesTotal={messagesTotal} messagesPage={messagesPage} setMessagesPage={setMessagesPage} token={token} fetchData={fetchData} />}
-                    {activeTab === 'settings' && <Settings settingsForm={settingsForm} setSettingsForm={setSettingsForm} passwordForm={passwordForm} setPasswordForm={setPasswordForm} token={token} />}
+                    {activeTab === 'settings' && <Settings passwordForm={passwordForm} setPasswordForm={setPasswordForm} token={token} />}
                     {activeTab === 'detailed_report' && <DetailedReport orders={orders} reportStartDate={reportStartDate} setReportStartDate={setReportStartDate} reportEndDate={reportEndDate} setReportEndDate={setReportEndDate} reportStatus={reportStatus} setReportStatus={setReportStatus} reportSearch={reportSearch} setReportSearch={setReportSearch} setActiveTab={setActiveTab} handleViewOrder={(o) => { setSelectedOrder(o); setTempOrderStatus(o.status); setActiveTab('orders'); }} />}
                 </div>
             </main>

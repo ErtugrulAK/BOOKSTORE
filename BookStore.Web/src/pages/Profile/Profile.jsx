@@ -7,6 +7,7 @@ import './Profile.css';
 import PersonalInfo from './components/PersonalInfo';
 import Addresses from './components/Addresses';
 import OrderHistory from './components/OrderHistory';
+import ChangePassword from './components/ChangePassword';
 
 function Profile({ user, setUser, token }) {
     const navigate = useNavigate();
@@ -56,6 +57,12 @@ function Profile({ user, setUser, token }) {
                         <i>👤</i> Kişisel Bilgiler
                     </button>
                     <button 
+                        className={`user-menu-item ${activeTab === 'change_password' ? 'active' : ''}`} 
+                        onClick={() => setActiveTab('change_password')}
+                    >
+                        <i>🔑</i> Şifre Değiştir
+                    </button>
+                    <button 
                         className={`user-menu-item ${activeTab === 'addresses' ? 'active' : ''}`} 
                         onClick={() => setActiveTab('addresses')}
                     >
@@ -88,6 +95,7 @@ function Profile({ user, setUser, token }) {
                 <div className="user-content-scroll">
                     <div className="user-page-container">
                         {activeTab === 'personal' && <PersonalInfo user={user} token={token} setUser={setUser} />}
+                        {activeTab === 'change_password' && <ChangePassword token={token} user={user} />}
                         {activeTab === 'addresses' && <Addresses token={token} />}
                         {activeTab === 'orders' && <OrderHistory orders={orders} token={token} onRefresh={fetchUserOrders} />}
                     </div>
