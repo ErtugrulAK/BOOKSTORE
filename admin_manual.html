@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEÜ Kitap Satış - Yönetici Kullanım Kılavuzu</title>
+    <!-- Modern Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- TEMA RENKLERİ VE DEĞİŞKENLERİ --- */
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-sidebar: #0f172a;
+            --sidebar-text: #94a3b8;
+            --sidebar-active: #ffffff;
+            --sidebar-active-bg: #1e293b;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --accent: #4318ff;
+            --accent-hover: #3311db;
+            --accent-light: #eef2ff;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #090d16;
+            --bg-secondary: #111827;
+            --bg-sidebar: #0b0f19;
+            --sidebar-text: #6b7280;
+            --sidebar-active: #3b82f6;
+            --sidebar-active-bg: #1f2937;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --accent-light: rgba(59, 130, 246, 0.15);
+            --border: #1f2937;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+        }
+
+        /* --- GENEL TASARIM --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.25;
+        }
+
+        /* --- SİDEBAR TASARIMI --- */
+        .sidebar {
+            width: 320px;
+            background-color: var(--bg-sidebar);
+            color: var(--sidebar-text);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            z-index: 100;
+            transition: var(--transition);
+            border-right: 1px solid var(--border);
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 8px 4px;
+        }
+
+        .sidebar-brand span.logo {
+            font-size: 28px;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-menu-title {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin: 16px 0 8px 12px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            color: var(--sidebar-text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .sidebar-item:hover {
+            color: #ffffff;
+            background-color: var(--sidebar-active-bg);
+            transform: translateX(4px);
+        }
+
+        .sidebar-item.active {
+            color: #ffffff;
+            background-color: var(--accent);
+            box-shadow: 0 4px 14px rgba(67, 24, 255, 0.3);
+        }
+
+        /* --- ANA İÇERİK ALANI --- */
+        .main-content {
+            margin-left: 320px;
+            flex-grow: 1;
+            padding: 40px 60px;
+            max-width: 1200px;
+            min-width: 0;
+            transition: var(--transition);
+        }
+
+        /* --- TOPBAR / HEADER --- */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            gap: 20px;
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 500px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-light);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(67, 24, 255, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .theme-toggle {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--border);
+            transform: translateY(-2px);
+        }
+
+        /* --- KARTLAR VE DETAYLAR --- */
+        .doc-section {
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .doc-section:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .doc-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .doc-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        /* --- ADIM ADIM ANLATIM (AKORDEON) --- */
+        .accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .accordion-item {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background-color: var(--bg-primary);
+            transition: var(--transition);
+        }
+
+        .accordion-header {
+            padding: 18px 24px;
+            font-weight: 700;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            transition: var(--transition);
+        }
+
+        .accordion-header:hover {
+            background-color: var(--border);
+        }
+
+        .accordion-content {
+            padding: 24px;
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            display: none;
+        }
+
+        .accordion-icon {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.open .accordion-content {
+            display: block;
+        }
+
+        .accordion-item.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        /* --- BİLGİ KUTULARI --- */
+        .info-box {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            border-radius: var(--radius-md);
+            margin: 20px 0;
+            border: 1px solid transparent;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .info-box-success {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.2);
+            color: #065f46;
+        }
+
+        .info-box-info {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.2);
+            color: #1e40af;
+        }
+
+        .info-box-warning {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.2);
+            color: #92400e;
+        }
+
+        .info-box-danger {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: #991b1b;
+        }
+
+        .info-box-icon {
+            font-size: 24px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        /* --- ADIM LİSTELERİ --- */
+        .step-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .step-list li {
+            position: relative;
+            padding-left: 36px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .step-list li::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 24px;
+            height: 24px;
+            background-color: var(--accent);
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        /* --- MOCKUP EKRAN GÖRÜNTÜLERİ --- */
+        .mockup-container {
+            margin: 24px 0;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            background-color: #0f172a;
+            position: relative;
+        }
+
+        .mockup-header {
+            height: 32px;
+            background-color: var(--border);
+            display: flex;
+            align-items: center;
+            padding-left: 16px;
+            gap: 6px;
+        }
+
+        .mockup-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        .mockup-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .mockup-container:hover .mockup-img {
+            transform: scale(1.02);
+        }
+
+        .mockup-caption {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* --- TABLOLAR --- */
+        .doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        .doc-table th {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 14px 18px;
+            font-weight: 700;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .doc-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .doc-table tr:hover {
+            background-color: var(--accent-light);
+        }
+
+        /* --- ROZETLER VE PİLLER --- */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .pill-success { background-color: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .pill-warning { background-color: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .pill-danger { background-color: rgba(239, 68, 68, 0.15); color: var(--danger); }
+        .pill-info { background-color: rgba(59, 130, 246, 0.15); color: var(--accent); }
+
+        /* --- YAZDIRILABİLİR SÜRÜM / PDF KAPAK --- */
+        .print-cover {
+            display: none;
+        }
+
+        /* --- YAZDIRMA STİLİ (@media print) --- */
+        @media print {
+            body {
+                background-color: #ffffff;
+                color: #000000;
+                display: block;
+            }
+
+            .sidebar, .topbar, .theme-toggle, .btn-print, .search-container {
+                display: none !important;
+            }
+
+            .main-content {
+                margin-left: 0 !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+
+            .doc-section {
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                margin-bottom: 50px !important;
+                page-break-before: always;
+            }
+
+            .doc-section:first-of-type {
+                page-break-before: avoid;
+            }
+
+            /* Kapak sayfası oluşturma */
+            .print-cover {
+                display: flex !important;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                text-align: center;
+                page-break-after: always;
+            }
+
+            .print-cover-title {
+                font-size: 38px;
+                color: #0f172a;
+                margin-bottom: 20px;
+                font-weight: 800;
+            }
+
+            .print-cover-subtitle {
+                font-size: 20px;
+                color: #475569;
+                margin-bottom: 60px;
+            }
+
+            .print-cover-meta {
+                margin-top: 100px;
+                font-size: 14px;
+                color: #94a3b8;
+                border-top: 1.5px solid #cbd5e1;
+                padding-top: 20px;
+                width: 200px;
+            }
+
+            .accordion-content {
+                display: block !important;
+            }
+
+            .accordion-icon {
+                display: none !important;
+            }
+
+            .mockup-container {
+                page-break-inside: avoid;
+                box-shadow: none !important;
+            }
+
+            .doc-table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PDF YAZDIRILIRKEN GÖZÜKECEK KAPAK SAYFASI -->
+    <div class="print-cover">
+        <div style="font-size: 70px; margin-bottom: 30px;">📚</div>
+        <h1 class="print-cover-title">DEÜ KİTAP SATIŞ</h1>
+        <h2 class="print-cover-subtitle">Yönetim Paneli Kullanım Kılavuzu</h2>
+        <p style="max-width: 500px; margin: 0 auto; color: #64748b; font-size: 15px;">Sisteme yeni başlayan yöneticiler için adım adım rehberler, ekran görüntüleri ve gelişmiş raporlama detayları.</p>
+        <div class="print-cover-meta">
+            <strong>Döküman Sürümü:</strong> 1.0.0<br>
+            <strong>Son Güncelleme:</strong> May 2026
+        </div>
+    </div>
+
+    <!-- YAN PANEL (SIDEBAR) -->
+    <aside class="sidebar">
+        <div class="sidebar-brand" onclick="window.scrollTo(0,0)">
+            <span class="logo">📚</span>
+            <span>DEÜ Kitap Satış</span>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <span class="sidebar-menu-title">Başlangıç</span>
+            <a href="#giris" class="sidebar-item active" data-section="giris">
+                <span>🔑</span> Giriş ve Erişim
+            </a>
+            
+            <span class="sidebar-menu-title">Yönetim Sekmeleri</span>
+            <a href="#panel" class="sidebar-item" data-section="panel">
+                <span>🎛️</span> Genel Bakış (Panel)
+            </a>
+            <a href="#kitaplar" class="sidebar-item" data-section="kitaplar">
+                <span>📘</span> Kitap Yönetimi
+            </a>
+            <a href="#siparisler" class="sidebar-item" data-section="siparisler">
+                <span>🛒</span> Sipariş Yönetimi
+            </a>
+            <a href="#kullanicilar" class="sidebar-item" data-section="kullanicilar">
+                <span>👥</span> Kullanıcı Yönetimi
+            </a>
+            <a href="#mesajlar" class="sidebar-item" data-section="mesajlar">
+                <span>✉️</span> İletişim Mesajları
+            </a>
+            
+            <span class="sidebar-menu-title">Güvenlik & Analiz</span>
+            <a href="#sifre" class="sidebar-item" data-section="sifre">
+                <span>🛡️</span> Şifre ve 2FA
+            </a>
+            <a href="#raporlama" class="sidebar-item" data-section="raporlama">
+                <span>📊</span> Detaylı Raporlama
+            </a>
+        </nav>
+
+        <div style="border-top: 1px solid #1e293b; padding-top: 16px; font-size: 12px; color: var(--text-muted); text-align: center;">
+            Sürüm 1.0.0 | DEÜ © 2026
+        </div>
+    </aside>
+
+    <!-- ANA İÇERİK -->
+    <main class="main-content">
+        
+        <!-- ÜST ARAMA VE AYAR KONTROLLERİ -->
+        <header class="topbar">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="searchInput" placeholder="Kılavuzda arama yapın (örn: elden teslim, kitap ekleme)...">
+            </div>
+            
+            <div class="controls">
+                <button class="theme-toggle" id="themeToggle" title="Tema Değiştir">🌓</button>
+                <button class="btn btn-primary btn-print" onclick="window.print()">
+                    🖨️ PDF Olarak Yazdır
+                </button>
+            </div>
+        </header>
+
+        <!-- 1. GİRİŞ VE ERİŞİM -->
+        <section id="giris" class="doc-section">
+            <h2 class="doc-title">🔑 1. Giriş ve Erişim</h2>
+            <p class="doc-subtitle">Yönetici paneline güvenli şekilde nasıl giriş yapılacağı ve yetki aşamaları.</p>
+            
+            <p>Sistem yöneticileri, genel kullanıcı arayüzü üzerinden giriş yaptıktan sonra otomatik olarak algılanır. Yönetici yetkilerine sahip hesaplar, platform üzerinde normal kullanıcıların erişemediği yönetim paneli arayüzüne yönlendirilirler.</p>
+            
+            <div class="info-box info-box-info">
+                <span class="info-box-icon">ℹ️</span>
+                <div>
+                    <strong>Önemli Not:</strong> Yönetici paneline erişmek için hesabınızın veritabanında <code>Role = 'Admin'</code> olarak işaretlenmiş olması gerekmektedir. Eğer giriş yaptıktan sonra yönetim butonunu göremiyorsanız sistem yöneticisiyle irtibat kurun.
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Adım Adım Giriş Yapma</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ul class="step-list">
+                            <li data-step="1">Ana sayfanın sağ üstündeki <strong>Giriş Yap</strong> butonuna tıklayın.</li>
+                            <li data-step="2">Açılan ekranda yönetici e-posta adresinizi ve şifrenizi girin.</li>
+                            <li data-step="3">Giriş yaptıktan sonra, sağ üstteki profil menüsünde beliren <strong>Yönetim Paneli</strong> butonuna tıklayın.</li>
+                            <li data-step="4">Sistem sizi sol menüye sahip geniş yönetim paneline yönlendirecektir.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. GENEL BAKIŞ (DASHBOARD) PANELİ -->
+        <section id="panel" class="doc-section">
+            <h2 class="doc-title">🎛️ 2. Genel Bakış (Dashboard) Paneli</h2>
+            <p class="doc-subtitle">Mağazanın ciro, sipariş ve üyelik performansını tek bir ekranda izleyin.</p>
+            
+            <div class="mockup-container">
+                <div class="mockup-header">
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                </div>
+                <img src="manual_assets/dashboard_mockup.png" alt="Dashboard Paneli" class="mockup-img">
+            </div>
+            <div class="mockup-caption">Görsel 1: Genel Bakış ve Analiz Paneli Arayüzü</div>
+
+            <p style="margin-top: 20px;">Dashboard ekranı, yöneticinin sistemi ilk açtığında gördüğü alandır. Burada en temel 4 gösterge kartı bulunur:</p>
+            
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Gösterge</th>
+                        <th>Açıklama</th>
+                        <th>İşlevi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>💰 Toplam Gelir</strong></td>
+                        <td>Kargolanmış (3), Teslim Edilmiş (4) ve Elden Teslim Edilmiş (6) siparişlerin toplam tutarıdır.</td>
+                        <td>İptaller hariç net cironuzu takip etmenizi sağlar.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>🛒 Toplam Sipariş</strong></td>
+                        <td>Sistemdeki tüm siparişlerin adeti. İptal ve iadeler kart altında kırmızı parantez içinde belirtilir.</td>
+                        <td>Sipariş hacmini gösterir.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>📚 Satılan Kitap</strong></td>
+                        <td>Gönderimi başarıyla yapılmış toplam fiziksel kitap adetidir.</td>
+                        <td>Stok devir hızınızı değerlendirmede kullanılır.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>👥 Yeni Üye</strong></td>
+                        <td>Sadece içinde bulunulan ay kaydolan yeni üye sayısıdır.</td>
+                        <td>Platformun büyüme ivmesini temsil eder.</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p><strong>Aylık Satış Analizi Grafiği:</strong> Geçmiş aylardaki başarılı teslimat gelirlerini bar grafik olarak karşılaştırır. Barların üzerine fare ile gelinerek detaylı tutar görülebilir.</p>
+            <p><strong>Kategori Dağılımı ve Çok Satanlar:</strong> Sayfanın altında, en çok satılan kitapların isimleri ve mühendislik bölümlerine/kategorilerine göre kazanılan ciro barları anlık listelenir.</p>
+        </section>
+
+        <!-- 3. KİTAP YÖNETİMİ (ENVANTER) -->
+        <section id="kitaplar" class="doc-section">
+            <h2 class="doc-title">📘 3. Kitap Yönetimi (Envanter)</h2>
+            <p class="doc-subtitle">Kitap ekleme, stok güncelleme, toplu fiyat değişiklikleri ve envanter filtreleri.</p>
+
+            <div class="mockup-container">
+                <div class="mockup-header">
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                </div>
+                <img src="manual_assets/books_mockup.png" alt="Kitap Listesi ve Yönetimi" class="mockup-img">
+            </div>
+            <div class="mockup-caption">Görsel 2: Kitap Listesi, Toplu İşlemler ve Arama Kontrolleri</div>
+
+            <p style="margin-top: 20px;">Kitap yönetimi sayfasında, stoğunuzda bulunan ders kitaplarını, dış yayınları yönetebilir, toplu fiyat artışı yapabilir veya kritik seviyedeki kitapları denetleyebilirsiniz.</p>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Yeni Kitap Ekleme Adımları</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ul class="step-list">
+                            <li data-step="1">Kitap Listesi ekranında sağ üstteki yeşil <strong>+ Yeni Kitap Ekle</strong> butonuna tıklayın.</li>
+                            <li data-step="2"><strong>Temel Bilgiler:</strong> Kitabın adını girin. Yazarları virgülle ayırarak yazın (örn: <i>Ahmet Yılmaz, Mehmet Can</i>). Detaylı açıklama girin.</li>
+                            <li data-step="3"><strong>Detaylar:</strong> Kategori (örn: <i>Makina Mühendisliği</i>) seçin. ISBN numarasını rakamlarla yazın (ISBN kutusu tire işaretlerini otomatik ekler). Sayfa sayısını ve basım yılını girin.</li>
+                            <li data-step="4"><strong>Kapak Görseli:</strong> "Kapak Seç" alanına tıklayıp bilgisayarınızdan resmi seçin. Yüklendiğinde resim önizlemede görünür.</li>
+                            <li data-step="5"><strong>Fiyat & Stok:</strong> Satış fiyatını ₺ cinsinden yazın. Stok adedini girin. Min Stok sınırını belirleyin (Stok bu değerin altına düşerse kritik olarak işaretlenir).</li>
+                            <li data-step="6"><strong>Görünürlük:</strong> "Satışa Açık" switch butonunun açık (yeşil) olduğundan emin olun.</li>
+                            <li data-step="7">Sağ üstteki <strong>💾 Değişiklikleri Kaydet</strong> butonuna basarak ürünü yayına alın.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Toplu İşlemler Nasıl Yapılır?</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Ekranın üst kısmında toplu eylemleri gerçekleştireceğiniz kısayol butonları mevcuttur:</p>
+                        <ul style="margin-left: 20px; line-height: 1.8; margin-bottom: 16px;">
+                            <li><strong>Tümünü Satışa Aç / Kapat:</strong> Sitedeki bütün kitapları tek hamlede aktif/pasif hale getirmek için tıklanır ve onay kutusu doğrulanır.</li>
+                            <li><strong>Toplu Fiyat Arttır:</strong> Yüzdelik girdi alanına sayı yazıp (örn: <code>10</code>) butona tıklandığında, depodaki tüm kitapların fiyatı otomatik olarak %10 oranında yükseltilir.</li>
+                        </ul>
+                        <div class="info-box info-box-warning">
+                            <span class="info-box-icon">⚠️</span>
+                            <div>
+                                <strong>Dikkat:</strong> Toplu fiyat artışı işlemi doğrudan veritabanında çalışır ve geri alınması zordur. İşlemi yapmadan önce girdiğiniz yüzdelik oranından emin olun.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Akıllı Filtrelerin Kullanımı (Kritik Stok & Pasif Kitaplar)</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Zamanla yüzlerce kitap arasında stok takibi zorlaşabilir. Bu durumda envanter listesindeki iki adet filtre butonu kullanılır:</p>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>⚠️ Kritik Stok Filtresi:</strong> Tıklandığında yalnızca stok miktarı <code>Min Stok</code> değerinden daha az kalmış kitaplar listelenir. Bu sayede tükenmek üzere olan kitapları hemen sipariş edebilirsiniz.</li>
+                            <li><strong>🚫 Pasifteki Kitaplar Filtresi:</strong> Yalnızca <code>Satışa Açık</code> durumu kapalı olan (gizlenmiş) kitapları görmenizi sağlar.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. SİPARİŞ YÖNETİMİ -->
+        <section id="siparisler" class="doc-section">
+            <h2 class="doc-title">🛒 4. Sipariş Yönetimi</h2>
+            <p class="doc-subtitle">Sipariş takipleri, teslimat durumu güncellemeleri ve elden teslim doğrulama kodu sistemi.</p>
+
+            <div class="mockup-container">
+                <div class="mockup-header">
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                </div>
+                <img src="manual_assets/orders_mockup.png" alt="Sipariş Yönetimi" class="mockup-img">
+            </div>
+            <div class="mockup-caption">Görsel 3: Sipariş Arayüzü ve Elden Teslim Doğrulama Bölümü</div>
+
+            <p style="margin-top: 20px;">Siparişler sayfasında müşterilerin sipariş kodlarını doğrulayabilir, sipariş içeriklerini görüntüleyebilir ve kargo veya elden teslim durumlarını güncelleyebilirsiniz.</p>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Elden Teslimat Kodu Doğrulama Adımları</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Öğrenciler dekanlık veya kitap teslim noktasından siparişlerini teslim almak üzere geldiklerinde aşağıdaki adımlar uygulanır:</p>
+                        <ul class="step-list">
+                            <li data-step="1">Alıcının telefonundaki veya çıktısındaki <strong>DK-FXXXXX</strong> biçimli kodu alın.</li>
+                            <li data-step="2">Sipariş sekmesindeki üst tarafta bulunan mavi renkli <strong>Elden Teslimat Doğrulama</strong> kutusuna kodu yazın.</li>
+                            <li data-step="3"><strong>Bul & Doğrula</strong> butonuna tıklayın.</li>
+                            <li data-step="4">Sipariş anında bulunup detay ekranı açılır ve yeşil renkli <strong>✅ KOD DOĞRULANDI</strong> rozeti görünür.</li>
+                            <li data-step="5">Sipariş içeriğinde belirtilen kitapları alıcıya elden teslim edin.</li>
+                            <li data-step="6">Sipariş durumunu "Elden Teslim Edildi" olarak güncelleyip kaydedin.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Sipariş Durumları ve Anlamları</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Her siparişin belirli bir hayat döngüsü vardır. Bunlar durum kodlarıyla belirlenir:</p>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><span class="pill pill-warning">Hazırlanıyor (2)</span>: Kitapların raftan indirilip koliye/pakete konma aşamasında olduğunu belirtir.</li>
+                            <li><span class="pill pill-success">Kargoya Verildi (3)</span>: Paketin kargo firmasına teslim edildiğini ifade eder.</li>
+                            <li><span class="pill pill-success">Elden Teslim Edildi (6)</span>: Alıcının kodu doğrulanarak elden teslim aldığı durumdur.</li>
+                            <li><span class="pill pill-danger">İptal Edildi (5)</span>: Ödeme yapılmayan ya da alıcı tarafından ilk 10 dakikada iptal edilen siparişler.</li>
+                            <li><span class="pill pill-danger">İade Edildi (7)</span>: Teslimat sonrası 14 gün içinde geri iade edilen siparişlerdir.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. KULLANICI YÖNETİMİ -->
+        <section id="kullanicilar" class="doc-section">
+            <h2 class="doc-title">👥 5. Kullanıcı Yönetimi</h2>
+            <p class="doc-subtitle">Sisteme kayıtlı kullanıcı hesaplarının yetki kontrolleri, silme işlemleri ve sipariş geçmişi takibi.</p>
+            
+            <p>Bu ekran, kayıtlı tüm üyelerin (öğrenci, akademisyen veya diğer yöneticiler) detaylarına erişmenizi sağlar. Arama kutusunu kullanarak kullanıcı adına veya e-posta adresine göre filtreleme yapabilir, kayıt tarihine veya isme göre sıralayabilirsiniz.</p>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Kullanıcı Detaylarını ve Geçmişini İnceleme</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ul class="step-list">
+                            <li data-step="1">Kullanıcılar tablosunda incelemek istediğiniz kullanıcının satırında yer alan <strong>👁️ (İncele)</strong> simgesine tıklayın.</li>
+                            <li data-step="2">Ekranın solunda kullanıcının profil baş harflerinden oluşan daire logo, ad soyad, e-posta, telefon ve sisteme kayıt tarihi bilgisi açılır.</li>
+                            <li data-step="3">Ekranın sağında ise bu kullanıcının bugüne kadar verdiği tüm siparişler, sipariş tarihleri, tutarları ve sipariş durumları liste halinde sunulur.</li>
+                            <li data-step="4">Üstteki sol ok butonuna basarak genel listeye geri dönebilirsiniz.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Kullanıcı Engelleme ve Silme Kuralları</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Kötü niyetli veya sistem kurallarına aykırı hareket eden hesaplar için silme işlemi uygulanabilir:</p>
+                        <ul style="margin-left: 20px; line-height: 1.8; margin-bottom: 16px;">
+                            <li>Kullanıcı satırındaki kırmızı <strong>🗑️ (Sil)</strong> butonuna tıklayın.</li>
+                            <li>Çıkan onay penceresindeki uyarıları okuyarak onay verin.</li>
+                        </ul>
+                        <div class="info-box info-box-danger">
+                            <span class="info-box-icon">🛑</span>
+                            <div>
+                                <strong>Kritik Güvenlik Kuralı:</strong> Veritabanında yer alan kurucu yönetici hesabı (ID: #1), sistemin çökmesini ve yönetim panelinin tamamen kilitlenmesini engellemek amacıyla hiçbir şekilde silinemez. Silme butonu bu kullanıcı için otomatik olarak gizlenir.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. İLETİŞİM MESAJLARI (DESTEK TALEPLERİ) -->
+        <section id="mesajlar" class="doc-section">
+            <h2 class="doc-title">✉️ 6. İletişim Mesajları</h2>
+            <p class="doc-subtitle">Siteden gönderilen destek taleplerini, soruları ve mailleri yanıtlayın.</p>
+            
+            <p>Ziyaretçilerin "İletişim" formundan gönderdiği sorular sol menüdeki <strong>İletişim Mesajları</strong> sekmesine bildirim olarak yansır. Okunmamış mesajların yanında kırmızı renkli adet rozeti bulunur.</p>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Gelen Mesajları Okuma ve Yanıtlama Prosedürü</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ul class="step-list">
+                            <li data-step="1">Gelen kutusunda okunmamış (arka planı renkli ve mavi bildirim noktalı olan) mesajları tespit edin.</li>
+                            <li data-step="2">Mesaj satırının sağındaki <strong>Oku & Yanıtla</strong> butonuna tıklayın.</li>
+                            <li data-step="3">Açılan pencerede kullanıcının ismi, kayıt tarihi, mesajın konusu ve detaylı içeriği gösterilir.</li>
+                            <li data-step="4">Cevabınızı alt kısımdaki <strong>Yanıtınız</strong> kutusuna yazın.</li>
+                            <li data-step="5"><strong>Cevabı Gönder</strong> butonuna tıklayın. Yazdığınız yanıt kaydedilir, arka planda kullanıcıya e-posta olarak iletilir ve mesajın durumu yeşil renkli "Yanıtlandı" olarak değişir.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. GÜVENLİK VE ŞİFRE DEĞİŞTİRME (2FA) -->
+        <section id="sifre" class="doc-section">
+            <h2 class="doc-title">🛡️ 7. Güvenlik ve Şifre Değiştirme (2FA)</h2>
+            <p class="doc-subtitle">Yönetici hesaplarının güvenliğini sağlamak için iki adımlı şifre güncelleme adımları.</p>
+            
+            <p>Yönetici hesabı platformun tüm verilerine erişim hakkına sahip olduğundan, şifre değişimlerinde iki faktörlü kimlik doğrulama zorunludur. E-posta onay kodu girilmeden yeni şifre aktif edilemez.</p>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>İki Aşamalı Şifre Değiştirme Adımları</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ul class="step-list">
+                            <li data-step="1">Sol menüden <strong>Şifre Değiştir</strong> sekmesine girin.</li>
+                            <li data-step="2">Mevcut Şifrenizi girin.</li>
+                            <li data-step="3">Yeni Şifrenizi yazın ve alttaki kutuya aynısını tekrar girerek şifreleri eşleştirin.</li>
+                            <li data-step="4"><strong>Şifreyi Güncelle</strong> butonuna basın.</li>
+                            <li data-step="5">Sistem, kayıtlı e-posta adresinize 6 haneli geçici bir güvenlik kodu yollar.</li>
+                            <li data-step="6">E-postanızı açıp gelen 6 haneli kodu kopyalayın ve ekrandaki <strong>Doğrulama Kodu</strong> alanına yapıştırın.</li>
+                            <li data-step="7"><strong>Doğrula ve Şifreyi Değiştir</strong> butonuna basarak işlemi tamamlayın.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. DETAYLI RAPORLAMA VE DIŞA AKTARMA -->
+        <section id="raporlama" class="doc-section">
+            <h2 class="doc-title">📊 8. Detaylı Raporlama ve Dışa Aktarma</h2>
+            <p class="doc-subtitle">Finansal raporları tarih aralıklarına göre filtreleyin ve kurumsal formatlarda dışa aktarın.</p>
+
+            <div class="mockup-container">
+                <div class="mockup-header">
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                </div>
+                <img src="manual_assets/reports_mockup.png" alt="Raporlama Ekranı" class="mockup-img">
+            </div>
+            <div class="mockup-caption">Görsel 4: Raporlama Filtreleri ve İstatistik Grafikleri</div>
+
+            <p style="margin-top: 20px;">Raporlama modülü, tarih aralığı, sipariş durumu veya kitap adlarına göre gelişmiş sorgulamalar yapabilmenizi sağlar. Filtrelenen siparişlerin toplam geliri, sipariş sayısı ve satılan kitap adeti anında üst kartlarda gösterilir.</p>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Biçimlendirilmiş Excel (XLSX) Raporu Alma</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Raporlama sayfasının sağ üstünde yer alan yeşil <strong>📊 Excel İndir</strong> butonuna bastığınızda, sistem verileri işleyip şu kurumsal standartlara göre düzenlenmiş bir dosya indirir:</p>
+                        <ul style="margin-left: 20px; line-height: 1.8; margin-top: 10px;">
+                            <li><strong>Görsel Düzen:</strong> Sütun genişlikleri içeriğe göre otomatik açılır, yazılar taşmaz. Başlık satırı kalın (Bold), büyük punto ve sarı dolgu ile biçimlendirilmiştir.</li>
+                            <li><strong>Bölmeler:</strong> Hücre kenarları ince gri çizgilerle çevrilidir. Fiyat sütunları otomatik para birimi formatına (<code>₺150.00</code>) dönüştürülmüştür.</li>
+                            <li><strong>Çoklu Sayfalar:</strong> Excel dosyasında iki ayrı çalışma sayfası bulunur. Birincisi detaylı sipariş listesi, ikincisi ise kategorilere göre toplam satış adetlerini toplayan <strong>Kategori İstatistikleri</strong> özet tablosudur.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Kurumsal PDF Raporu Alma</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Filtrelenmiş sipariş listesini PDF olarak almak için kırmızı <strong>📄 PDF İndir</strong> butonuna basın. İndirilen dosyanın özellikleri:</p>
+                        <ul style="margin-left: 20px; line-height: 1.8; margin-top: 10px;">
+                            <li><strong>Sayfa Yapısı:</strong> Yatay (Landscape) A4 kağıt boyutuna uygun tasarlanmıştır.</li>
+                            <li><strong>Marka Tasarımı:</strong> Sayfa başında platformun kurumsal mavi şeridi (`#4318ff`) ve başlık yer alır. Tablolar çizgili satır (zebra) modeliyle kolay okunur biçimdedir.</li>
+                            <li><strong>Dil Desteği:</strong> PDF standart fontlarının Türkçe harfleri bozmasını engellemek amacıyla otomatik karakter dönüşümü uygulanarak kusursuz bir metin çıktısı elde edilir.</li>
+                            <li><strong>Alt Bilgiler:</strong> Her sayfanın altında otomatik sayfa numaraları (örn: <i>Sayfa 1 / 3</i>) bulunur.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        // --- TEMA DEĞİŞTİRİCİ ---
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggleBtn.textContent = '☀️';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeToggleBtn.textContent = '🌙';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                themeToggleBtn.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.textContent = '☀️';
+            }
+        });
+
+        // --- AKORDEON MENÜLER ---
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                item.classList.toggle('open');
+            });
+        });
+
+        // --- KILAVUZ İÇİ ARAMA FONKSİYONU ---
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            const sections = document.querySelectorAll('.doc-section');
+            
+            sections.forEach(section => {
+                const title = section.querySelector('.doc-title').textContent.toLowerCase();
+                const subtitle = section.querySelector('.doc-subtitle').textContent.toLowerCase();
+                const contentText = section.textContent.toLowerCase();
+                const sidebarItem = document.querySelector(`.sidebar-item[data-section="${section.id}"]`);
+                
+                if (title.includes(query) || subtitle.includes(query) || contentText.includes(query)) {
+                    section.style.display = 'block';
+                    if (sidebarItem) sidebarItem.style.display = 'flex';
+                    
+                    // Arama yapılıyorsa akordeonları otomatik aç
+                    if (query.length > 2) {
+                        const accordions = section.querySelectorAll('.accordion-item');
+                        accordions.forEach(acc => acc.classList.add('open'));
+                    }
+                } else {
+                    section.style.display = 'none';
+                    if (sidebarItem) sidebarItem.style.display = 'none';
+                }
+            });
+            
+            if (query === "") {
+                // Arama temizlendiyse akordeonları kapat
+                const allAccordions = document.querySelectorAll('.accordion-item');
+                allAccordions.forEach(acc => acc.classList.remove('open'));
+            }
+        });
+
+        // --- SIDEBAR AKTİF SINIF DEĞİŞİMİ ---
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        window.addEventListener('scroll', () => {
+            let currentActive = "";
+            const sections = document.querySelectorAll('.doc-section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 120) {
+                    currentActive = section.getAttribute('id');
+                }
+            });
+
+            sidebarItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-section') === currentActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+        
+        // Sidebar item tıklama ile yumuşak geçiş
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = item.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetSection.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                
+                sidebarItems.forEach(si => si.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
