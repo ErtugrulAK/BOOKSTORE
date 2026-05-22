@@ -80,6 +80,7 @@ namespace BookStore.Api.Controllers
 
             // Sepete EKLENİRKEN yeni sepet oluşturulabilir (true)
             var cart = await GetCartAsync(true);
+            if (cart == null) return NotFound("Sepet oluşturulamadı.");
 
             var existingItem = cart.OrderItems.FirstOrDefault(oi => oi.BookId == req.BookId);
             if (existingItem != null)
@@ -210,7 +211,7 @@ namespace BookStore.Api.Controllers
             var user = await _db.Users.FindAsync(userId);
             if (user != null && !string.IsNullOrEmpty(user.Email))
             {
-                await _emailService.SendOrderCreatedEmailAsync(user.Email, cart.OrderNumber);
+                await _emailService.SendOrderCreatedEmailAsync(user.Email, cart.OrderNumber, cart.PickupCode);
             }
 
             return Ok(cart);

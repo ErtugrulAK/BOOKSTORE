@@ -240,7 +240,7 @@ const OrderHistory = ({ orders = [], token, onRefresh }) => {
                             <div className={`timeline-step ${(selectedOrder.status === 'Shipped' || selectedOrder.status === 3) ? 'active' : (selectedOrder.status === 'Delivered' || selectedOrder.status === 4 || selectedOrder.status === 6) ? 'completed' : ''}`}>
                                 <div className="step-icon">🚚</div>
                                 <div className="step-label">Kargoya Verildi</div>
-                                <div className="step-time" style={{ fontWeight: '700' }}>{(selectedOrder.status === 'Shipped' || selectedOrder.status === 3) ? 'Yolda' : (selectedOrder.status === 'Delivered' || selectedOrder.status === 4) ? 'Teslim Edildi' : selectedOrder.status === 6 ? 'Elden Teslim Edildi' : 'Bekleniyor'}</div>
+                                <div className="step-time" style={{ fontWeight: '700' }}>{(selectedOrder.status === 'Shipped' || selectedOrder.status === 3) ? 'Kargoya Verildi' : (selectedOrder.status === 'Delivered' || selectedOrder.status === 4) ? 'Teslim Edildi' : selectedOrder.status === 6 ? 'Elden Teslim Edildi' : 'Bekleniyor'}</div>
                             </div>
                         )}
                     </div>

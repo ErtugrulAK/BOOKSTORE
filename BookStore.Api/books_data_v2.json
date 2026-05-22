@@ -14,7 +14,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/kimya-laboratuvari-deneyleri.jpg"
   },
   {
     "Name": "Çevre Mühendisliğinde Fiziksel- Kimyasal Temel Süreçler",
@@ -31,7 +32,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/cevre-muhendisliginde-fiziksel-kimyasal-temel-surecler.jpg"
   },
   {
     "Name": "Çevre Mühendisliğinde Biyoprosesler",
@@ -48,7 +50,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/cevre-uhendisliginde-biyoprosesler.jpg"
   },
   {
     "Name": "Atıksu Arıtma Sistemlerinin Tasarım Esasları C-I ",
@@ -65,7 +68,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "Atıksu Arıtma Sistemlerinin Tasarım Esasları C-II",
@@ -82,7 +86,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/atiksu-aritma-sistemlerinin-tasarim-esaslari-c-ii.jpg"
   },
   {
     "Name": "Arıtma Çamurlarının İşlenmesi",
@@ -99,7 +104,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/aritma-camurlarinin-islenmesi.jpg"
   },
   {
     "Name": "Katı Atık Toplama Taş. Bertaraf sis.",
@@ -116,7 +122,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/kati-atik-toplama-tasima-ve-bertaraf-sistemlerinin-eniyilenmesi-ve-ekonomisi.jpg"
   },
   {
     "Name": "Atıksu Stabili Havuz ve Mekanik Havuz Lagün Taşıma-İnş -İşlt Esas",
@@ -133,7 +140,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "Anaerobik Arıtma",
@@ -150,7 +158,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/anaerobik-aritma.jpg"
   },
   {
     "Name": "Atmosfer Kimyası",
@@ -167,7 +176,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/atmosfer-kimyasi.jpg"
   },
   {
     "Name": "Çevre Mühendisliğinde Mikrobiyolojik Uygulamalar",
@@ -184,7 +194,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/cevre-muhendiliginde-mikrobiyolojik-uygulamalar.jpg"
   },
   {
     "Name": "Aktif Çamur Sürecinin Tasarım Uygulamaları Cilt I",
@@ -201,7 +212,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/aktif-camur-surecinin-tasarim-uygulamalari-cilt-i.jpeg"
   },
   {
     "Name": "Aktif Çamur Sürecinin Tasarım Uygulamaları Cilt II",
@@ -218,7 +230,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/aktif-camur-surecinin-tasarim-uygulamalari-cilt-ii.jpeg"
   },
   {
     "Name": "Teknik İngilizce ",
@@ -235,7 +248,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "Endüstriyel atık suların yönetilmesi",
@@ -252,7 +266,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/endustriyel-atik-sularin-yonetimi.jpeg"
   },
   {
     "Name": "Elektrik  Makinalarının Temel İlkeleri",
@@ -269,7 +284,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/elektrik-makinalarinin-temel-ilkeleri.jpg"
   },
   {
     "Name": "Üretim Fonksiyonları",
@@ -286,7 +302,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/uretim-fonksiyonlari.jpg"
   },
   {
     "Name": "İşletme Yöntemi ve Organizasyonu",
@@ -303,7 +320,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/isletme-yonetimi-ve-organizasyonu.jpg"
   },
   {
     "Name": "Tesis Planlama",
@@ -320,7 +338,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "Üretim Planlama",
@@ -337,7 +356,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/uretim-planama.jpg"
   },
   {
     "Name": "Sukuvveti tes.Sayısal Örnekle",
@@ -354,7 +374,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/su-kuvveti-tesislerinde-sayisal-ornekler.jpg"
   },
   {
     "Name": "Su Getirme ve Kanalizasyon Tes.Sayısal Örnekler",
@@ -371,7 +392,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "Yapı ve Deprem Mühendisliğinde Matris Yöntemler",
@@ -388,7 +410,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/yapi-ve-deprem-muhendisliginde-matris-yontemler.jpg"
   },
   {
     "Name": "Malzeme Bilgisi (İnş.Müh.İçin.)",
@@ -405,7 +428,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/insaat-muhendisleri-icin-malzeme-bilgisi.jpg"
   },
   {
     "Name": "Kıyı Mühendisliğinde  Sayısal Uygulamalar",
@@ -422,7 +446,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/kiyi-muhendisliginde-sayisal-uygulamalar.jpeg"
   },
   {
     "Name": "Su Kaynaklarını Geliştirilmesi",
@@ -439,7 +464,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/su-kaynaklarinin-i-yilestirilmesi.jpeg"
   },
   {
     "Name": "Su Kuvveti Su yapıları Cilt IX",
@@ -456,7 +482,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/su-kuvveti-su-yapilari.jpeg"
   },
   {
     "Name": "Fiziksel Modeller",
@@ -473,7 +500,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/fiziksel-modeller.jpeg"
   },
   {
     "Name": "Fıransızca",
@@ -490,7 +518,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/french-for-engineers.jpeg"
   },
   {
     "Name": "Beton",
@@ -507,7 +536,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "Sayısal uygulamalı Akışkanlar Mekaniği",
@@ -524,7 +554,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "Diferansiyel denklemler",
@@ -541,7 +572,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/diferansiyel-denklemler.jpeg"
   },
   {
     "Name": "Mühendis ve Mimar Sinan",
@@ -558,7 +590,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/muhendis-ve-mimar-sinan.jpeg"
   },
   {
     "Name": "Geçmişten Günümüze Dünya Su Yapıları",
@@ -575,7 +608,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/gecmisten-gunumuze-dunyada-su-yapilari.jpeg"
   },
   {
     "Name": "Taşıyıcı Sistemlerin Dinamik Analizi",
@@ -592,7 +626,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/tasiyici-sistemlerin-dinamik-analizi.jpeg"
   },
   {
     "Name": "Bilisayar Programlama (matlab Uygulamalı)",
@@ -609,7 +644,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/bilgisayar-programlama.jpeg"
   },
   {
     "Name": "Jeofizik Sinyal Analizi",
@@ -626,7 +662,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/jeofizikte-sinyal-analizi.jpeg"
   },
   {
     "Name": "Potansiyel Teori Jeofizik Uygulamaları",
@@ -643,7 +680,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/potansiyel-teori-ve-jeofizik-uygulamalari.jpeg"
   },
   {
     "Name": "Mineroloji-Genel Mineroloji (Cilt I )",
@@ -660,7 +698,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/mineraloji.jpg"
   },
   {
     "Name": "Kömür",
@@ -677,7 +716,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/komur.jpg"
   },
   {
     "Name": "Maden Jeolojisi Uygulama kılavuzu",
@@ -694,7 +734,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/maden-jeolojisi-uygulama-klavuzu.jpg"
   },
   {
     "Name": "Volkanik lastik Kayaclar",
@@ -711,7 +752,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/volkaniklastik-kayaclar.jpg"
   },
   {
     "Name": "Kayaçların Radyometrik Yaş Tayininin Ana Yöntemleri",
@@ -728,7 +770,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/kayaclarin-radyometrik-yas-tayininin-ana-yontemleri.jpg"
   },
   {
     "Name": "Cevher Mikroskopisi ve Petrografisi",
@@ -745,7 +788,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "Jeotermalde Yerbilimsel  Uygulamalar",
@@ -762,7 +806,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/jeotermalde-yerbilimsel-uygulamalar.jpg"
   },
   {
     "Name": "Kil Mineralleri (Ders Notları)",
@@ -779,7 +824,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/kil-mineralleri.jpeg"
   },
   {
     "Name": "Mühendislik Jeolojisi",
@@ -796,7 +842,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/muhendislik-jeolojisi.jpeg"
   },
   {
     "Name": "Kömür Teknolojisi",
@@ -813,7 +860,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/komur-teknolojisi.jpg"
   },
   {
     "Name": "Tünel Ve Kuyu Açma",
@@ -830,7 +878,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/tunel-ve-kuyu-acma.jpg"
   },
   {
     "Name": "Kaya Mekaniği",
@@ -847,7 +896,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/kaya-mekanigi.jpg"
   },
   {
     "Name": "Maden işletme Ekonomisi",
@@ -864,7 +914,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/maden-isletme-ekonomisi.jpg"
   },
   {
     "Name": "Açık İşletme Tekniği",
@@ -881,7 +932,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/acik-isletme-teknigi.jpg"
   },
   {
     "Name": "Madenlerde Su atımı ve Pompalar",
@@ -898,7 +950,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/madenlerde-su-aritimi-ve-pompalar.jpg"
   },
   {
     "Name": "Madenlerde Nakliyat",
@@ -915,7 +968,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/madenlerde-nakliyat.jpg"
   },
   {
     "Name": "Yer altı Maden Makinaları Ve Mekanizasyonu",
@@ -932,7 +986,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/yeralti-maden-makineleri-ve-mekanizasyonu.jpg"
   },
   {
     "Name": "Maden Mühendisleri için Ölçme Tekniği",
@@ -949,7 +1004,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/maden-muhendisleri-icin-olcme-teknigi.jpg"
   },
   {
     "Name": "Madenciliğe Giriş",
@@ -966,7 +1022,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "Yer altı havalandırması",
@@ -983,7 +1040,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/yeralti-havalandirmasi.jpeg"
   },
   {
     "Name": "Yer altı madencilik Yöntemleri",
@@ -1000,7 +1058,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "Teknik Resim  I",
@@ -1017,7 +1076,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "Kaldırma Makinaları",
@@ -1034,7 +1094,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/kaldirma-makinalari.jpg"
   },
   {
     "Name": "Mukavemet I",
@@ -1051,7 +1112,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "Sistem Dinamiği ve Otomatik Kontrol",
@@ -1068,7 +1130,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/sistem-dinamigi-ve-otomatik-kontrol.jpg"
   },
   {
     "Name": "Staj Defteri",
@@ -1085,7 +1148,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/staj-defteri.jpg"
   },
   {
     "Name": "Örmecilik Esasları",
@@ -1102,7 +1166,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/ormecilik-esaslari.jpg"
   },
   {
     "Name": "Tekstil Mekaniğinin Temelleri",
@@ -1119,7 +1184,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/tekstil-mekaniginin-temelleri.jpeg"
   },
   {
     "Name": "Giysi Kalıpçılığı-1",
@@ -1136,7 +1202,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/giysi-kalipciligi-i.jpeg"
   },
   {
     "Name": "Matematik I",
@@ -1153,7 +1220,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "Matematik-I (Lineer Cebir)",
@@ -1170,7 +1238,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/matematik-i-lineer-cebir.jpg"
   },
   {
     "Name": "Analitik Geometri",
@@ -1187,7 +1256,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/analitik-geometri.jpg"
   },
   {
     "Name": "Sayısal Çözümleme",
@@ -1204,7 +1274,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "Sayısal Çözümleme ve Örnekler",
@@ -1221,7 +1292,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/sayisal-cozumleme-ve-ornekler.jpg"
   },
   {
     "Name": "Matematık ııı",
@@ -1238,7 +1310,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "İş ve zaman etüdü  ",
@@ -1255,7 +1328,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/i-s-ve-zaman-etudu.jpeg"
   },
   {
     "Name": "Atatürk ve Aydınlanma",
@@ -1272,7 +1346,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/ataturk-ve-aydinlanma.jpeg"
   },
   {
     "Name": "Üçünçü  Kılıç",
@@ -1289,7 +1364,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/i-zmir-in-kurtulusu-ve-yuzbasi-serafettin.jpeg"
   },
   {
     "Name": "Türk Devrim Tarihi",
@@ -1306,7 +1382,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/turk-devrim-tarihi-i.jpeg"
   },
   {
     "Name": "Genel kimya için Lab.Deneyleri",
@@ -1323,7 +1400,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/kim-1016-organik-kimya-uygulama-deneyleri.jpeg"
   },
   {
     "Name": "Fizik Lab II",
@@ -1340,7 +1418,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": "/images/books/fizik-laboratuvari-ii-deney-kitapcigi.jpeg"
   },
   {
     "Name": "Fizik lab.I",
@@ -1357,7 +1436,8 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   },
   {
     "Name": "Tekstil Kimya ",
@@ -1374,6 +1454,7 @@
     "Description": null,
     "IsActive": true,
     "IsFeatured": false,
-    "MinStockLevel": 25
+    "MinStockLevel": 25,
+    "ImageUrl": ""
   }
 ]

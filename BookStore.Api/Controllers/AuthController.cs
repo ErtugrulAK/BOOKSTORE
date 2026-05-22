@@ -115,6 +115,13 @@ namespace BookStore.Api.Controllers
             }
 
             // Doğrulama başarılı, kullanıcıyı kaydet
+            
+            // Çift kayıt / Race Condition Kontrolü:
+            if (await _db.Users.AnyAsync(u => u.Email == cachedData.Request.Email || u.Username == cachedData.Request.Email))
+            {
+                return BadRequest(new { message = "Bu e-posta adresi zaten kullanımda." });
+            }
+
             var user = new User
             {
                 Username = cachedData.Request.Email, 

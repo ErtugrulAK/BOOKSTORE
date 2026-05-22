@@ -13,7 +13,7 @@ import DetailedReport from './components/DetailedReport';
 import ContactMessages from './components/ContactMessages';
 import CustomModal from './components/CustomModal';
 
-function Admin({ token, user }) {
+function Admin({ token, user, onLogout }) {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('dashboard');
 
@@ -76,7 +76,31 @@ function Admin({ token, user }) {
     // Site Ayarları
     const [settingsForm, setSettingsForm] = useState(() => {
         const saved = localStorage.getItem('site_settings');
-        return saved ? JSON.parse(saved) : { siteName: 'DEÜ Kitap Satışı', phone: '+90 232 412 00 00', email: 'iletisim@bookstore.com', address: 'Buca / İZMİR' };
+        const defaultSettings = { 
+            siteName: 'DEÜ Kitap Satışı', 
+            phone: '0232 301 75 97', 
+            fax: '0232 301 72 10',
+            email: 'kitapsatis@deu.edu.tr', 
+            address: 'Dokuz Eylül Üniversitesi Mühendislik Fakültesi Merkez Yerleşkesi 35160 Buca / İZMİR' 
+        };
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            let updated = false;
+            if (parsed.siteName === 'DEU Kitap Satışı' || parsed.siteName === 'DEU Kitap Satış') {
+                parsed.siteName = 'DEÜ Kitap Satışı';
+                updated = true;
+            }
+            if (parsed.phone === '+90 (232) 412 70 00' || !parsed.fax) {
+                parsed.phone = '0232 301 75 97';
+                parsed.fax = '0232 301 72 10';
+                updated = true;
+            }
+            if (updated) {
+                localStorage.setItem('site_settings', JSON.stringify(parsed));
+            }
+            return parsed;
+        }
+        return defaultSettings;
     });
     const [passwordForm, setPasswordForm] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });
 
@@ -321,6 +345,9 @@ function Admin({ token, user }) {
                     <button className={`admin-menu-item ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => { setActiveTab('settings'); setSelectedUser(null); setSelectedOrder(null); }}><i>🔑</i> Şifre Değiştir</button>
                 </div>
                 <div className="admin-sidebar-footer">
+                    <button className="admin-menu-item logout" onClick={() => { onLogout(); navigate('/'); }}>
+                        Güvenli Çıkış
+                    </button>
                 </div>
             </aside>
  
@@ -341,7 +368,7 @@ function Admin({ token, user }) {
                     {activeTab === 'dashboard' && <Dashboard orders={orders} books={books} users={users} CATEGORIES={CATEGORIES} setActiveTab={setActiveTab} formatDate={formatDate} stats={dashboardStats} />}
                     {(activeTab === 'books' || activeTab === 'book_form') && <BookManagement activeTab={activeTab} books={books} booksTotal={booksTotal} booksPage={booksPage} setBooksPage={setBooksPage} bookForm={bookForm} setBookForm={setBookForm} handleSaveBook={handleSaveBook} handleDeleteBook={handleDeleteBook} handleBulkAction={handleBulkAction} setActiveTab={setActiveTab} CATEGORIES={CATEGORIES} token={token} fetchData={fetchData} showOnlyInactiveBooks={showOnlyInactiveBooks} setShowOnlyInactiveBooks={setShowOnlyInactiveBooks} showOnlyCriticalBooks={showOnlyCriticalBooks} setShowOnlyCriticalBooks={setShowOnlyCriticalBooks} criticalStockCount={criticalStockCount} inactiveBooksCount={inactiveBooksCount} bulkPriceIncrease={bulkPriceIncrease} setBulkPriceIncrease={setBulkPriceIncrease} openBookForm={openBookForm} formatISBN={formatISBN} />}
                     {activeTab === 'orders' && <OrderManagement selectedOrder={selectedOrder} setSelectedOrder={setSelectedOrder} orders={orders} ordersTotal={ordersTotal} ordersPage={ordersPage} setOrdersPage={setOrdersPage} formatDate={formatDate} getStatusText={getStatusText} tempOrderStatus={tempOrderStatus} setTempOrderStatus={setTempOrderStatus} token={token} fetchData={fetchData} handleViewOrder={(o) => { setSelectedOrder(o); setTempOrderStatus(o.status); }} />}
-                    {activeTab === 'users' && <UserManagement users={users} usersTotal={usersTotal} usersPage={usersPage} setUsersPage={setUsersPage} formatDate={formatDate} handleViewUser={handleViewUser} handleDeleteUser={handleDeleteUser} selectedUser={selectedUser} setSelectedUser={setSelectedUser} />}
+                    {activeTab === 'users' && <UserManagement users={users} usersTotal={usersTotal} usersPage={usersPage} setUsersPage={setUsersPage} formatDate={formatDate} handleViewUser={handleViewUser} handleDeleteUser={handleDeleteUser} selectedUser={selectedUser} setSelectedUser={setSelectedUser} token={token} />}
                     {activeTab === 'contacts' && <ContactMessages messages={messages} messagesTotal={messagesTotal} messagesPage={messagesPage} setMessagesPage={setMessagesPage} token={token} fetchData={fetchData} />}
                     {activeTab === 'settings' && <Settings passwordForm={passwordForm} setPasswordForm={setPasswordForm} token={token} />}
                     {activeTab === 'detailed_report' && <DetailedReport orders={orders} reportStartDate={reportStartDate} setReportStartDate={setReportStartDate} reportEndDate={reportEndDate} setReportEndDate={setReportEndDate} reportStatus={reportStatus} setReportStatus={setReportStatus} reportSearch={reportSearch} setReportSearch={setReportSearch} setActiveTab={setActiveTab} handleViewOrder={(o) => { setSelectedOrder(o); setTempOrderStatus(o.status); setActiveTab('orders'); }} />}

@@ -12,7 +12,10 @@ function Navbar({ searchTerm, setSearchTerm, user, handleLogout, cartCount }) {
       {/* Sol Kısım: Logo / Marka */}
       <div className="navbar-logo">
         <Link to="/" style={{ textDecoration: 'none', color: '#1e293b' }}>
-          <span style={{color: '#3b82f6', marginRight: '6px'}}>📚</span> {JSON.parse(localStorage.getItem('site_settings') || '{}').siteName || "DEÜ Kitap Satışı"}
+          <span style={{color: '#3b82f6', marginRight: '6px'}}>📚</span> {(() => {
+            const name = JSON.parse(localStorage.getItem('site_settings') || '{}').siteName || "DEÜ Kitap Satışı";
+            return name.replace(/DEU/gi, 'DEÜ');
+          })()}
         </Link>
       </div>
 

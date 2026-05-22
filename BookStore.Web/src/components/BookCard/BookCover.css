@@ -1,0 +1,280 @@
+/* Premium Book Cover Fallback Styling */
+
+.book-cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-book-cover {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: #ffffff;
+    font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    box-sizing: border-box;
+    user-select: none;
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.15), 
+        0 3px 6px rgba(0, 0, 0, 0.1),
+        inset -2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+/* Gradients */
+.bg-gradient-indigo {
+    background: linear-gradient(135deg, #1e3a8a 0%, #312e81 30%, #4f46e5 70%, #6366f1 100%);
+}
+
+.bg-gradient-emerald {
+    background: linear-gradient(135deg, #064e3b 0%, #022c22 30%, #0f766e 70%, #10b981 100%);
+}
+
+.bg-gradient-sunset {
+    background: linear-gradient(135deg, #311b92 0%, #4a148c 30%, #880e4f 70%, #d81b60 100%);
+}
+
+.bg-gradient-teal {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 35%, #0d9488 75%, #14b8a6 100%);
+}
+
+.bg-gradient-rose {
+    background: linear-gradient(135deg, #4c0519 0%, #881337 30%, #be123c 70%, #fb7185 100%);
+}
+
+/* 3D Spine Fold Effect */
+.book-cover-spine {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 12px;
+    background: linear-gradient(to right, 
+        rgba(0, 0, 0, 0.35) 0%, 
+        rgba(0, 0, 0, 0.1) 25%, 
+        rgba(255, 255, 255, 0.15) 35%, 
+        rgba(255, 255, 255, 0.25) 50%, 
+        rgba(0, 0, 0, 0.15) 60%, 
+        rgba(0, 0, 0, 0) 100%);
+    z-index: 4;
+}
+
+/* Paper Texture and Lighting Highlight Overlay */
+.book-cover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(105deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.08) 35%, rgba(0, 0, 0, 0.04) 50%, rgba(0, 0, 0, 0.2) 100%),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.01) 0px, rgba(255, 255, 255, 0.01) 1px, transparent 1px, transparent 4px);
+    z-index: 2;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+/* Content Container */
+.book-cover-content {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 16px 20px 24px;
+    z-index: 3;
+    box-sizing: border-box;
+}
+
+/* Branding Badge */
+.book-cover-branding {
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    opacity: 0.85;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    padding-bottom: 4px;
+    margin-bottom: auto;
+    text-align: left;
+}
+
+/* Center Section */
+.book-cover-center {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: auto 0;
+    text-align: left;
+}
+
+.book-cover-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.book-cover-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.book-cover-title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 0;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Footer Section */
+.book-cover-footer {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.book-cover-author {
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.book-cover-footer-accent {
+    height: 3px;
+    width: 30px;
+    background-color: #fbbf24; /* Warm Gold accent */
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Size Variations --- */
+
+/* Large Size (Book Details) */
+.premium-book-cover.large {
+    min-height: 480px;
+    border-radius: 16px;
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.35),
+        inset -3px 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.premium-book-cover.large .book-cover-spine {
+    width: 22px;
+}
+
+.premium-book-cover.large .book-cover-content {
+    padding: 36px 28px 36px 44px;
+}
+
+.premium-book-cover.large .book-cover-branding {
+    font-size: 11px;
+    letter-spacing: 3px;
+    padding-bottom: 6px;
+}
+
+.premium-book-cover.large .book-cover-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.premium-book-cover.large .book-cover-title {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    -webkit-line-clamp: 6;
+}
+
+.premium-book-cover.large .book-cover-author {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.premium-book-cover.large .book-cover-footer-accent {
+    height: 4px;
+    width: 45px;
+}
+
+/* Medium Size (Default for Cards) */
+.premium-book-cover.medium {
+    height: 200px;
+    border-radius: 12px;
+}
+
+/* Small Size (Shopping Cart Thumbnails) */
+.premium-book-cover.small {
+    width: 60px;
+    height: 80px;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.premium-book-cover.small .book-cover-spine {
+    width: 5px;
+}
+
+.premium-book-cover.small .book-cover-content {
+    padding: 6px 4px 6px 8px;
+}
+
+.premium-book-cover.small .book-cover-branding {
+    font-size: 5px;
+    letter-spacing: 0.5px;
+    padding-bottom: 1px;
+    border-bottom: none;
+    opacity: 0.7;
+}
+
+.premium-book-cover.small .book-cover-icon {
+    display: none;
+}
+
+.premium-book-cover.small .book-cover-title {
+    font-size: 8px;
+    line-height: 1.2;
+    font-weight: 600;
+    -webkit-line-clamp: 3;
+}
+
+.premium-book-cover.small .book-cover-author {
+    font-size: 6px;
+    opacity: 0.8;
+}
+
+.premium-book-cover.small .book-cover-footer-accent {
+    display: none;
+}
+
+/* Hover Zoom effects */
+.book-card:hover .premium-book-cover {
+    transform: scale(1.03) translateY(-2px);
+    box-shadow: 
+        0 15px 30px rgba(0, 0, 0, 0.25), 
+        0 5px 10px rgba(0, 0, 0, 0.15),
+        inset -2px 0 10px rgba(0, 0, 0, 0.1);
+}

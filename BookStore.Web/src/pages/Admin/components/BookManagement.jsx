@@ -1,5 +1,7 @@
 import React, { useRef, useState, useMemo } from 'react';
 import Pagination from './Pagination';
+import axios from 'axios';
+import XLSX from 'xlsx-js-style';
 
 const BookManagement = ({ 
     activeTab, 
@@ -28,6 +30,112 @@ const BookManagement = ({
     formatISBN
 }) => {
     const fileInputRef = useRef(null);
+
+    const exportToExcel = async () => {
+        try {
+            window.showToast("Kitap listesi indiriliyor...", false);
+            const res = await axios.get('/api/Books?includeInactive=true&pageSize=1000000');
+            const allBooks = res.data.items || [];
+            
+            const dataToExport = allBooks.map(b => ({
+                'Kitap ID': b.id,
+                'Kitap Adı': b.name || '-',
+                'Yazar': b.author || '-',
+                'Kategori / Bölüm': b.category || '-',
+                'Yayınevi': b.publisher || '-',
+                'ISBN': b.isbn || '-',
+                'Basım Yılı': b.publicationYear || '-',
+                'Sayfa Sayısı': b.pageCount || 0,
+                'Baskı': b.edition || '-',
+                'Dil': b.language || 'Türkçe',
+                'Fiyat (TL)': b.price || 0.0,
+                'Stok Adedi': b.stockQuantity || 0,
+                'Min Stok Seviyesi': b.minStockLevel || 25,
+                'Öne Çıkarılan': b.isFeatured ? 'Evet' : 'Hayır',
+                'Durum': b.isActive ? 'Yayında' : 'Pasif'
+            }));
+
+            const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+
+            const applyExcelStyles = (ws, colWidths, bodyHeight = 25) => {
+                if (!ws['!ref']) return;
+                ws['!cols'] = colWidths.map(w => ({ wpx: w }));
+                
+                const range = XLSX.utils.decode_range(ws['!ref']);
+                ws['!rows'] = [{ hpx: 35 }]; // Header row height
+
+                for (let R = range.s.r; R <= range.e.r; ++R) {
+                    if (R > 0) {
+                        ws['!rows'].push({ hpx: bodyHeight }); // Body row height
+                    }
+                    for (let C = range.s.c; C <= range.e.c; ++C) {
+                        const cell_ref = XLSX.utils.encode_cell({ r: R, c: C });
+                        if (!ws[cell_ref]) continue;
+
+                        if (R === 0) {
+                            ws[cell_ref].s = {
+                                fill: {
+                                    patternType: "solid",
+                                    fgColor: { rgb: "FFFF00" } // Yellow
+                                },
+                                font: {
+                                    name: "Calibri",
+                                    sz: 14,
+                                    bold: true,
+                                    color: { rgb: "000000" }
+                                },
+                                alignment: {
+                                    horizontal: "center",
+                                    vertical: "center",
+                                    wrapText: true
+                                },
+                                border: {
+                                    top: { style: "thin", color: { rgb: "000000" } },
+                                    bottom: { style: "medium", color: { rgb: "000000" } },
+                                    left: { style: "thin", color: { rgb: "000000" } },
+                                    right: { style: "thin", color: { rgb: "000000" } }
+                                }
+                            };
+                        } else {
+                            ws[cell_ref].s = {
+                                font: {
+                                    name: "Calibri",
+                                    sz: 11,
+                                    color: { rgb: "000000" }
+                                },
+                                alignment: {
+                                    horizontal: "center",
+                                    vertical: "center",
+                                    wrapText: true
+                                },
+                                border: {
+                                    top: { style: "thin", color: { rgb: "D3D3D3" } },
+                                    bottom: { style: "thin", color: { rgb: "D3D3D3" } },
+                                    left: { style: "thin", color: { rgb: "D3D3D3" } },
+                                    right: { style: "thin", color: { rgb: "D3D3D3" } }
+                                }
+                            };
+                            
+                            // Format Fiyat (TL) column (C = 10)
+                            if (C === 10) {
+                                ws[cell_ref].z = '"₺"#,##0.00';
+                            }
+                        }
+                    }
+                }
+            };
+
+            applyExcelStyles(worksheet, [80, 250, 180, 180, 150, 130, 100, 100, 100, 80, 120, 100, 120, 120, 100]);
+
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Kitap Envanteri");
+            XLSX.writeFile(workbook, "Kitap_Envanter_Yedegi.xlsx");
+            window.showToast("Kitap listesi başarıyla indirildi.");
+        } catch (err) {
+            console.error(err);
+            window.showToast("Kitap listesi indirilirken hata oluştu.", true);
+        }
+    };
     
     const [searchQuery, setSearchQuery] = useState('');
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'desc' });
@@ -148,6 +256,9 @@ const BookManagement = ({
                         )}
                     </div>
 
+                    <button className="admin-primary-btn" onClick={exportToExcel} style={{ background: '#10b981', borderColor: '#10b981', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        📥 Excel İndir (Yedek)
+                    </button>
                     <button className="admin-primary-btn" onClick={() => openBookForm()}>+ Yeni Kitap Ekle</button>
                 </div>
             </div>

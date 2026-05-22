@@ -13,6 +13,7 @@ import Profile from './pages/Profile/Profile'; // Profil sayfası
 import BookDetail from './pages/BookDetail/BookDetail'; // Kitap detay sayfası
 import Contact from './pages/Contact/Contact'; // İletişim sayfası
 import Footer from './components/Footer/Footer'; // Footer bileşeni
+import DistanceSales from './pages/DistanceSales/DistanceSales'; // Mesafeli satış sayfası
 
 // Vitrin (Ana Sayfa) bileşenimiz dışarıdan paramtere olarak aramayı, fiyatları ve KATEGORİYİ alıyor
 function Home({ searchTerm, minPrice, maxPrice, category, handleAddToCart }) {
@@ -312,7 +313,7 @@ function App() {
       <>
         <ToastContainer />
         <Routes>
-          <Route path="/admin" element={<Admin token={token} user={user} />} />
+          <Route path="/admin" element={<Admin token={token} user={user} onLogout={handleLogout} />} />
         </Routes>
       </>
     );
@@ -419,8 +420,9 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/kitap/:id" element={<BookDetail handleAddToCart={handleAddToCart} />} />
             <Route path="/iletisim" element={<Contact />} />
-            <Route path="/admin" element={<Admin token={token} />} />
+            <Route path="/admin" element={<Admin token={token} user={user} onLogout={handleLogout} />} />
             <Route path="/profile" element={<Profile token={token} user={user} onLogout={handleLogout} />} />
+            <Route path="/mesafeli-satis" element={<DistanceSales />} />
           </Routes>
         </div>
       </div>

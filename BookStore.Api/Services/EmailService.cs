@@ -70,15 +70,26 @@ namespace BookStore.Api.Services
             await SendCustomEmailAsync(toEmail, subject, body);
         }
 
-        public async Task SendOrderCreatedEmailAsync(string toEmail, string orderNumber)
+        public async Task SendOrderCreatedEmailAsync(string toEmail, string orderNumber, string? pickupCode = null)
         {
             string subject = $"Siparişiniz Alınmıştır! ({orderNumber})";
+            
+            string deliveryInfo = string.IsNullOrEmpty(pickupCode) 
+                ? "<p>Siparişiniz en kısa sürede hazırlanıp kargoya verilecektir.</p>"
+                : $@"<p>Siparişiniz en kısa sürede hazırlanıp dekanlığa teslim edilecektir. Siparişiniz hazırlandığında dekanlıktan teslim alabilirsiniz.</p>
+                     <div style='background: #eef2ff; border: 2px dashed #3b82f6; padding: 20px; border-radius: 12px; text-align: center; margin: 20px 0; max-width: 400px;'>
+                         <h4 style='margin: 0 0 10px 0; color: #3b82f6;'>🔐 Dekanlık Teslimat Kodunuz</h4>
+                         <div style='font-size: 28px; font-weight: bold; letter-spacing: 3px; color: #1e293b;'>{pickupCode}</div>
+                         <p style='margin: 10px 0 0 0; font-size: 12px; color: #64748b;'>Kitaplarınızı teslim alırken bu kodu yetkiliye göstermeniz gerekmektedir.</p>
+                     </div>";
+
             string body = $@"
                 <div style='font-family: Arial, sans-serif; padding: 20px;'>
                     <h2 style='color: #16a34a;'>Siparişiniz Alındı!</h2>
                     <p>Merhaba,</p>
                     <p><strong>{orderNumber}</strong> numaralı siparişiniz başarıyla oluşturulmuştur.</p>
-                    <p>Siparişiniz en kısa sürede hazırlanıp kargoya verilecektir. Bizi tercih ettiğiniz için teşekkür ederiz.</p>
+                    {deliveryInfo}
+                    <p>Bizi tercih ettiğiniz için teşekkür ederiz.</p>
                     <hr style='border: 1px solid #eee; margin: 20px 0;'/>
                     <p style='font-size: 12px; color: #888;'>DEÜ Kitap Satış Platformu</p>
                 </div>";
@@ -86,7 +97,7 @@ namespace BookStore.Api.Services
             await SendCustomEmailAsync(toEmail, subject, body);
         }
 
-        public async Task SendOrderStatusChangedEmailAsync(string toEmail, string orderNumber, OrderStatus oldStatus, OrderStatus newStatus)
+        public async Task SendOrderStatusChangedEmailAsync(string toEmail, string orderNumber, OrderStatus oldStatus, OrderStatus newStatus, string? pickupCode = null)
         {
             string newStatusText = newStatus switch
             {
@@ -123,12 +134,21 @@ namespace BookStore.Api.Services
                 _ => "#4b5563" // Gray
             };
 
+            string pickupInfo = string.IsNullOrEmpty(pickupCode)
+                ? ""
+                : $@"<div style='background: #eef2ff; border: 2px dashed #3b82f6; padding: 20px; border-radius: 12px; text-align: center; margin: 20px 0; max-width: 400px;'>
+                         <h4 style='margin: 0 0 10px 0; color: #3b82f6;'>🔐 Dekanlık Teslimat Kodunuz</h4>
+                         <div style='font-size: 28px; font-weight: bold; letter-spacing: 3px; color: #1e293b;'>{pickupCode}</div>
+                         <p style='margin: 10px 0 0 0; font-size: 12px; color: #64748b;'>Kitaplarınızı teslim alırken bu kodu yetkiliye göstermeniz gerekmektedir.</p>
+                     </div>";
+
             string subject = $"Siparişinizin Durumu Güncellendi: {newStatusText} ({orderNumber})";
             string body = $@"
                 <div style='font-family: Arial, sans-serif; padding: 20px;'>
                     <h2 style='color: {color};'>{title}</h2>
                     <p>Merhaba,</p>
                     <p><strong>{orderNumber}</strong> numaralı siparişinizin durumu <strong>{newStatusText}</strong> olarak güncellenmiştir.</p>
+                    {pickupInfo}
                     <p>Siparişinizin detaylarını web sitemiz üzerinden her zaman kontrol edebilirsiniz.</p>
                     <hr style='border: 1px solid #eee; margin: 20px 0;'/>
                     <p style='font-size: 12px; color: #888;'>DEÜ Kitap Satış Platformu</p>

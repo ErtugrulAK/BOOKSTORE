@@ -59,7 +59,7 @@ namespace BookStore.Api.Services
             var user = await _context.Users.FindAsync(userId);
             if (user != null && !string.IsNullOrEmpty(user.Email))
             {
-                await _emailService.SendOrderCreatedEmailAsync(user.Email, order.OrderNumber);
+                await _emailService.SendOrderCreatedEmailAsync(user.Email, order.OrderNumber, order.PickupCode);
             }
 
             return order;
@@ -140,7 +140,7 @@ namespace BookStore.Api.Services
             // Sipariş durumu değiştiğinde kullanıcıya mail at
             if (newStatus != oldStatus && order.User != null && !string.IsNullOrEmpty(order.User.Email))
             {
-                await _emailService.SendOrderStatusChangedEmailAsync(order.User.Email, order.OrderNumber, oldStatus, newStatus);
+                await _emailService.SendOrderStatusChangedEmailAsync(order.User.Email, order.OrderNumber, oldStatus, newStatus, order.PickupCode);
             }
 
             return order;
@@ -163,7 +163,7 @@ namespace BookStore.Api.Services
 
             if (oldStatus != OrderStatus.Paid && order.User != null && !string.IsNullOrEmpty(order.User.Email))
             {
-                await _emailService.SendOrderStatusChangedEmailAsync(order.User.Email, order.OrderNumber, oldStatus, OrderStatus.Paid);
+                await _emailService.SendOrderStatusChangedEmailAsync(order.User.Email, order.OrderNumber, oldStatus, OrderStatus.Paid, order.PickupCode);
             }
 
             return order;
@@ -204,7 +204,7 @@ namespace BookStore.Api.Services
 
             if (oldStatus != OrderStatus.Cancelled && order.User != null && !string.IsNullOrEmpty(order.User.Email))
             {
-                await _emailService.SendOrderStatusChangedEmailAsync(order.User.Email, order.OrderNumber, oldStatus, OrderStatus.Cancelled);
+                await _emailService.SendOrderStatusChangedEmailAsync(order.User.Email, order.OrderNumber, oldStatus, OrderStatus.Cancelled, order.PickupCode);
             }
 
             return order;
@@ -244,7 +244,7 @@ namespace BookStore.Api.Services
 
             if (oldStatus != OrderStatus.Returned && order.User != null && !string.IsNullOrEmpty(order.User.Email))
             {
-                await _emailService.SendOrderStatusChangedEmailAsync(order.User.Email, order.OrderNumber, oldStatus, OrderStatus.Returned);
+                await _emailService.SendOrderStatusChangedEmailAsync(order.User.Email, order.OrderNumber, oldStatus, OrderStatus.Returned, order.PickupCode);
             }
 
             return order;

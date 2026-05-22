@@ -7,8 +7,8 @@ const Footer = () => {
         <footer className="footer-container">
             <div className="footer-content">
                 <div className="footer-brand">
-                    <h2>📚 DEU Kitap Satış</h2>
-                    <p>En sevdiğiniz kitapları güvenle satın alın. Geniş kitap yelpazemiz ve uygun fiyatlarımızla her zaman yanınızdayız.</p>
+                    <h2>📚 DEÜ Kitap Satış</h2>
+                    <p>En sevdiğiniz kitapları güvenle satın alın. Uygun fiyatlarımızla her zaman yanınızdayız.</p>
                 </div>
                 
                 <div className="footer-links-group">
@@ -30,15 +30,19 @@ const Footer = () => {
                     <h3>İletişim</h3>
                     <div className="contact-item">
                         <span className="icon">📍</span>
-                        <p>Dokuz Eylül Üniversitesi Mühendislik Fakültesi Tınaztepe Yerleşkesi 35160 Buca / İzmir</p>
+                        <p>Dokuz Eylül Üniversitesi Mühendislik Fakültesi Merkez Yerleşkesi 35160 Buca / İzmir</p>
                     </div>
                     <div className="contact-item">
                         <span className="icon">📞</span>
-                        <p><a href="tel:+902321234567">+90 (232) 123 45 67</a></p>
+                        <p><strong>Tel:</strong> <a href="tel:+902323017597">0232 301 75 97</a></p>
+                    </div>
+                    <div className="contact-item">
+                        <span className="icon">📠</span>
+                        <p><strong>Fax:</strong> <a href="tel:+902323017210">0232 301 72 10</a></p>
                     </div>
                     <div className="contact-item">
                         <span className="icon">✉️</span>
-                        <p><a href="mailto:kitapsatis@deu.edu.tr">kitapsatis@deu.edu.tr</a></p>
+                        <p><strong>E-posta:</strong> <a href="mailto:kitapsatis@deu.edu.tr">kitapsatis@deu.edu.tr</a></p>
                     </div>
                     <div className="contact-item">
                         <span className="icon">🕐</span>
@@ -60,7 +64,7 @@ const Footer = () => {
             </div>
             
             <div className="footer-bottom">
-                <p>&copy; {new Date().getFullYear()} DEU Kitap Satış. Tüm hakları saklıdır.</p>
+                <p>&copy; {new Date().getFullYear()} DEÜ Kitap Satış. Tüm hakları saklıdır.</p>
             </div>
         </footer>
     );

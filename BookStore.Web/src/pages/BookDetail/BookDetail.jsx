@@ -4,6 +4,7 @@ import axios from 'axios';
 import './BookDetail.css';
 
 import BookCard from '../../components/BookCard/BookCard';
+import BookCover from '../../components/BookCard/BookCover';
 
 const BookDetail = ({ handleAddToCart }) => {
     const { id } = useParams();
@@ -12,6 +13,10 @@ const BookDetail = ({ handleAddToCart }) => {
     const [loading, setLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);
     const [similarBooks, setSimilarBooks] = useState([]);
+
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser ? JSON.parse(storedUser) : null;
+    const isAdmin = user?.role === 'Admin';
 
     useEffect(() => {
         const fetchBook = async () => {
@@ -72,19 +77,13 @@ const BookDetail = ({ handleAddToCart }) => {
             <div className="book-detail-card">
                 <div className="book-detail-image-side">
                     <div className="main-image-wrapper">
-                        {book.imageUrl ? (
-                            <img 
-                                src={book.imageUrl} 
-                                alt={book.name} 
-                                className="detail-main-image"
-                                onError={(e) => {
-                                    e.target.onerror = null;
-                                    e.target.src = "https://via.placeholder.com/400x600?text=Kitap+Resmi+Yok";
-                                }}
-                            />
-                        ) : (
-                            <span style={{ fontSize: '100px' }}>📘</span>
-                        )}
+                        <BookCover 
+                            imageUrl={book.imageUrl} 
+                            title={book.name} 
+                            author={book.author} 
+                            className="detail-main-image"
+                            size="large"
+                        />
                     </div>
                 </div>
 
@@ -117,19 +116,27 @@ const BookDetail = ({ handleAddToCart }) => {
                         </div>
 
                         <div className="action-row">
-                            <div className="quantity-picker">
-                                <button className="quantity-btn" onClick={() => handleQtyChange(quantity - 1)}>-</button>
-                                <input type="text" className="quantity-input" value={quantity} readOnly />
-                                <button className="quantity-btn" onClick={() => handleQtyChange(quantity + 1)}>+</button>
-                            </div>
+                            {!isAdmin && (
+                                <div className="quantity-picker">
+                                    <button className="quantity-btn" onClick={() => handleQtyChange(quantity - 1)}>-</button>
+                                    <input type="text" className="quantity-input" value={quantity} readOnly />
+                                    <button className="quantity-btn" onClick={() => handleQtyChange(quantity + 1)}>+</button>
+                                </div>
+                            )}
                             <button 
                                 className="detail-add-btn" 
-                                disabled={book.stockQuantity <= 0}
+                                style={{
+                                    backgroundColor: isAdmin ? '#cbd5e1' : undefined,
+                                    color: isAdmin ? '#64748b' : undefined,
+                                    cursor: isAdmin ? 'not-allowed' : 'pointer',
+                                    flex: isAdmin ? 1 : undefined
+                                }}
+                                disabled={book.stockQuantity <= 0 || isAdmin}
                                 onClick={() => {
                                     for(let i=0; i<quantity; i++) handleAddToCart(book);
                                 }}
                             >
-                                🛒 Sepete Ekle
+                                {isAdmin ? '🚫 Yönetici Hesabı' : '🛒 Sepete Ekle'}
                             </button>
                         </div>
                     </div>

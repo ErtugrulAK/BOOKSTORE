@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import './Cart.css';
 import SearchableSelect from '../../components/SearchableSelect';
+import BookCover from '../../components/BookCard/BookCover';
 import { turkeyCities } from '../../data/turkeyCities';
 
 function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
@@ -263,7 +264,7 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
         </div>
     );
 
-    if (items.length === 0 && step !== 4) {
+    if (items.length === 0 && step === 1) {
         return (
             <div className="cart-container animate-fade-in">
                 <div className="empty-cart">
@@ -295,7 +296,13 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
                             const bookId = isLocal ? book?.id : item.bookId;
                             return (
                                 <div className="cart-card" key={index}>
-                                    <img src={book?.imageUrl || '/placeholder.jpg'} alt={book?.name} className="cart-card-img" />
+                                    <BookCover 
+                                        imageUrl={book?.imageUrl} 
+                                        title={book?.name || book?.isim} 
+                                        author={book?.author || book?.yazar}
+                                        className="cart-card-img" 
+                                        size="small" 
+                                    />
                                     <div className="cart-card-info">
                                         <h3>{book?.name || book?.isim}</h3>
                                         <p>Kategori: {book?.category || 'Genel'}</p>
@@ -457,8 +464,8 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
                             <div className="form-section animate-fade-in" style={{textAlign: 'center', padding: '60px'}}>
                                 <div style={{fontSize: '48px', marginBottom: '20px'}}>🏛️</div>
                                 <h3>Dekanlık Teslimat Noktası</h3>
-                                <p style={{color: '#64748b', maxWidth: '400px', margin: '15px auto'}}>
-                                    Siparişiniz hazırlandığında fakülte dekanlığından <strong>size özel üretim kodunuz</strong> ve kimliğinizle birlikte teslim alabilirsiniz.
+                                <p style={{color: '#64748b', maxWidth: '450px', margin: '15px auto', lineHeight: '1.6'}}>
+                                    Siparişiniz hazırlandığında size özel üretilecek teslimat kodunuz ve kimliğinizle birlikte teslim alabilirsiniz. Bu teslimat kodu bir sonraki onay ekranında gösterilecek ve e-posta adresinize gönderilecektir.
                                 </p>
                             </div>
                         )}
@@ -506,6 +513,27 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
                                     <label>CVV</label>
                                     <input name="kartCvv" value={formData.kartCvv} onChange={handleInputChange} placeholder="***" />
                                 </div>
+                            </div>
+                        </div>
+
+                        <div className="secure-payment-notice" style={{
+                            background: '#f0fdf4',
+                            border: '1px solid #bbf7d0',
+                            padding: '16px 20px',
+                            borderRadius: '12px',
+                            marginTop: '20px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px',
+                            color: '#16a34a',
+                            fontSize: '14px',
+                            fontWeight: '500',
+                            lineHeight: '1.5',
+                            textAlign: 'left'
+                        }}>
+                            <span style={{ fontSize: '24px' }}>🔒</span>
+                            <div>
+                                <strong>Güvenli Ödeme Protokolü:</strong> Ödemeniz Ziraat Bankası güvenli ortak ödeme sistemi altyapısı üzerinden 256-bit SSL şifreleme protokolü ile korunarak gerçekleştirilmektedir.
                             </div>
                         </div>
                     </div>

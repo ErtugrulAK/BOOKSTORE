@@ -34,6 +34,8 @@ function Register() {
 
     const handleVerify = async (e) => {
         e.preventDefault();
+        if (isLoading) return;
+        setIsLoading(true);
         setError('');
         try {
             await axios.post('/api/auth/verify-email', {
@@ -44,6 +46,8 @@ function Register() {
             navigate('/login');
         } catch (err) {
             setError(err.response?.data?.message || 'Doğrulama başarısız.');
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -79,7 +83,7 @@ function Register() {
                             maxLength="6"
                             style={{textAlign: 'center', fontSize: '20px', letterSpacing: '5px'}}
                         />
-                        <button type="submit">Doğrula ve Kaydı Tamamla</button>
+                        <button type="submit" disabled={isLoading}>{isLoading ? "Doğrulanıyor..." : "Doğrula ve Kaydı Tamamla"}</button>
                         <p><a href="#" onClick={(e) => { e.preventDefault(); setStep(1); }} style={{color: '#2563eb'}}>Geri Dön</a></p>
                     </form>
                 )}

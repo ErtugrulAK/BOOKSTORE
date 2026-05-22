@@ -58,7 +58,7 @@ public class OrdersController : ControllerBase
         {
             return NotFound(ex.Message);
         }
-        catch (UnauthorizedAccessException ex)
+        catch (UnauthorizedAccessException)
         {
             return Forbid(); // Return 403 Forbidden 
         }
@@ -81,7 +81,7 @@ public class OrdersController : ControllerBase
         {
             return NotFound(ex.Message);
         }
-        catch (UnauthorizedAccessException ex)
+        catch (UnauthorizedAccessException)
         {
             return Forbid();
         }
