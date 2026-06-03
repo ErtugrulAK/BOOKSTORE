@@ -199,3 +199,47 @@
     color: #ef4444;
     transform: scale(1.1);
 }
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+        gap: 15px;
+    }
+    
+    .navbar-logo {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .navbar-logo-img {
+        height: 44px;
+    }
+    
+    .navbar-title-main {
+        font-size: 11px;
+    }
+    
+    .navbar-title-sub {
+        font-size: 10px;
+    }
+    
+    .navbar-search {
+        margin: 0;
+        width: 100%;
+        flex: 1 1 auto;
+    }
+    
+    .navbar-links {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .nav-link {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+}

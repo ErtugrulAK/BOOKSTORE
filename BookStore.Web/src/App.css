@@ -157,3 +157,41 @@ button:active {
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* Responsive Geliştirmeleri */
+@media (max-width: 992px) {
+  .main-layout {
+    flex-direction: column;
+    padding: 20px;
+    gap: 35px;
+  }
+  
+  .sidebar-container {
+    width: 100% !important;
+    position: relative !important;
+    top: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .main-layout {
+    padding: 12px;
+  }
+  
+  .books-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 15px;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .featured-section {
+    padding: 15px;
+    border-radius: 12px;
+  }
+}
