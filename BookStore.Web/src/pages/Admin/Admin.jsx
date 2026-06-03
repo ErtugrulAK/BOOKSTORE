@@ -81,7 +81,7 @@ function Admin({ token, user, onLogout }) {
             phone: '0232 301 75 97', 
             fax: '0232 301 72 10',
             email: 'kitapsatis@deu.edu.tr', 
-            address: 'Dokuz Eylül Üniversitesi Mühendislik Fakültesi Merkez Yerleşkesi 35160 Buca / İZMİR' 
+            address: 'Dokuz Eylül Üniversitesi Mühendislik Fakültesi Dekanlığı\nDokuz Eylül Üniversitesi Merkez Yerleşkesi\nAdatepe Mah. Doğuş Cad. No: 207-I / 35390 Buca-İZMİR' 
         };
         if (saved) {
             const parsed = JSON.parse(saved);
@@ -93,6 +93,10 @@ function Admin({ token, user, onLogout }) {
             if (parsed.phone === '+90 (232) 412 70 00' || !parsed.fax) {
                 parsed.phone = '0232 301 75 97';
                 parsed.fax = '0232 301 72 10';
+                updated = true;
+            }
+            if (!parsed.address || parsed.address.includes('35160 Buca / İZMİR') || parsed.address.includes('35160 Buca / İzmir')) {
+                parsed.address = 'Dokuz Eylül Üniversitesi Mühendislik Fakültesi Dekanlığı\nDokuz Eylül Üniversitesi Merkez Yerleşkesi\nAdatepe Mah. Doğuş Cad. No: 207-I / 35390 Buca-İZMİR';
                 updated = true;
             }
             if (updated) {

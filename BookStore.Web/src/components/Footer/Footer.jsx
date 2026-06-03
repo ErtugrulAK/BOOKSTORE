@@ -7,7 +7,7 @@ const Footer = () => {
         <footer className="footer-container">
             <div className="footer-content">
                 <div className="footer-brand">
-                    <h2>📚 DEÜ Kitap Satış</h2>
+                    <h2>DEÜ Mühendislik Fakültesi Kitap Satış</h2>
                     <p>En sevdiğiniz kitapları güvenle satın alın. Uygun fiyatlarımızla her zaman yanınızdayız.</p>
                 </div>
                 
@@ -30,7 +30,11 @@ const Footer = () => {
                     <h3>İletişim</h3>
                     <div className="contact-item">
                         <span className="icon">📍</span>
-                        <p>Dokuz Eylül Üniversitesi Mühendislik Fakültesi Merkez Yerleşkesi 35160 Buca / İzmir</p>
+                        <p style={{ lineHeight: '1.4' }}>
+                            Dokuz Eylül Üniversitesi Mühendislik Fakültesi Dekanlığı<br />
+                            Dokuz Eylül Üniversitesi Merkez Yerleşkesi<br />
+                            Adatepe Mah. Doğuş Cad. No: 207-I / 35390 Buca-İZMİR
+                        </p>
                     </div>
                     <div className="contact-item">
                         <span className="icon">📞</span>
