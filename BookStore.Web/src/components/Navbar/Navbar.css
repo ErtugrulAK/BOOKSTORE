@@ -131,7 +131,7 @@
 }
 
 .admin-btn {
-    color: #ef4444 ! from admin colors;
+    color: #ef4444; /* from admin colors */
 }
 
 .signup-btn {
@@ -142,6 +142,12 @@
 .signup-btn:hover {
     background: #2563eb;
     transform: translateY(-1px);
+}
+
+.auth-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .nav-cart-icon-btn {
@@ -200,21 +206,21 @@
     transform: scale(1.1);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .navbar {
-        flex-direction: column;
+        flex-wrap: wrap;
         height: auto;
-        padding: 15px;
-        gap: 15px;
+        padding: 12px 20px;
+        gap: 12px;
     }
     
     .navbar-logo {
-        width: 100%;
-        justify-content: center;
+        flex: 1 1 auto;
+        justify-content: flex-start;
     }
     
     .navbar-logo-img {
-        height: 44px;
+        height: 42px;
     }
     
     .navbar-title-main {
@@ -226,19 +232,33 @@
     }
     
     .navbar-search {
+        order: 3; /* Push search to the bottom row */
+        flex: 1 1 100%;
         margin: 0;
-        width: 100%;
-        flex: 1 1 auto;
+        max-width: 100%;
     }
     
     .navbar-links {
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 8px;
+        flex: 1 1 auto;
+        justify-content: flex-end;
+        gap: 10px;
     }
     
-    .nav-link {
+    /* Hide desktop-only links on mobile to prevent overlap */
+    .navbar-links > .nav-link:not(.admin-btn) {
+        display: none;
+    }
+    
+    .signup-btn {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+    
+    .auth-links {
+        gap: 6px;
+    }
+    
+    .auth-links .nav-link:not(.signup-btn) {
         font-size: 13px;
         padding: 6px 12px;
     }
