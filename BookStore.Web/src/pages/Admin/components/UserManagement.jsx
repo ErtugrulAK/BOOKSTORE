@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import Pagination from './Pagination';
 
-const UserManagement = ({ users, usersTotal, usersPage, setUsersPage, formatDate, handleViewUser, handleDeleteUser, selectedUser, setSelectedUser }) => {
+const UserManagement = ({ users, usersTotal, usersPage, setUsersPage, formatDate, handleViewUser, handleDeleteUser, selectedUser, setSelectedUser, searchQuery, setSearchQuery }) => {
     const [ordersPage, setOrdersPage] = useState(1);
     const ordersPerPage = 5;
     
     // Arama ve Sıralama State'leri
-    const [searchTerm, setSearchTerm] = useState('');
+    const [localSearch, setLocalSearch] = useState(searchQuery);
+
+    React.useEffect(() => {
+        setLocalSearch(searchQuery);
+    }, [searchQuery]);
+
+    React.useEffect(() => {
+        const handler = setTimeout(() => {
+            setSearchQuery(localSearch);
+        }, 400);
+        return () => clearTimeout(handler);
+    }, [localSearch, setSearchQuery]);
+
     const [sortOrder, setSortOrder] = useState('newest'); // newest, oldest, name_asc, name_desc
 
     // Filtreleme ve Sıralama İşlemi
@@ -14,15 +26,6 @@ const UserManagement = ({ users, usersTotal, usersPage, setUsersPage, formatDate
     const others = users.filter(u => u.role !== 'Admin' && u.id !== 1);
 
     let filteredOthers = [...others];
-
-    if (searchTerm) {
-        const lower = searchTerm.toLowerCase();
-        filteredOthers = filteredOthers.filter(u => 
-            u.firstName?.toLowerCase().includes(lower) || 
-            u.lastName?.toLowerCase().includes(lower) || 
-            u.email?.toLowerCase().includes(lower)
-        );
-    }
 
     if (sortOrder === 'newest') {
         filteredOthers.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
@@ -147,9 +150,9 @@ const UserManagement = ({ users, usersTotal, usersPage, setUsersPage, formatDate
                         <span style={{ marginRight: '8px', opacity: '0.5' }}>🔍</span>
                         <input 
                             type="text" 
-                            placeholder="Kullanıcı veya E-posta ara..." 
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            placeholder="Kullanıcı veya e-posta ara..." 
+                            value={localSearch}
+                            onChange={(e) => setLocalSearch(e.target.value)}
                             style={{ border: 'none', outline: 'none', width: '100%', fontSize: '14px' }}
                         />
                     </div>
