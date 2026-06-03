@@ -77,7 +77,7 @@ function Admin({ token, user, onLogout }) {
     const [settingsForm, setSettingsForm] = useState(() => {
         const saved = localStorage.getItem('site_settings');
         const defaultSettings = { 
-            siteName: 'DEÜ Kitap Satışı', 
+            siteName: 'DEÜ Mühendislik Fakültesi Kitap Satış', 
             phone: '0232 301 75 97', 
             fax: '0232 301 72 10',
             email: 'kitapsatis@deu.edu.tr', 
@@ -86,8 +86,8 @@ function Admin({ token, user, onLogout }) {
         if (saved) {
             const parsed = JSON.parse(saved);
             let updated = false;
-            if (parsed.siteName === 'DEU Kitap Satışı' || parsed.siteName === 'DEU Kitap Satış') {
-                parsed.siteName = 'DEÜ Kitap Satışı';
+            if (parsed.siteName === 'DEÜ Kitap Satışı' || parsed.siteName === 'DEU Kitap Satışı' || parsed.siteName === 'DEU Kitap Satış') {
+                parsed.siteName = 'DEÜ Mühendislik Fakültesi Kitap Satış';
                 updated = true;
             }
             if (parsed.phone === '+90 (232) 412 70 00' || !parsed.fax) {
@@ -330,7 +330,7 @@ function Admin({ token, user, onLogout }) {
 
             <aside className="admin-sidebar">
                 <div className="admin-sidebar-header" onClick={() => navigate('/')}>
-                    <span style={{ fontSize: '24px', color: '#3b82f6', marginRight: '6px' }}>📚</span>
+                    <img src="/deu_logo.png" alt="DEÜ Logo" className="admin-sidebar-logo-img" />
                     <span className="sidebar-title">{settingsForm.siteName}</span>
                 </div>
                 <div className="admin-sidebar-menu">

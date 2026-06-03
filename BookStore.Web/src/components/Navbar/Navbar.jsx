@@ -11,11 +11,12 @@ function Navbar({ searchTerm, setSearchTerm, user, handleLogout, cartCount }) {
     <nav className="navbar">
       {/* Sol Kısım: Logo / Marka */}
       <div className="navbar-logo">
-        <Link to="/" style={{ textDecoration: 'none', color: '#1e293b' }}>
-          <span style={{color: '#3b82f6', marginRight: '6px'}}>📚</span> {(() => {
-            const name = JSON.parse(localStorage.getItem('site_settings') || '{}').siteName || "DEÜ Kitap Satışı";
-            return name.replace(/DEU/gi, 'DEÜ');
-          })()}
+        <Link to="/" style={{ textDecoration: 'none', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <img src="/deu_logo.png" alt="DEÜ Logo" className="navbar-logo-img" />
+          <div className="navbar-title-container">
+            <span className="navbar-title-main">DEÜ MÜHENDİSLİK FAKÜLTESİ</span>
+            <span className="navbar-title-sub">KİTAP SATIŞ</span>
+          </div>
         </Link>
       </div>
 

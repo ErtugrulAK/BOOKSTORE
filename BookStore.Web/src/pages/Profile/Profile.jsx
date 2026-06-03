@@ -45,8 +45,8 @@ function Profile({ user, setUser, token }) {
         <div className="user-layout">
             <aside className="user-sidebar">
                 <div className="user-sidebar-header" onClick={() => navigate('/')}>
-                    <span style={{ fontSize: '24px', color: '#4318ff', marginRight: '6px' }}>📚</span>
-                    <span className="sidebar-title">DEÜ Kitap Satış</span>
+                    <img src="/deu_logo.png" alt="DEÜ Logo" className="user-sidebar-logo-img" />
+                    <span className="sidebar-title">DEÜ Mühendislik Fakültesi Kitap Satış</span>
                 </div>
 
                 <div className="user-sidebar-menu">
