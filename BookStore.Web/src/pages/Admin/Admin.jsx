@@ -33,10 +33,11 @@ function Admin({ token, user, onLogout }) {
     const [showOnlyInactiveBooks, setShowOnlyInactiveBooks] = useState(false);
     const [inactiveBooksCount, setInactiveBooksCount] = useState(0);
     const [bulkPriceIncrease, setBulkPriceIncrease] = useState('');
+    const [booksSearchQuery, setBooksSearchQuery] = useState('');
 
     useEffect(() => {
         setBooksPage(1);
-    }, [showOnlyInactiveBooks, showOnlyCriticalBooks]);
+    }, [showOnlyInactiveBooks, showOnlyCriticalBooks, booksSearchQuery]);
 
     const [orders, setOrders] = useState([]);
     const [ordersTotal, setOrdersTotal] = useState(0);
@@ -114,7 +115,7 @@ function Admin({ token, user, onLogout }) {
             return;
         }
         fetchData();
-    }, [token, user, booksPage, ordersPage, usersPage, messagesPage, showOnlyInactiveBooks, showOnlyCriticalBooks]);
+    }, [token, user, booksPage, ordersPage, usersPage, messagesPage, showOnlyInactiveBooks, showOnlyCriticalBooks, booksSearchQuery]);
 
     const fetchData = async () => {
         try {
@@ -124,6 +125,7 @@ function Admin({ token, user, onLogout }) {
             let booksUrl = `/api/Books?includeInactive=true&page=${booksPage}&pageSize=10`;
             if (showOnlyInactiveBooks) booksUrl += '&isActive=false';
             if (showOnlyCriticalBooks) booksUrl += '&isCritical=true';
+            if (booksSearchQuery) booksUrl += `&search=${encodeURIComponent(booksSearchQuery)}`;
 
             const booksRes = await axios.get(booksUrl);
             setBooks(booksRes.data.items);
@@ -370,7 +372,7 @@ function Admin({ token, user, onLogout }) {
  
                 <div className="admin-content-scroll">
                     {activeTab === 'dashboard' && <Dashboard orders={orders} books={books} users={users} CATEGORIES={CATEGORIES} setActiveTab={setActiveTab} formatDate={formatDate} stats={dashboardStats} />}
-                    {(activeTab === 'books' || activeTab === 'book_form') && <BookManagement activeTab={activeTab} books={books} booksTotal={booksTotal} booksPage={booksPage} setBooksPage={setBooksPage} bookForm={bookForm} setBookForm={setBookForm} handleSaveBook={handleSaveBook} handleDeleteBook={handleDeleteBook} handleBulkAction={handleBulkAction} setActiveTab={setActiveTab} CATEGORIES={CATEGORIES} token={token} fetchData={fetchData} showOnlyInactiveBooks={showOnlyInactiveBooks} setShowOnlyInactiveBooks={setShowOnlyInactiveBooks} showOnlyCriticalBooks={showOnlyCriticalBooks} setShowOnlyCriticalBooks={setShowOnlyCriticalBooks} criticalStockCount={criticalStockCount} inactiveBooksCount={inactiveBooksCount} bulkPriceIncrease={bulkPriceIncrease} setBulkPriceIncrease={setBulkPriceIncrease} openBookForm={openBookForm} formatISBN={formatISBN} />}
+                    {(activeTab === 'books' || activeTab === 'book_form') && <BookManagement activeTab={activeTab} books={books} booksTotal={booksTotal} booksPage={booksPage} setBooksPage={setBooksPage} bookForm={bookForm} setBookForm={setBookForm} handleSaveBook={handleSaveBook} handleDeleteBook={handleDeleteBook} handleBulkAction={handleBulkAction} setActiveTab={setActiveTab} CATEGORIES={CATEGORIES} token={token} fetchData={fetchData} showOnlyInactiveBooks={showOnlyInactiveBooks} setShowOnlyInactiveBooks={setShowOnlyInactiveBooks} showOnlyCriticalBooks={showOnlyCriticalBooks} setShowOnlyCriticalBooks={setShowOnlyCriticalBooks} criticalStockCount={criticalStockCount} inactiveBooksCount={inactiveBooksCount} bulkPriceIncrease={bulkPriceIncrease} setBulkPriceIncrease={setBulkPriceIncrease} openBookForm={openBookForm} formatISBN={formatISBN} searchQuery={booksSearchQuery} setSearchQuery={setBooksSearchQuery} />}
                     {activeTab === 'orders' && <OrderManagement selectedOrder={selectedOrder} setSelectedOrder={setSelectedOrder} orders={orders} ordersTotal={ordersTotal} ordersPage={ordersPage} setOrdersPage={setOrdersPage} formatDate={formatDate} getStatusText={getStatusText} tempOrderStatus={tempOrderStatus} setTempOrderStatus={setTempOrderStatus} token={token} fetchData={fetchData} handleViewOrder={(o) => { setSelectedOrder(o); setTempOrderStatus(o.status); }} />}
                     {activeTab === 'users' && <UserManagement users={users} usersTotal={usersTotal} usersPage={usersPage} setUsersPage={setUsersPage} formatDate={formatDate} handleViewUser={handleViewUser} handleDeleteUser={handleDeleteUser} selectedUser={selectedUser} setSelectedUser={setSelectedUser} token={token} />}
                     {activeTab === 'contacts' && <ContactMessages messages={messages} messagesTotal={messagesTotal} messagesPage={messagesPage} setMessagesPage={setMessagesPage} token={token} fetchData={fetchData} />}

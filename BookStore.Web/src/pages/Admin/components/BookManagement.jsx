@@ -27,7 +27,9 @@ const BookManagement = ({
     bulkPriceIncrease,
     setBulkPriceIncrease,
     openBookForm,
-    formatISBN
+    formatISBN,
+    searchQuery,
+    setSearchQuery
 }) => {
     const fileInputRef = useRef(null);
 
@@ -137,7 +139,19 @@ const BookManagement = ({
         }
     };
     
-    const [searchQuery, setSearchQuery] = useState('');
+    const [localSearch, setLocalSearch] = useState(searchQuery);
+
+    React.useEffect(() => {
+        setLocalSearch(searchQuery);
+    }, [searchQuery]);
+
+    React.useEffect(() => {
+        const handler = setTimeout(() => {
+            setSearchQuery(localSearch);
+        }, 400);
+        return () => clearTimeout(handler);
+    }, [localSearch, setSearchQuery]);
+
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'desc' });
 
     const handleSort = (key) => {
@@ -148,9 +162,7 @@ const BookManagement = ({
     };
 
     const sortedAndFilteredBooks = useMemo(() => {
-        let filtered = books.filter(b =>
-            b.name.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+        let filtered = books;
         if (sortConfig.key) {
             filtered = [...filtered].sort((a, b) => {
                 let aVal = a[sortConfig.key];
@@ -163,7 +175,7 @@ const BookManagement = ({
             });
         }
         return filtered;
-    }, [books, searchQuery, sortConfig]);
+    }, [books, sortConfig]);
 
     const SortIcon = ({ col }) => {
         if (sortConfig.key !== col) return <span style={{ opacity: 0.3, marginLeft: 4 }}>↕</span>;
@@ -246,13 +258,13 @@ const BookManagement = ({
                         <span style={{ color: '#a3aed1', marginRight: '8px', fontSize: '16px' }}>🔍</span>
                         <input
                             type="text"
-                            placeholder="Kitap ismi ara..."
-                            value={searchQuery}
-                            onChange={e => setSearchQuery(e.target.value)}
+                            placeholder="Kitap veya yazar ara..."
+                            value={localSearch}
+                            onChange={e => setLocalSearch(e.target.value)}
                             style={{ border: 'none', outline: 'none', fontSize: '14px', width: '100%', padding: '10px 0', background: 'transparent', color: '#2b3674' }}
                         />
-                        {searchQuery && (
-                            <span onClick={() => setSearchQuery('')} style={{ cursor: 'pointer', color: '#a3aed1', fontSize: '18px', lineHeight: 1 }}>×</span>
+                        {localSearch && (
+                            <span onClick={() => { setLocalSearch(''); setSearchQuery(''); }} style={{ cursor: 'pointer', color: '#a3aed1', fontSize: '18px', lineHeight: 1 }}>×</span>
                         )}
                     </div>
 
