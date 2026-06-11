@@ -163,8 +163,48 @@ def main():
         add_heading_styled(doc, title, level=2)
         add_p_styled(doc, text, space_after=12)
 
+    # Page Break for the KVKK section
+    doc.add_page_break()
+
+    # --- SECTION 3: KVKK AYDINLATMA METNİ ---
+    add_heading_styled(doc, "BÖLÜM 3: KİŞİSEL VERİLERİN KORUNMASI KANUNU (KVKK) AYDINLATMA METNİ", level=1)
+    
+    kvkk_intro = (
+        "6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) uyarınca, kişisel verileriniz; veri sorumlusu olarak "
+        "Dokuz Eylül Üniversitesi Mühendislik Fakültesi Dekanlığı (“Fakülte/Dekanlık”) tarafından aşağıda açıklanan kapsamda işlenebilecektir."
+    )
+    add_p_styled(doc, kvkk_intro, space_after=12)
+
+    kvkk_sections = [
+        ("1. Veri Sorumlusu",
+         "Veri sorumlusu Dokuz Eylül Üniversitesi Mühendislik Fakültesi Dekanlığı'dır."),
+        
+        ("2. Kişisel Verilerin Hangi Amaçla İşleneceği",
+         "Toplanan kişisel verileriniz (Ad, soyad, T.C. Kimlik / Öğrenci No, teslimat adresi, telefon numarası, e-posta adresi, sipariş ve ödeme yöntemi detayları);\n"
+         "• Kitap satış işlemlerinin gerçekleştirilmesi, siparişlerinizin hazırlanması ve faturalandırılması,\n"
+         "• Satın alınan kitapların elden teslimi (Dekanlık teslimat kodu doğrulama işlemleri) veya kargo yoluyla ulaştırılması,\n"
+         "• Tüketici mevzuatından kaynaklanan yükümlülüklerin yerine getirilmesi,\n"
+         "• Yetkili kamu kurum ve kuruluşlarına yasal bilgi sağlama yükümlülüklerinin ifası amaçlarıyla sınırlı olarak işlenmektedir."),
+        
+        ("3. İşlenen Kişisel Verilerin Kimlere ve Hangi Amaçla Aktarılabileceği",
+         "Kişisel verileriniz, yukarıda belirtilen amaçların gerçekleştirilmesi doğrultusunda;\n"
+         "• Satın alınan kitapların teslimatı amacıyla anlaşmalı kargo şirketlerine (Örn: PTT Kargo),\n"
+         "• Ödemelerin güvenli şekilde tahsil edilmesi amacıyla aracı banka ve sanal POS altyapı sağlayıcılarına (Örn: Ziraat Bankası),\n"
+         "• Kanuni yükümlülüklerin ifası kapsamında yetkili kamu kurum ve kuruluşlarına yasal sınırlar dahilinde aktarılabilecektir."),
+        
+        ("4. Kişisel Veri Toplamanın Yöntemi ve Hukuki Sebebi",
+         "Kişisel verileriniz, web sitesine üye olmanız, sipariş formunu doldurmanız ve ödeme adımlarını tamamlamanız esnasında tamamen elektronik ortamda toplanmaktadır. Söz konusu veriler, KVKK Madde 5/2 kapsamında “bir sözleşmenin kurulması veya ifasıyla doğrudan doğruya ilgili olması” ve “veri sorumlusunun hukuki yükümlülüğünü yerine getirebilmesi” hukuki sebeplerine dayanarak işlenmektedir."),
+        
+        ("5. Veri Sahibinin KVKK Madde 11 Kapsamındaki Hakları",
+         "Dilediğiniz zaman Dekanlığımıza başvurarak kişisel verilerinizin; işlenip işlenmediğini öğrenme, işlenme amacına uygun kullanılıp kullanılmadığını bilme, yurt içinde aktarıldığı üçüncü kişileri öğrenme ve eksik/yanlış işlenmişse düzeltilmesini talep etme haklarına sahipsiniz.")
+    ]
+
+    for title, text in kvkk_sections:
+        add_heading_styled(doc, title, level=2)
+        add_p_styled(doc, text, space_after=12)
+
     # Save to file
-    out_filename = "DEÜ Kitap Satış - Sözleşmeler (Ön Bilgilendirme ve Mesafeli Satış).docx"
+    out_filename = "DEÜ Kitap Satış - Yasal Sözleşmeler ve KVKK Metni.docx"
     doc.save(out_filename)
     print(f"Generated successfully: {out_filename}")
 
