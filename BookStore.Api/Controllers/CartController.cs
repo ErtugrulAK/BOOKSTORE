@@ -163,6 +163,50 @@ namespace BookStore.Api.Controllers
             return Ok(new { message = "Sepet boşaltıldı." });
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost("admin-checkout")]
+        public async Task<IActionResult> AdminCheckout()
+        {
+            var cart = await GetCartAsync(false);
+            if (cart == null || !cart.OrderItems.Any())
+                return BadRequest("Sepetiniz boş.");
+
+            cart.PaymentMethod = "Nakit";
+            cart.Status = OrderStatus.HandDelivered; // Elden Teslim Edildi (6)
+            cart.OrderNumber = cart.OrderNumber.Replace("CRT", "ORD"); // Change prefix to Order
+
+            // Capture admin client IP and timestamp
+            var clientIp = HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+            if (string.IsNullOrEmpty(clientIp))
+            {
+                clientIp = HttpContext.Connection.RemoteIpAddress?.ToString();
+            }
+            cart.ApprovedAtUtc = DateTime.UtcNow;
+            cart.ApprovedIpAddress = clientIp + " (Elden Satış / Admin)";
+
+            // Check and decrease stock
+            foreach (var item in cart.OrderItems)
+            {
+                var book = await _db.Books.FindAsync(item.BookId);
+                if (book != null)
+                {
+                    if (book.StockQuantity < item.Quantity)
+                        return BadRequest($"'{book.Name}' stokta yeterli değil. Sadece {book.StockQuantity} adet var.");
+
+                    book.StockQuantity -= item.Quantity;
+                    if (book.StockQuantity <= 0) book.IsActive = false;
+                }
+                else
+                {
+                    return BadRequest("Sepetinizdeki bazı ürünler sistemden kaldırılmış.");
+                }
+            }
+
+            await _db.SaveChangesAsync();
+
+            return Ok(cart);
+        }
+
         public record CheckoutRequest(string DeliveryAddress);
 
         [HttpPost("checkout")]
@@ -185,6 +229,15 @@ namespace BookStore.Api.Controllers
 
             cart.Status = OrderStatus.Processing; // Default status is now 'Hazırlanıyor' (2)
             cart.OrderNumber = cart.OrderNumber.Replace("CRT", "ORD"); // Change prefix to Order
+
+            // Capture client IP and timestamp
+            var clientIp = HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+            if (string.IsNullOrEmpty(clientIp))
+            {
+                clientIp = HttpContext.Connection.RemoteIpAddress?.ToString();
+            }
+            cart.ApprovedAtUtc = DateTime.UtcNow;
+            cart.ApprovedIpAddress = clientIp;
 
             // Check and decrease stock
             foreach (var item in cart.OrderItems)

@@ -23,6 +23,7 @@ const Footer = () => {
                     <h3>Kurumsal</h3>
                     <ul>
                         <li><Link to="/mesafeli-satis">Mesafeli Satış Sözleşmesi</Link></li>
+                        <li><a href="https://kvkk.deu.edu.tr/" target="_blank" rel="noopener noreferrer">KVKK Aydınlatma Metni</a></li>
                     </ul>
                 </div>
 

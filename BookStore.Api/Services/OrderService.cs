@@ -72,6 +72,7 @@ namespace BookStore.Api.Services
                 .Include(o => o.OrderItems).ThenInclude(oi => oi.Book)
                 .Where(o => o.UserId == userId && o.Status != OrderStatus.Pending)
                 .OrderByDescending(o => o.CreatedAtUtc)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
@@ -79,6 +80,7 @@ namespace BookStore.Api.Services
         public async Task<(List<Order> Items, int TotalCount)> GetAllAsync(int page, int pageSize)
         {
             var query = _context.Orders
+                .AsNoTracking()
                 .Include(o => o.User)
                 .Include(o => o.OrderItems).ThenInclude(oi => oi.Book)
                 .Where(o => o.Status != OrderStatus.Pending);
@@ -94,7 +96,7 @@ namespace BookStore.Api.Services
         }
 
         // ✅ Admin durum günceller
-        public async Task<Order> UpdateStatusAsync(int orderId, OrderStatus newStatus)
+        public async Task<Order> UpdateStatusAsync(int orderId, OrderStatus newStatus, string? cargoTrackingNumber = null)
         {
             var order = await _context.Orders
                 .Include(o => o.OrderItems)
@@ -104,6 +106,11 @@ namespace BookStore.Api.Services
 
             var oldStatus = order.Status;
             order.Status = newStatus;
+
+            if (newStatus == OrderStatus.Shipped && !string.IsNullOrEmpty(cargoTrackingNumber))
+            {
+                order.CargoTrackingNumber = cargoTrackingNumber;
+            }
 
             // Eğer iptal veya iade edildiyse stokları geri yükle (Eskiden iptal veya iade değilse)
             var isTerminalRefund = newStatus == OrderStatus.Cancelled || newStatus == OrderStatus.Returned;
@@ -140,7 +147,7 @@ namespace BookStore.Api.Services
             // Sipariş durumu değiştiğinde kullanıcıya mail at
             if (newStatus != oldStatus && order.User != null && !string.IsNullOrEmpty(order.User.Email))
             {
-                await _emailService.SendOrderStatusChangedEmailAsync(order.User.Email, order.OrderNumber, oldStatus, newStatus, order.PickupCode);
+                await _emailService.SendOrderStatusChangedEmailAsync(order.User.Email, order.OrderNumber, oldStatus, newStatus, order.PickupCode, order.CargoTrackingNumber);
             }
 
             return order;

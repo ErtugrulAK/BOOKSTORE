@@ -52,6 +52,7 @@ const BookManagement = ({
                 'Dil': b.language || 'Türkçe',
                 'Fiyat (TL)': b.price || 0.0,
                 'Stok Adedi': b.stockQuantity || 0,
+                'Depo Stok Adedi': b.warehouseQuantity || 0,
                 'Min Stok Seviyesi': b.minStockLevel || 25,
                 'Öne Çıkarılan': b.isFeatured ? 'Evet' : 'Hayır',
                 'Durum': b.isActive ? 'Yayında' : 'Pasif'
@@ -280,14 +281,17 @@ const BookManagement = ({
                     <table className="admin-modern-table">
                         <thead>
                             <tr>
-                                <th style={{ width: '35%' }}>Kitaplar</th>
+                                <th style={{ width: '30%' }}>Kitaplar</th>
                                 <th style={{ width: '20%', cursor: 'pointer', userSelect: 'none' }} onClick={() => handleSort('category')}>
                                     Kategori<SortIcon col="category" />
                                 </th>
                                 <th style={{ width: '10%', cursor: 'pointer', userSelect: 'none' }} onClick={() => handleSort('stockQuantity')}>
-                                    Stok<SortIcon col="stockQuantity" />
+                                    Satış Stok<SortIcon col="stockQuantity" />
                                 </th>
-                                <th style={{ width: '15%', cursor: 'pointer', userSelect: 'none' }} onClick={() => handleSort('price')}>
+                                <th style={{ width: '10%', cursor: 'pointer', userSelect: 'none' }} onClick={() => handleSort('warehouseQuantity')}>
+                                    Depo Stok<SortIcon col="warehouseQuantity" />
+                                </th>
+                                <th style={{ width: '10%', cursor: 'pointer', userSelect: 'none' }} onClick={() => handleSort('price')}>
                                     Fiyat<SortIcon col="price" />
                                 </th>
                                 <th style={{ width: '10%', cursor: 'pointer', userSelect: 'none' }} onClick={() => handleSort('isActive')}>
@@ -316,6 +320,7 @@ const BookManagement = ({
                                     </td>
                                     <td><span style={{ color: '#4318ff', background: '#f4f7fe', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: '700' }}>{b.category || "Yok"}</span></td>
                                     <td>{b.stockQuantity}</td>
+                                    <td>{b.warehouseQuantity ?? 0}</td>
                                     <td style={{ fontWeight: '700' }}>₺{b.price.toFixed(2)}</td>
                                     <td>
                                         {b.isActive
@@ -561,14 +566,18 @@ const BookManagement = ({
                             <label>Fiyat (₺)</label>
                             <input type="number" step="0.01" placeholder="Örn: 150.00" value={bookForm.price} onChange={e => setBookForm({ ...bookForm, price: e.target.value })} />
                         </div>
-                        <div className="input-row">
+                        <div className="input-row" style={{ gap: '8px' }}>
                             <div className="input-group">
-                                <label>Stok Adedi</label>
-                                <input type="number" placeholder="Örn: 100" value={bookForm.stockQuantity} onChange={e => setBookForm({ ...bookForm, stockQuantity: e.target.value })} />
+                                <label style={{ fontSize: '11px', whiteSpace: 'nowrap' }}>Satış Stok</label>
+                                <input type="number" placeholder="100" style={{ padding: '10px 8px' }} value={bookForm.stockQuantity} onChange={e => setBookForm({ ...bookForm, stockQuantity: e.target.value })} />
                             </div>
                             <div className="input-group">
-                                <label>Min Stok</label>
-                                <input type="number" value={bookForm.minStockLevel} onChange={e => setBookForm({ ...bookForm, minStockLevel: e.target.value })} />
+                                <label style={{ fontSize: '11px', whiteSpace: 'nowrap' }}>Depo Stok</label>
+                                <input type="number" placeholder="50" style={{ padding: '10px 8px' }} value={bookForm.warehouseQuantity || 0} onChange={e => setBookForm({ ...bookForm, warehouseQuantity: e.target.value })} />
+                            </div>
+                            <div className="input-group">
+                                <label style={{ fontSize: '11px', whiteSpace: 'nowrap' }}>Min Stok</label>
+                                <input type="number" style={{ padding: '10px 8px' }} value={bookForm.minStockLevel} onChange={e => setBookForm({ ...bookForm, minStockLevel: e.target.value })} />
                             </div>
                         </div>
                     </div>

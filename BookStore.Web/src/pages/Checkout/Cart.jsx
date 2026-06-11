@@ -12,6 +12,12 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
     const [apiCart, setApiCart] = useState([]);
     const [loading, setLoading] = useState(true);
     const [step, setStep] = useState(1); // 1: Sepet, 2: Bilgiler, 3: Ödeme, 4: Onay
+    const [preInfoAccepted, setPreInfoAccepted] = useState(false);
+    const [showPreInfoModal, setShowPreInfoModal] = useState(false);
+
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser ? JSON.parse(storedUser) : null;
+    const isAdmin = user?.role === 'Admin';
 
     const [deliveryMethod, setDeliveryMethod] = useState('kargo'); // 'kargo' or 'dekanlik'
     const [userAddresses, setUserAddresses] = useState([]);
@@ -177,6 +183,11 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
             return;
         }
 
+        if (!preInfoAccepted) {
+            window.showToast('Lütfen Ön Bilgilendirme Formunu okuyup kabul ediniz.', true);
+            return;
+        }
+
         let addressString = "";
         if (deliveryMethod === 'dekanlik') {
             addressString = "Dekanlıktan Gelip Alma";
@@ -204,6 +215,36 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
             window.showToast('Siparişiniz başarıyla alındı!');
         } catch (err) {
             window.showToast(err.response?.data || 'Sipariş tamamlanırken hata oluştu.', true);
+        }
+    };
+
+    const handleAdminCheckout = async () => {
+        try {
+            // Sepet geçerliliğini doğrula
+            const valRes = await axios.get('/api/Cart/validate', { 
+                headers: { Authorization: `Bearer ${token}` } 
+            });
+            if (!valRes.data.isValid) {
+                window.showToast(valRes.data.message, true);
+                return;
+            }
+
+            const response = await axios.post('/api/Cart/admin-checkout', {}, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            
+            setOrderResult(response.data);
+            setStep(4);
+            
+            // Sepeti temizle
+            if (setApiCartCount) setApiCartCount(0);
+            setApiCart([]);
+            setLocalCart([]);
+            localStorage.removeItem('guest_cart');
+
+            window.showToast('Elden satış başarıyla tamamlandı!');
+        } catch (err) {
+            window.showToast(err.response?.data || 'Elden satış tamamlanırken hata oluştu.', true);
         }
     };
 
@@ -255,7 +296,53 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
                 <span>Toplam</span>
                 <span>{totalAmount.toFixed(2)} ₺</span>
             </div>
-            <button className="btn-primary-lg" onClick={onNext}>
+            {deliveryMethod === 'kargo' && (
+                <div className="shipping-notice" style={{
+                    marginTop: '15px',
+                    padding: '10px 14px',
+                    background: '#eff6ff',
+                    border: '1px solid #bfdbfe',
+                    borderRadius: '10px',
+                    fontSize: '13px',
+                    color: '#1e40af',
+                    fontWeight: '600',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    justifyContent: 'center'
+                }}>
+                    <span>🚚</span>
+                    <span>Kargo ücreti alıcıya aittir.</span>
+                </div>
+            )}
+            {buttonText === 'Siparişi Onayla' && (
+                <div className="agreement-container" style={{ textAlign: 'left', marginTop: '15px', marginBottom: '15px' }}>
+                    <div className="kvkk-notice-box" style={{
+                        background: '#f8fafc',
+                        border: '1px solid #e2e8f0',
+                        borderRadius: '8px',
+                        padding: '10px 12px',
+                        fontSize: '11px',
+                        color: '#475569',
+                        lineHeight: '1.4',
+                        marginBottom: '10px'
+                    }}>
+                        <strong>KVKK Bilgilendirmesi:</strong> Üniversitemiz; kişisel verilerin işlenmesi esnasında hukuka ve dürüstlük kurallarına uygun hareket etmekte; orantılılık ve gereklilik prensiplerini dikkate almakta, kişisel verileri, veri işleme amaçlarına uygun düşecek seviyede işlemekte olup, Aydınlatma ve Açık Rıza Metinlerine <a href="https://kvkk.deu.edu.tr/" target="_blank" rel="noopener noreferrer" style={{color: '#2563eb', textDecoration: 'underline'}}>https://kvkk.deu.edu.tr/</a> adresinden ulaşılabilmektedir.
+                    </div>
+                    <label style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '12px', color: '#334155', cursor: 'pointer', userSelect: 'none' }}>
+                        <input 
+                            type="checkbox" 
+                            checked={preInfoAccepted} 
+                            onChange={(e) => setPreInfoAccepted(e.target.checked)}
+                            style={{ marginTop: '2px' }}
+                        />
+                        <span>
+                            <a href="#" onClick={(e) => { e.preventDefault(); setShowPreInfoModal(true); }} style={{ color: '#2563eb', textDecoration: 'underline', fontWeight: '600' }}>Ön Bilgilendirme Formunu</a> Okudum ve Kabul Ediyorum.
+                        </span>
+                    </label>
+                </div>
+            )}
+            <button className="btn-primary-lg" onClick={onNext} style={{ marginTop: buttonText === 'Siparişi Onayla' ? '10px' : '25px' }}>
                 {buttonText} {step < 3 && deliveryMethod === 'kargo' && '→'}
             </button>
             <div style={{marginTop: '20px', fontSize: '12px', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '8px'}}>
@@ -331,24 +418,63 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
                             );
                         })}
                     </div>
-                    {renderSummary(isLocal ? 'Giriş Yap' : 'Sepeti Onayla', async () => {
-                        if (isLocal) {
-                            navigate('/login');
-                        } else {
-                            try {
-                                const res = await axios.get('/api/Cart/validate', { 
-                                    headers: { Authorization: `Bearer ${token}` } 
-                                });
-                                if (!res.data.isValid) {
-                                    window.showToast(res.data.message, true);
-                                    return;
+                    {isAdmin ? (
+                        <div className="summary-card">
+                            <h2>Elden Satış Özeti</h2>
+                            <div className="summary-items-list" style={{marginBottom: '20px', maxHeight: '150px', overflowY: 'auto'}}>
+                                {items.map((item, idx) => (
+                                    <div key={idx} style={{display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#64748b', marginBottom: '8px'}}>
+                                        <span style={{maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
+                                            {item.book?.name || item.book?.isim}
+                                        </span>
+                                        <span>x{item.quantity}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            
+                            <div style={{marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
+                                <label style={{fontSize: '14px', fontWeight: '700', color: '#475569'}}>Ödeme Yöntemi</label>
+                                <div style={{
+                                    padding: '10px 14px', 
+                                    borderRadius: '8px', 
+                                    border: '1px solid #e2e8f0', 
+                                    fontSize: '14px', 
+                                    fontWeight: '600', 
+                                    color: '#475569',
+                                    backgroundColor: '#f1f5f9'
+                                }}>
+                                    💵 Nakit (Yalnızca Elden Satış)
+                                </div>
+                            </div>
+
+                            <div className="summary-total" style={{marginTop: 0, borderTop: '1px solid #f1f5f9', paddingTop: '15px', marginBottom: '20px'}}>
+                                <span>Toplam</span>
+                                <span>{totalAmount.toFixed(2)} ₺</span>
+                            </div>
+                            <button className="btn-primary-lg" onClick={handleAdminCheckout}>
+                                🏪 Elden Satışı Tamamla
+                            </button>
+                        </div>
+                    ) : (
+                        renderSummary(isLocal ? 'Giriş Yap' : 'Sepeti Onayla', async () => {
+                            if (isLocal) {
+                                navigate('/login');
+                            } else {
+                                try {
+                                    const res = await axios.get('/api/Cart/validate', { 
+                                        headers: { Authorization: `Bearer ${token}` } 
+                                    });
+                                    if (!res.data.isValid) {
+                                        window.showToast(res.data.message, true);
+                                        return;
+                                    }
+                                    setStep(2);
+                                } catch (err) {
+                                    window.showToast("İşleminiz şu anda gerçekleştirilemiyor. Lütfen kısa bir süre sonra tekrar deneyiniz.", true);
                                 }
-                                setStep(2);
-                            } catch (err) {
-                                window.showToast("İşleminiz şu anda gerçekleştirilemiyor. Lütfen kısa bir süre sonra tekrar deneyiniz.", true);
                             }
-                        }
-                    })}
+                        })
+                    )}
                 </div>
             )}
 
@@ -363,7 +489,7 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
                                 <div className="method-icon">🚚</div>
                                 <div className="method-info">
                                     <h4>Eve Kargo</h4>
-                                    <p>Kitaplarınız adresinize gönderilir.</p>
+                                    <p>Kitaplarınız adresinize gönderilir. (Kargo ücreti alıcıya aittir.)</p>
                                 </div>
                                 <div className="method-radio"></div>
                             </div>
@@ -543,9 +669,9 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
 
             {step === 4 && orderResult && (
                 <div className="success-container animate-fade-in">
-                    <div className="success-icon">✓</div>
-                    <h1>Siparişiniz Başarıyla Alınmıştır!</h1>
-                    <p>Teşekkür ederiz! Kitaplarınız hazırlanıyor. Sipariş detaylarını aşağıda bulabilirsiniz.</p>
+                    <div className="success-icon" style={{ backgroundColor: isAdmin ? '#10b981' : undefined }}>✓</div>
+                    <h1>{isAdmin ? 'Elden Satış Başarıyla Tamamlandı!' : 'Siparişiniz Başarıyla Alınmıştır!'}</h1>
+                    <p>{isAdmin ? 'Stoklar başarıyla düşürüldü ve satış sisteme kaydedildi.' : 'Teşekkür ederiz! Kitaplarınız hazırlanıyor. Sipariş detaylarını aşağıda bulabilirsiniz.'}</p>
                     
                     {orderResult.pickupCode && (
                         <div className="pickup-code-alert" style={{
@@ -580,11 +706,86 @@ function Cart({ localCart, setLocalCart, token, setApiCartCount }) {
                             <label>Toplam</label>
                             <span>{orderResult.totalPrice?.toFixed(2) || '0.00'} ₺</span>
                         </div>
+                        {isAdmin && (
+                            <div className="info-item">
+                                <label>Ödeme Yöntemi</label>
+                                <span>💵 Nakit</span>
+                            </div>
+                        )}
                     </div>
 
                     <div className="btn-group">
-                        <button className="btn-primary-lg" style={{width: 'auto', marginTop: 0}} onClick={() => navigate('/profil', { state: { tab: 'orders' } })}>Siparişlerime Git</button>
+                        <button 
+                            className="btn-primary-lg" 
+                            style={{width: 'auto', marginTop: 0}} 
+                            onClick={() => navigate(isAdmin ? '/admin' : '/profil', isAdmin ? undefined : { state: { tab: 'orders' } })}
+                        >
+                            {isAdmin ? 'Yönetim Paneline Git' : 'Siparişlerime Git'}
+                        </button>
                         <button className="btn-secondary" onClick={() => navigate('/')}>Ana Sayfaya Dön</button>
+                    </div>
+                </div>
+            )}
+
+            {showPreInfoModal && (
+                <div className="modal-overlay" onClick={() => setShowPreInfoModal(false)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h2>Ön Bilgilendirme Formu</h2>
+                            <button className="modal-close-btn" onClick={() => setShowPreInfoModal(false)}>&times;</button>
+                        </div>
+                        <div className="modal-body">
+{`DOKUZ EYLÜL ÜNİVERSİTESİ MÜHENDİSLİK FAKÜLTESİ
+KİTAP SATIŞ E-TİCARET SİTESİ ÖN BİLGİLENDİRME FORMU
+
+İşbu Ön Bilgilendirme Formu, Alıcı’nın https://kitapsatis.deu.edu.tr/ internet sitesi üzerinden kitap/yayın satın almadan önce; ürünün temel nitelikleri, fiyatı, ödeme, teslimat, cayma hakkı ve iade koşulları hakkında bilgilendirilmesi amacıyla hazırlanmıştır.
+
+1. Satıcı Bilgileri
+Ünvan: Dokuz Eylül Üniversitesi Mühendislik Fakültesi Dekanlığı
+Adres: Merkez Yerleşkesi, Buca / İzmir
+E-posta: kitapsatis@deu.edu.tr
+Web Sitesi: https://kitapsatis.deu.edu.tr/
+
+2. Sözleşme Konusu Ürün / Hizmet Bilgileri
+Alıcı tarafından satın alınan kitap/yayın ürününün adı, ISBN numarası, adedi, birim fiyatı, KDV dahil toplam tutarı, kargo bedeli ve genel toplamı sipariş tamamlama ekranında ve sipariş onay e-postasında yer almaktadır.
+Güncel fiyatlandırma, KDV oranı ve stok bilgileri Satıcı'nın internet sitesinde ilan edildiği şekilde geçerlidir.
+
+3. Ödeme Bilgileri
+Alıcı, sipariş bedelini kredi kartı veya banka kartı ile sanal POS aracılığıyla ödeyebilir.
+Ön provizyon siparişin verildiği anda alınır; sipariş onayı sonrasında tahsilat gerçekleştirilir.
+
+4. Teslimat Bilgileri
+Teslimat, Alıcı'nın sipariş sırasında bildirdiği adrese anlaşmalı kargo firması aracılığıyla yapılır.
+Satıcı, ödemenin kendisine ulaşmasından itibaren en fazla 30 (otuz) gün içinde teslimatı gerçekleştirmekle yükümlüdür. Yurt içi teslimatlar, kargoya teslim edildiği günden itibaren genellikle 2-5 iş günü içinde tamamlanır; bu süre kargo firmasının hizmet koşullarına göre değişebilir.
+Alıcı, teslimat adresine ilişkin bilgilerin eksiksiz ve doğru olduğunu kabul eder. Hatalı veya eksik adres bilgisi nedeniyle doğabilecek ek kargo masrafları Alıcı'ya aittir.
+
+5. Cayma Hakkı
+Alıcı, sözleşmenin kurulduğu tarihten itibaren 14 (on dört) gün içinde herhangi bir gerekçe göstermeksizin ve cezai şart ödemeksizin cayma hakkını kullanabilir.
+Cayma hakkının kullanılabilmesi için ürünün ambalajı açılmamış, kullanılmamış, deforme edilmemiş ve yeniden satılabilir durumda olması gerekir.
+Cayma hakkını kullanmak isteyen Alıcı, Satıcı'ya kitapsatis@deu.edu.tr adresi üzerinden e-posta yoluyla veya yazılı olarak bildirimde bulunur.
+Alıcı, cayma bildiriminin ardından ürünü 10 (on) gün içinde, kargo masrafları kendisine ait olmak üzere Satıcı'ya iade eder. Satıcı, iade edilen ürünü teslim aldığı tarihten itibaren 14 (on dört) gün içinde ödemeyi Alıcı'ya iade eder.
+
+6. Cayma Hakkının Kullanılamayacağı Durumlar
+Alıcı tarafından ambalajı açılan, okunmaya başlanan veya üzerinde işaretleme/notlama yapılan kitap ve yayınlarda cayma hakkı kullanılamaz.
+Sipariş üzerine özel baskı/cilt yaptırılan veya kişiye özel hazırlanan yayınlarda cayma hakkı kullanılamaz.
+Dijital içerik ve e-kitap ürünlerinde, indirme veya aktivasyon işlemi gerçekleştirilmişse cayma hakkı kullanılemamaktadır.
+
+7. Hasarlı, Eksik veya Yanlış Ürün Teslimi
+Teslimat sırasında hasarlı ya da eksik ürün alınması halinde Alıcı, durumu teslim tarihinden itibaren 3 (üç) iş günü içinde fotoğraf ile belgeleyerek Satıcı'ya e-posta yoluyla bildirmelidir.
+Satıcı, inceleme sonucuna göre ürünü değiştirir veya bedelini iade eder. Yanlış ürün gönderilmesi durumunda iade kargo masrafları Satıcı tarafından karşılanır.
+
+8. Kişisel Verilerin Korunması
+Alıcı'nın kişisel verileri, 6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında işlenmektedir. Satıcı'nın KVKK Aydınlatma Metni internet sitesinde kamuoyuyla paylaşılmıştır.
+
+9. Uyuşmazlıkların Çözümü
+Bu form ve mesafeli satış sözleşmesinden doğabilecek uyuşmazlıklarda İzmir Mahkemeleri, İcra Daireleri ve Tüketici Hakem Heyetleri yetkilidir.
+
+10. Onay
+Alıcı; ürünün temel nitelikleri, satış fiyatı, ödeme şekli, teslimat koşulları, cayma hakkı ve iade şartları hakkında önceden bilgilendirildiğini, işbu Ön Bilgilendirme Formu'nu okuyup anladığını ve elektronik ortamda onayladığını kabul, beyan ve taahhüt eder.`}
+                        </div>
+                        <div className="modal-footer">
+                            <button className="modal-accept-btn" onClick={() => { setPreInfoAccepted(true); setShowPreInfoModal(false); }}>Okudum, Kabul Ediyorum</button>
+                        </div>
                     </div>
                 </div>
             )}

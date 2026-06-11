@@ -116,27 +116,19 @@ const BookDetail = ({ handleAddToCart }) => {
                         </div>
 
                         <div className="action-row">
-                            {!isAdmin && (
-                                <div className="quantity-picker">
-                                    <button className="quantity-btn" onClick={() => handleQtyChange(quantity - 1)}>-</button>
-                                    <input type="text" className="quantity-input" value={quantity} readOnly />
-                                    <button className="quantity-btn" onClick={() => handleQtyChange(quantity + 1)}>+</button>
-                                </div>
-                            )}
+                            <div className="quantity-picker">
+                                <button className="quantity-btn" onClick={() => handleQtyChange(quantity - 1)}>-</button>
+                                <input type="text" className="quantity-input" value={quantity} readOnly />
+                                <button className="quantity-btn" onClick={() => handleQtyChange(quantity + 1)}>+</button>
+                            </div>
                             <button 
                                 className="detail-add-btn" 
-                                style={{
-                                    backgroundColor: isAdmin ? '#cbd5e1' : undefined,
-                                    color: isAdmin ? '#64748b' : undefined,
-                                    cursor: isAdmin ? 'not-allowed' : 'pointer',
-                                    flex: isAdmin ? 1 : undefined
-                                }}
-                                disabled={book.stockQuantity <= 0 || isAdmin}
+                                disabled={book.stockQuantity <= 0}
                                 onClick={() => {
                                     for(let i=0; i<quantity; i++) handleAddToCart(book);
                                 }}
                             >
-                                {isAdmin ? '🚫 Yönetici Hesabı' : '🛒 Sepete Ekle'}
+                                {isAdmin ? '🏪 Elden Satışa Ekle' : '🛒 Sepete Ekle'}
                             </button>
                         </div>
                     </div>

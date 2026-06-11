@@ -36,15 +36,11 @@ function BookCard({ book, onAddToCart }) {
         className="add-to-cart-btn" 
         style={{ 
           width: '100%', 
-          marginTop: 'auto',
-          backgroundColor: isAdmin ? '#cbd5e1' : undefined,
-          color: isAdmin ? '#64748b' : undefined,
-          cursor: isAdmin ? 'not-allowed' : 'pointer'
+          marginTop: 'auto'
         }} 
-        onClick={() => !isAdmin && onAddToCart(book)}
-        disabled={isAdmin}
+        onClick={() => onAddToCart(book)}
       >
-        {isAdmin ? 'Yönetici Yetkisi' : 'Sepete Ekle'}
+        {isAdmin ? 'Elden Satışa Ekle' : 'Sepete Ekle'}
       </button>
     </div>
   );

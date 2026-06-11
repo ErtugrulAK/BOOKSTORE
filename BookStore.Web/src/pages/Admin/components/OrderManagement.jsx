@@ -19,6 +19,7 @@ const OrderManagement = ({
 }) => {
     const [searchCode, setSearchCode] = React.useState('');
     const [verifyCode, setVerifyCode] = React.useState('');
+    const [cargoTrackingCode, setCargoTrackingCode] = React.useState('');
 
     const handleSearchByCode = async () => {
         if (!searchCode) return window.showToast("Lütfen bir kod giriniz.", true);
@@ -64,7 +65,7 @@ const OrderManagement = ({
                                 color: (selectedOrder.status === 5 || selectedOrder.status === 7) ? '#dc2626' : selectedOrder.status === 3 || selectedOrder.status === 4 || selectedOrder.status === 6 ? '#16a34a' : '#d97706',
                                 fontSize: '14px', marginTop: '6px'
                             }}>
-                                {getStatusText(selectedOrder.status)}
+                                {getStatusText(selectedOrder.status, selectedOrder.paymentMethod)}
                             </span>
                         </div>
                         <p className="admin-page-subtitle">Sipariş detaylarını inceleyin ve durumu güncelleyin.</p>
@@ -97,64 +98,131 @@ const OrderManagement = ({
                             </div>
                             <div className="admin-info-grid">
                                 <div className="info-item">
-                                    <label>Kullanıcı ID</label>
-                                    <span>#{selectedOrder.userId}</span>
+                                    <label>Müşteri Adı</label>
+                                    <span>{selectedOrder.user ? `${selectedOrder.user.firstName} ${selectedOrder.user.lastName}` : `Kullanıcı #${selectedOrder.userId}`}</span>
                                 </div>
+                                {selectedOrder.user?.phoneNumber && (
+                                    <div className="info-item">
+                                        <label>Telefon</label>
+                                        <span>{selectedOrder.user.phoneNumber}</span>
+                                    </div>
+                                )}
+                                {selectedOrder.user?.email && (
+                                    <div className="info-item">
+                                        <label>E-Posta</label>
+                                        <span>{selectedOrder.user.email}</span>
+                                    </div>
+                                )}
                                 <div className="info-item">
                                     <label>Sipariş Tarihi</label>
                                     <span>{formatDate(selectedOrder.createdAtUtc)}</span>
+                                </div>
+                                <div className="info-item">
+                                    <label>Ödeme Yöntemi</label>
+                                    <span style={{ fontWeight: '700', color: selectedOrder.paymentMethod === 'Nakit' ? '#16a34a' : '#1e3a8a' }}>
+                                        {selectedOrder.paymentMethod === 'Nakit' ? '💵 Nakit' : '💳 Online'}
+                                    </span>
                                 </div>
                                 <div className="info-item" style={{ gridColumn: 'span 2' }}>
                                     <label>Teslimat Adresi</label>
                                     <span>{selectedOrder.deliveryAddress}</span>
                                 </div>
+                                {selectedOrder.cargoTrackingNumber && (
+                                    <div className="info-item" style={{ gridColumn: 'span 2' }}>
+                                        <label>Kargo Takip Numarası (PTT)</label>
+                                        <span>
+                                            <a 
+                                                href={`https://gonderitakip.ptt.gov.tr/Track/ActiveTrack?id=${selectedOrder.cargoTrackingNumber}`} 
+                                                target="_blank" 
+                                                rel="noreferrer"
+                                                style={{ color: '#4318ff', fontWeight: '700', textDecoration: 'underline' }}
+                                            >
+                                                {selectedOrder.cargoTrackingNumber} 🔗
+                                            </a>
+                                        </span>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
                         <div className="admin-card">
                             <h3 className="admin-card-title">Sipariş Durumu Güncelle</h3>
-                            <div style={{ display: 'flex', gap: '16px', marginTop: '16px', alignItems: 'center' }}>
-                                {selectedOrder.pickupCode ? (
-                                    <select
-                                        className="admin-select"
-                                        style={{ width: '200px' }}
-                                        value={tempOrderStatus !== null ? tempOrderStatus : selectedOrder.status}
-                                        onChange={(e) => setTempOrderStatus(parseInt(e.target.value))}
-                                    >
-                                        <option value="2">Hazırlanıyor</option>
-                                        <option value="6">Elden Teslim Edildi</option>
-                                        <option value="5">İptal Edildi</option>
-                                        <option value="7">İade Edildi</option>
-                                    </select>
-                                ) : (
-                                    <select
-                                        className="admin-select"
-                                        style={{ width: '200px' }}
-                                        value={tempOrderStatus !== null ? tempOrderStatus : selectedOrder.status}
-                                        onChange={(e) => setTempOrderStatus(parseInt(e.target.value))}
-                                    >
-                                        <option value="2">Hazırlanıyor</option>
-                                        <option value="3">Kargoya Verildi</option>
-                                        <option value="5">İptal Edildi</option>
-                                        <option value="7">İade Edildi</option>
-                                    </select>
-                                )}
+                            <div style={{ display: 'flex', flexDirection: 'column', marginTop: '16px' }}>
+                                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                                    {selectedOrder.paymentMethod === 'Nakit' ? (
+                                        <select
+                                            className="admin-select"
+                                            style={{ width: '200px' }}
+                                            value={tempOrderStatus !== null ? tempOrderStatus : selectedOrder.status}
+                                            onChange={(e) => setTempOrderStatus(parseInt(e.target.value))}
+                                        >
+                                            <option value="6">Nakit</option>
+                                            <option value="5">İptal Edildi</option>
+                                            <option value="7">İade Edildi</option>
+                                        </select>
+                                    ) : selectedOrder.pickupCode ? (
+                                        <select
+                                            className="admin-select"
+                                            style={{ width: '200px' }}
+                                            value={tempOrderStatus !== null ? tempOrderStatus : selectedOrder.status}
+                                            onChange={(e) => setTempOrderStatus(parseInt(e.target.value))}
+                                        >
+                                            <option value="2">Hazırlanıyor</option>
+                                            <option value="6">Elden Teslim Edildi</option>
+                                            <option value="5">İptal Edildi</option>
+                                            <option value="7">İade Edildi</option>
+                                        </select>
+                                    ) : (
+                                        <select
+                                            className="admin-select"
+                                            style={{ width: '200px' }}
+                                            value={tempOrderStatus !== null ? tempOrderStatus : selectedOrder.status}
+                                            onChange={(e) => setTempOrderStatus(parseInt(e.target.value))}
+                                        >
+                                            <option value="2">Hazırlanıyor</option>
+                                            <option value="3">Kargoya Verildi</option>
+                                            <option value="5">İptal Edildi</option>
+                                            <option value="7">İade Edildi</option>
+                                        </select>
+                                    )}
 
-                                {tempOrderStatus !== null && tempOrderStatus !== selectedOrder.status && (
-                                    <div style={{ display: 'flex', gap: '8px' }}>
-                                        <button className="admin-primary-btn" onClick={async () => {
-                                            try {
-                                                await axios.put(`/api/Orders/${selectedOrder.id}/status`,
-                                                    { Status: tempOrderStatus },
-                                                    { headers: { Authorization: `Bearer ${token}` } });
-                                                window.showToast("Sipariş durumu güncellendi!");
-                                                setSelectedOrder({ ...selectedOrder, status: tempOrderStatus });
-                                                fetchData();
-                                            } catch (err) {
-                                                window.showToast("Durum güncellenirken hata oluştu.", true);
-                                            }
-                                        }}>Değişiklikleri Kaydet</button>
-                                        <button className="admin-secondary-btn" onClick={() => setTempOrderStatus(selectedOrder.status)}>İptal Et</button>
+                                    {tempOrderStatus !== null && tempOrderStatus !== selectedOrder.status && (
+                                        <div style={{ display: 'flex', gap: '8px' }}>
+                                            <button className="admin-primary-btn" onClick={async () => {
+                                                try {
+                                                    await axios.put(`/api/Orders/${selectedOrder.id}/status`,
+                                                        { 
+                                                            Status: tempOrderStatus,
+                                                            CargoTrackingNumber: tempOrderStatus === 3 ? cargoTrackingCode : null
+                                                        },
+                                                        { headers: { Authorization: `Bearer ${token}` } });
+                                                    window.showToast("Sipariş durumu güncellendi!");
+                                                    setSelectedOrder({ 
+                                                        ...selectedOrder, 
+                                                        status: tempOrderStatus,
+                                                        cargoTrackingNumber: tempOrderStatus === 3 ? cargoTrackingCode : selectedOrder.cargoTrackingNumber
+                                                    });
+                                                    setCargoTrackingCode('');
+                                                    fetchData();
+                                                } catch (err) {
+                                                    window.showToast("Durum güncellenirken hata oluştu.", true);
+                                                }
+                                            }}>Değişiklikleri Kaydet</button>
+                                            <button className="admin-secondary-btn" onClick={() => { setTempOrderStatus(selectedOrder.status); setCargoTrackingCode(''); }}>İptal Et</button>
+                                        </div>
+                                    )}
+                                </div>
+                                {tempOrderStatus === 3 && (
+                                    <div style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                        <label style={{ fontSize: '13px', fontWeight: '700', color: '#475569' }}>Kargo Takip Numarası (PTT)</label>
+                                        <input 
+                                            type="text" 
+                                            placeholder="PTT Takip Numarasını Girin (İsteğe Bağlı)"
+                                            value={cargoTrackingCode}
+                                            onChange={(e) => setCargoTrackingCode(e.target.value)}
+                                            className="admin-input"
+                                            style={{ maxWidth: '300px', height: '40px', padding: '0 12px', fontSize: '14px', borderRadius: '8px', border: '1px solid #e2e8f0' }}
+                                        />
                                     </div>
                                 )}
                             </div>
@@ -256,7 +324,7 @@ const OrderManagement = ({
                             <tr>
                                 <th style={{ width: '20%' }}>Sipariş No</th>
                                 <th style={{ width: '15%' }}>Tarih</th>
-                                <th style={{ width: '30%' }}>Kullanıcı (ID)</th>
+                                <th style={{ width: '30%' }}>Müşteri Adı</th>
                                 <th style={{ width: '15%' }}>Tutar</th>
                                 <th style={{ width: '15%' }}>Durum</th>
                                 <th style={{ width: '5%', textAlign: 'right' }}>İşlemler</th>
@@ -267,14 +335,14 @@ const OrderManagement = ({
                                 <tr key={o.id}>
                                     <td style={{ color: '#4318ff', fontWeight: '700' }}>{o.orderNumber}</td>
                                     <td>{new Date(o.createdAtUtc).toLocaleDateString()}</td>
-                                    <td>#{o.userId}</td>
+                                    <td>{o.user ? `${o.user.firstName} ${o.user.lastName}` : `Kullanıcı #${o.userId}`}</td>
                                     <td style={{ fontWeight: '700' }}>₺{o.totalPrice.toFixed(2)}</td>
                                     <td>
                                         <span className="status-pill" style={{
                                             background: o.status === 5 ? '#fee2e2' : o.status === 3 || o.status === 4 || o.status === 6 ? '#dcfce7' : '#fef3c7',
                                             color: o.status === 5 ? '#dc2626' : o.status === 3 || o.status === 4 || o.status === 6 ? '#16a34a' : '#d97706'
                                         }}>
-                                            {getStatusText(o.status)}
+                                            {getStatusText(o.status, o.paymentMethod)}
                                         </span>
                                     </td>
                                     <td style={{ textAlign: 'right' }}>

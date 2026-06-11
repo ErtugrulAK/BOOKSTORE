@@ -74,7 +74,7 @@ function Admin({ token, user, onLogout }) {
     const [bookForm, setBookForm] = useState({
         name: '', author: '', publisher: '', isbn: '', language: '',
         publicationYear: '', pageCount: '', description: '',
-        price: '', stockQuantity: '', minStockLevel: 25,
+        price: '', stockQuantity: '', warehouseQuantity: 0, minStockLevel: 25,
         category: '', isActive: true, isFeatured: false,
         edition: ''
     });
@@ -230,7 +230,10 @@ function Admin({ token, user, onLogout }) {
 
     const formatDate = (dateString) => new Date(dateString).toLocaleDateString('tr-TR');
 
-    const getStatusText = (status) => {
+    const getStatusText = (status, paymentMethod = "") => {
+        if (status === 6) {
+            return paymentMethod === "Nakit" ? "Nakit" : "Elden Teslim Edildi";
+        }
         switch (status) {
             case 2: return "Hazırlanıyor";
             case 3: return "Kargoya Verildi";
@@ -261,6 +264,7 @@ function Admin({ token, user, onLogout }) {
                 ...bookForm,
                 price: parseFloat(bookForm.price),
                 stockQuantity: parseInt(bookForm.stockQuantity),
+                warehouseQuantity: parseInt(bookForm.warehouseQuantity || 0),
                 minStockLevel: parseInt(bookForm.minStockLevel)
             };
             if (bookForm.id) {
@@ -327,7 +331,7 @@ function Admin({ token, user, onLogout }) {
             setBookForm({
                 name: '', author: '', publisher: '', isbn: '', language: '',
                 publicationYear: '', pageCount: '', description: '',
-                price: '', stockQuantity: '', minStockLevel: 25,
+                price: '', stockQuantity: '', warehouseQuantity: 0, minStockLevel: 25,
                 category: '', isActive: true, isFeatured: false,
                 edition: ''
             });

@@ -61,12 +61,10 @@ function Navbar({ searchTerm, setSearchTerm, user, handleLogout, cartCount }) {
         )}
 
         {/* Sepet Butonu ve Sayaç */}
-        {(!user || user.role !== 'Admin') && (
-            <Link to="/sepet" className="nav-cart-icon-btn" title="Sepetim">
-              <i>🛒</i>
-              {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
-            </Link>
-        )}
+        <Link to="/sepet" className="nav-cart-icon-btn" title={user?.role === 'Admin' ? 'Elden Satış Sepeti' : 'Sepetim'}>
+          <i>🛒</i>
+          {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+        </Link>
         
         {user && (
             <button className="nav-logout-btn" onClick={handleLogout} title="Güvenli Çıkış">

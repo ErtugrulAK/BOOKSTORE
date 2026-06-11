@@ -97,7 +97,7 @@ namespace BookStore.Api.Services
             await SendCustomEmailAsync(toEmail, subject, body);
         }
 
-        public async Task SendOrderStatusChangedEmailAsync(string toEmail, string orderNumber, OrderStatus oldStatus, OrderStatus newStatus, string? pickupCode = null)
+        public async Task SendOrderStatusChangedEmailAsync(string toEmail, string orderNumber, OrderStatus oldStatus, OrderStatus newStatus, string? pickupCode = null, string? cargoTrackingNumber = null)
         {
             string newStatusText = newStatus switch
             {
@@ -142,6 +142,15 @@ namespace BookStore.Api.Services
                          <p style='margin: 10px 0 0 0; font-size: 12px; color: #64748b;'>Kitaplarınızı teslim alırken bu kodu yetkiliye göstermeniz gerekmektedir.</p>
                      </div>";
 
+            string cargoInfo = string.IsNullOrEmpty(cargoTrackingNumber)
+                ? ""
+                : $@"<div style='background: #f0fdf4; border: 2px dashed #16a34a; padding: 20px; border-radius: 12px; text-align: center; margin: 20px 0; max-width: 400px;'>
+                         <h4 style='margin: 0 0 10px 0; color: #16a34a;'>📦 PTT Kargo Takip Bilgisi</h4>
+                         <div style='font-size: 18px; font-weight: bold; color: #1e293b; margin-bottom: 15px;'>{cargoTrackingNumber}</div>
+                         <a href='https://gonderitakip.ptt.gov.tr/Track/ActiveTrack?id={cargoTrackingNumber}' target='_blank' style='display: inline-block; background: #16a34a; color: white; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; font-family: Arial, sans-serif;'>Kargomu Takip Et</a>
+                         <p style='margin: 10px 0 0 0; font-size: 11px; color: #64748b;'>Yukarıdaki butona tıklayarak PTT Kargo üzerinden gönderinizi anlık takip edebilirsiniz.</p>
+                     </div>";
+
             string subject = $"Siparişinizin Durumu Güncellendi: {newStatusText} ({orderNumber})";
             string body = $@"
                 <div style='font-family: Arial, sans-serif; padding: 20px;'>
@@ -149,6 +158,7 @@ namespace BookStore.Api.Services
                     <p>Merhaba,</p>
                     <p><strong>{orderNumber}</strong> numaralı siparişinizin durumu <strong>{newStatusText}</strong> olarak güncellenmiştir.</p>
                     {pickupInfo}
+                    {cargoInfo}
                     <p>Siparişinizin detaylarını web sitemiz üzerinden her zaman kontrol edebilirsiniz.</p>
                     <hr style='border: 1px solid #eee; margin: 20px 0;'/>
                     <p style='font-size: 12px; color: #888;'>DEÜ Kitap Satış Platformu</p>

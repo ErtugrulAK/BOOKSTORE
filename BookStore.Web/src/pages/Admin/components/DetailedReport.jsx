@@ -63,7 +63,7 @@ const DetailedReport = ({
                 'Sipariş İçeriği': bookNames,
                 'Toplam Ürün': o.orderItems?.reduce((sum, i) => sum + i.quantity, 0) || 0,
                 'Tutar (TL)': o.totalPrice,
-                'Durum': o.status === 1 ? 'Beklemede' : o.status === 2 ? 'Hazırlanıyor' : o.status === 3 ? 'Kargoya Verildi' : o.status === 6 ? 'Elden Teslim Edildi' : o.status === 7 ? 'İade Edildi' : 'İptal Edildi'
+                'Durum': o.status === 1 ? 'Beklemede' : o.status === 2 ? 'Hazırlanıyor' : o.status === 3 ? 'Kargoya Verildi' : o.status === 6 ? (o.paymentMethod === 'Nakit' ? 'Nakit' : 'Elden Teslim Edildi') : o.status === 7 ? 'İade Edildi' : 'İptal Edildi'
             };
         });
         
@@ -195,7 +195,7 @@ const DetailedReport = ({
         const tableRows = [];
 
         filteredOrders.forEach(o => {
-            const status = o.status === 1 ? 'Beklemede' : o.status === 2 ? 'Hazirlaniyor' : o.status === 3 ? 'Kargoya Verildi' : o.status === 6 ? 'Elden Teslim Edildi' : o.status === 7 ? 'Iade Edildi' : 'Iptal Edildi';
+            const status = o.status === 1 ? 'Beklemede' : o.status === 2 ? 'Hazirlaniyor' : o.status === 3 ? 'Kargoya Verildi' : o.status === 6 ? (o.paymentMethod === 'Nakit' ? 'Nakit' : 'Elden Teslim Edildi') : o.status === 7 ? 'Iade Edildi' : 'Iptal Edildi';
             const bookNames = o.orderItems?.map(i => `${i.quantity}x ${i.book?.name}`).join(', ') || '-';
             const customerName = o.user ? `${o.user.firstName} ${o.user.lastName}` : 'Bilinmeyen Musteri';
             const customerEmail = o.user ? o.user.email : '-';
@@ -303,7 +303,7 @@ const DetailedReport = ({
                             <option value="">Tümü</option>
                             <option value="2">Hazırlanıyor</option>
                             <option value="3">Kargoya Verildi</option>
-                            <option value="6">Elden Teslim Edildi</option>
+                            <option value="6">Elden Teslim / Nakit</option>
                             <option value="5">İptal Edildi</option>
                             <option value="7">İade Edildi</option>
                         </select>

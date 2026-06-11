@@ -115,7 +115,7 @@ const UserManagement = ({ users, usersTotal, usersPage, setUsersPage, formatDate
                                             <td style={{ fontWeight: '800', color: '#2b3674' }}>₺{o.totalPrice.toFixed(2)}</td>
                                             <td>
                                                 <span className={`status-pill ${(o.status === 5 || o.status === 7) ? 'danger' : (o.status === 3 || o.status === 4 || o.status === 6) ? 'success' : 'warning'}`}>
-                                                    {o.status === 1 ? 'Beklemede' : o.status === 2 ? 'Hazırlanıyor' : o.status === 3 ? 'Kargolandı' : o.status === 6 ? 'Elden Teslim Edildi' : o.status === 7 ? 'İade Edildi' : o.status === 5 ? 'İptal Edildi' : 'Hazırlanıyor'}
+                                                    {o.status === 1 ? 'Beklemede' : o.status === 2 ? 'Hazırlanıyor' : o.status === 3 ? 'Kargolandı' : o.status === 6 ? (o.paymentMethod === 'Nakit' ? 'Nakit' : 'Elden Teslim Edildi') : o.status === 7 ? 'İade Edildi' : o.status === 5 ? 'İptal Edildi' : 'Hazırlanıyor'}
                                                 </span>
                                             </td>
                                         </tr>

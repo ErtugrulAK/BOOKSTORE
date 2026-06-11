@@ -134,7 +134,7 @@ const OrderHistory = ({ orders = [], token, onRefresh }) => {
                                  selectedOrder.status === 'Processing' || selectedOrder.status === 2 ? 'Hazırlanıyor' :
                                  selectedOrder.status === 'Shipped' || selectedOrder.status === 3 ? 'Kargoya Verildi' :
                                  selectedOrder.status === 'Delivered' || selectedOrder.status === 4 ? 'Teslim Edildi' :
-                                 selectedOrder.status === 6 ? 'Elden Teslim Edildi' :
+                                 selectedOrder.status === 6 ? (selectedOrder.paymentMethod === 'Nakit' ? 'Nakit' : 'Elden Teslim Edildi') :
                                  selectedOrder.status === 'Cancelled' || selectedOrder.status === 5 ? 'İptal Edildi' :
                                  selectedOrder.status === 7 ? 'İade Edildi' : selectedOrder.status}
                             </span>
@@ -230,7 +230,13 @@ const OrderHistory = ({ orders = [], token, onRefresh }) => {
                             <div className="step-label">Hazırlanıyor</div>
                             <div className="step-time" style={{ fontWeight: '700' }}>{(selectedOrder.status === 'Processing' || selectedOrder.status === 2) ? 'İşleniyor' : 'Tamamlandı'}</div>
                         </div>
-                        {selectedOrder.pickupCode ? (
+                        {selectedOrder.paymentMethod === 'Nakit' ? (
+                            <div className={`timeline-step ${(selectedOrder.status === 'Delivered' || selectedOrder.status === 4 || selectedOrder.status === 6) ? 'completed' : ''}`}>
+                                <div className="step-icon">💵</div>
+                                <div className="step-label">Nakit Satış</div>
+                                <div className="step-time" style={{ fontWeight: '700' }}>{(selectedOrder.status === 'Delivered' || selectedOrder.status === 4 || selectedOrder.status === 6) ? 'Tamamlandı' : 'Bekleniyor'}</div>
+                            </div>
+                        ) : selectedOrder.pickupCode ? (
                             <div className={`timeline-step ${(selectedOrder.status === 'Delivered' || selectedOrder.status === 4 || selectedOrder.status === 6) ? 'completed' : ''}`}>
                                 <div className="step-icon">🤝</div>
                                 <div className="step-label">Elden Teslim Edildi</div>
@@ -373,7 +379,7 @@ const OrderHistory = ({ orders = [], token, onRefresh }) => {
                                              {order.status === 'Pending' || order.status === 0 || order.status === 'Paid' || order.status === 1 || order.status === 'Processing' || order.status === 2 ? 'Hazırlanıyor' : 
                                              order.status === 'Cancelled' || order.status === 5 ? 'İptal Edildi' : 
                                              order.status === 7 ? 'İade Edildi' : 
-                                             order.status === 6 ? 'Elden Teslim Edildi' : 
+                                             order.status === 6 ? (order.paymentMethod === 'Nakit' ? 'Nakit' : 'Elden Teslim Edildi') : 
                                              order.status === 'Delivered' || order.status === 4 ? 'Teslim Edildi' : 'Kargoya Verildi'}
                                         </span>
                                     </td>

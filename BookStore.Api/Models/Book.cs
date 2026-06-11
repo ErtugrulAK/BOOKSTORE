@@ -15,6 +15,7 @@ namespace BookStore.Api.Models
         public string? Description { get; set; }
         public decimal Price { get; set; }
         public int StockQuantity { get; set; }
+        public int WarehouseQuantity { get; set; } = 0;
         public int MinStockLevel { get; set; } = 25;
         public bool IsFeatured { get; set; }
         public bool IsActive { get; set; } = true;

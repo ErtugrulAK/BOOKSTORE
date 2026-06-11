@@ -95,7 +95,8 @@ namespace BookStore.Api.Controllers
             string Name, string? Author, string? Publisher, string? ISBN,
             string? Language, string? Edition, string? ImageUrl, int? PublicationYear, int? PageCount,
             string? Description, decimal Price, int StockQuantity,
-            int MinStockLevel, bool IsFeatured, bool IsActive, string? Category
+            int MinStockLevel, bool IsFeatured, bool IsActive, string? Category,
+            int WarehouseQuantity
         );
 
         [Authorize(Roles = "Admin")]
@@ -119,6 +120,7 @@ namespace BookStore.Api.Controllers
                 Description = req.Description,
                 Price = req.Price,
                 StockQuantity = req.StockQuantity,
+                WarehouseQuantity = req.WarehouseQuantity,
                 MinStockLevel = req.MinStockLevel,
                 IsFeatured = req.IsFeatured,
                 IsActive = req.IsActive,
@@ -158,6 +160,7 @@ namespace BookStore.Api.Controllers
             existing.Description = req.Description;
             existing.Price = req.Price;
             existing.StockQuantity = req.StockQuantity;
+            existing.WarehouseQuantity = req.WarehouseQuantity;
             existing.MinStockLevel = req.MinStockLevel;
             existing.IsFeatured = req.IsFeatured;
             existing.Category = req.Category;

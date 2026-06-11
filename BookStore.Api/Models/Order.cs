@@ -26,7 +26,14 @@ namespace BookStore.Api.Models
         // Delivery Info (Snapshot of user address at order time)
         public string? DeliveryAddress { get; set; }
         public string? PickupCode { get; set; }
+        public string? CargoTrackingNumber { get; set; }
+        public string PaymentMethod { get; set; } = "Online";
+
+        // Legal Agreement Logs
+        public DateTime? ApprovedAtUtc { get; set; }
+        public string? ApprovedIpAddress { get; set; }
 
         public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }
 }
+

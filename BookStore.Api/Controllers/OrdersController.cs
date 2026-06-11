@@ -91,13 +91,13 @@ public class OrdersController : ControllerBase
         }
     }
 
-    public record UpdateStatusRequest(OrderStatus Status);
+    public record UpdateStatusRequest(OrderStatus Status, string? CargoTrackingNumber = null);
 
     [Authorize(Roles = "Admin")]
     [HttpPut("{id}/status")]
     public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateStatusRequest req)
     {
-        var updated = await _orderService.UpdateStatusAsync(id, req.Status);
+        var updated = await _orderService.UpdateStatusAsync(id, req.Status, req.CargoTrackingNumber);
         return Ok(updated);
     }
 
