@@ -25,6 +25,7 @@ ENV/
 
 # Excel & Temporary
 ~$*.xlsx
+~$*.docx
 *.xlsx
 kitapsatisdata
 *.log
