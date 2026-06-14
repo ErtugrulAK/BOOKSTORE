@@ -17,12 +17,12 @@ $BackupDir = "C:\BookStore_Backups"
 $RetentionDays = 14
 
 # E-posta (SMTP) Ayarları
-$SmtpHost = "smtp.gmail.com"
-$SmtpPort = 587
-$SmtpUser = "mertyesilbahce050505@gmail.com"
-$SmtpPassword = "jfilytyfovwbsrab"
-$SmtpFrom = "mertyesilbahce050505@gmail.com"
-$SmtpTo = "mertyesilbahce050505@gmail.com"
+$SmtpHost = "mail.deu.edu.tr"
+$SmtpPort = 27002
+$SmtpUser = "kitapsatis@deu.edu.tr"
+$SmtpPassword = "SIFRENIZI_YAZIN"
+$SmtpFrom = "kitapsatis@deu.edu.tr"
+$SmtpTo = "kitapsatis@deu.edu.tr"
 $UseSsl = $true
 
 # pg_dump.exe'nin yolu (Boş bırakılırsa sistem PATH değişkeninde veya standart yollarda aranır)
